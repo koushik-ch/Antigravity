@@ -326,3 +326,195 @@ document.addEventListener('mousemove', (e) => {
 initNav();
 renderCategories();
 updateProgress();
+
+// ===== REVISIT DASHBOARD =====
+const CUSTOM_REVISITS_KEY = STORAGE_KEY + '_custom_revisits';
+let customRevisits = JSON.parse(localStorage.getItem(CUSTOM_REVISITS_KEY) || '[]');
+const TRACKED_DONE_KEY = STORAGE_KEY + '_tracked_done';
+let trackedDone = JSON.parse(localStorage.getItem(TRACKED_DONE_KEY) || '{}');
+
+const revisitContent = document.getElementById('revisitContent');
+const revisitTabBtn = document.getElementById('revisitTabBtn');
+let isRevisitView = false;
+
+function saveCustomRevisits() {
+    localStorage.setItem(CUSTOM_REVISITS_KEY, JSON.stringify(customRevisits));
+}
+
+function addCustomRevisit(name, diff, url) {
+    const entry = { name: name.trim(), diff: diff || 'M', url: url.trim(), id: Date.now(), done: false, needsRevisit: false };
+    customRevisits.unshift(entry);
+    saveCustomRevisits();
+    renderRevisitView();
+}
+
+function removeCustomRevisit(id) {
+    customRevisits = customRevisits.filter(r => r.id !== id);
+    saveCustomRevisits();
+    renderRevisitView();
+}
+
+function toggleCustomRevisitDone(id) {
+    const entry = customRevisits.find(r => r.id === id);
+    if (entry) entry.done = !entry.done;
+    saveCustomRevisits();
+    renderRevisitView();
+}
+
+function toggleCustomNeedsRevisit(id) {
+    const entry = customRevisits.find(r => r.id === id);
+    if (entry) entry.needsRevisit = !entry.needsRevisit;
+    saveCustomRevisits();
+    renderRevisitView();
+}
+
+function removeTrackedRevisit(key) {
+    delete revisits[key];
+    delete trackedDone[key];
+    localStorage.setItem(STORAGE_KEY + '_revisits', JSON.stringify(revisits));
+    localStorage.setItem(TRACKED_DONE_KEY, JSON.stringify(trackedDone));
+    renderRevisitView();
+}
+
+function toggleTrackedDone(key) {
+    if (trackedDone[key]) delete trackedDone[key];
+    else trackedDone[key] = 1;
+    localStorage.setItem(TRACKED_DONE_KEY, JSON.stringify(trackedDone));
+    renderRevisitView();
+}
+
+function renderRevisitView() {
+    // Collect problems marked as revisit from COMBINED_DATA
+    const trackedItems = [];
+    COMBINED_DATA.forEach(cat => {
+        cat.patterns.forEach(p => {
+            p.problems.forEach(pr => {
+                const key = problemKey(p.num, pr.t);
+                if (revisits[key]) {
+                    const note = notes[key] || '';
+                    const isSolved = solved[key];
+                    trackedItems.push({ key, title: pr.t, diff: pr.d, patternNum: p.num, patternName: p.name, catTitle: cat.title, note, isSolved, isCustom: false });
+                }
+            });
+        });
+    });
+
+    // Also include custom problems flagged for revisit
+    customRevisits.filter(r => r.needsRevisit).forEach(r => {
+        const key = `custom::${r.id}`;
+        trackedItems.push({ key, title: r.name, diff: r.diff, url: r.url, catTitle: 'Custom', patternName: '', note: '', isSolved: false, isCustom: true, customId: r.id, isDoneCustom: r.done });
+    });
+
+    const diffClass = d => d === 'E' ? 'easy' : d === 'M' ? 'medium' : 'hard';
+    const diffText = d => d === 'E' ? 'Easy' : d === 'M' ? 'Med' : 'Hard';
+
+    // Helper: escape a key for safe use as a JS single-quoted string inside an onclick attribute
+    const jsStr = s => s.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+
+    const trackedHTML = trackedItems.length === 0
+        ? `<p class="revisit-empty">No tracked revisits yet. Hit 🔁 next to any problem to add it here.</p>`
+        : trackedItems.map(item => {
+            const isCustom = item.isCustom;
+            const isDone = isCustom ? item.isDoneCustom : !!trackedDone[item.key];
+            const safeKey = jsStr(item.key);
+            const titleHTML = (isCustom && item.url)
+                ? `<a href="${escapeHtml(item.url)}" target="_blank" rel="noopener" class="revisit-title">${escapeHtml(item.title)}</a>`
+                : `<a href="${getLeetCodeUrl(item.title)}" target="_blank" rel="noopener" class="revisit-title">${escapeHtml(item.title.replace(/^\d+\.\s*/, ''))}</a>`;
+            const sourceHTML = isCustom
+                ? `<span class="revisit-source">Custom</span>`
+                : `<span class="revisit-source">${escapeHtml(item.catTitle)} › ${escapeHtml(item.patternName)}</span>`;
+            const doneonclick = isCustom
+                ? `toggleCustomRevisitDone(${item.customId})`
+                : `toggleTrackedDone('${safeKey}')`;
+            const removeonclick = isCustom
+                ? `toggleCustomNeedsRevisit(${item.customId})`
+                : `removeTrackedRevisit('${safeKey}')`;
+            const removetitle = isCustom ? 'Remove from Tracked' : 'Remove from revisit';
+            return `
+            <div class="revisit-item ${item.isSolved ? 'solved' : ''} ${isDone ? 'done' : ''} ${isCustom ? 'custom-revisit' : ''}">
+                <div class="revisit-item-header">
+                    ${titleHTML}
+                    <span class="diff-badge ${diffClass(item.diff)}">${diffText(item.diff)}</span>
+                    ${sourceHTML}
+                    <button class="custom-done-btn ${isDone ? 'active' : ''}" title="${isDone ? 'Mark as pending' : 'Mark as done'}" onclick="${doneonclick}">${isDone ? '✓ Done' : '○ Done'}</button>
+                    <button class="revisit-remove-btn" title="${removetitle}" onclick="${removeonclick}">✕</button>
+                </div>
+                ${item.note ? `<div class="revisit-note">${escapeHtml(item.note)}</div>` : ''}
+            </div>`;
+        }).join('');
+
+    const customHTML = customRevisits.length === 0 ? '' : customRevisits.map(r => `
+        <div class="revisit-item custom-revisit ${r.done ? 'done' : ''} ${r.needsRevisit ? 'needs-revisit' : ''}">
+            <div class="revisit-item-header">
+                ${r.url ? `<a href="${escapeHtml(r.url)}" target="_blank" rel="noopener" class="revisit-title">${escapeHtml(r.name)}</a>` : `<span class="revisit-title">${escapeHtml(r.name)}</span>`}
+                <span class="diff-badge ${diffClass(r.diff)}">${diffText(r.diff)}</span>
+                <span class="revisit-source">Custom</span>
+                <button class="custom-revisit-flag-btn ${r.needsRevisit ? 'active' : ''}" title="${r.needsRevisit ? 'Remove revisit flag' : 'Flag for revisit'}" onclick="toggleCustomNeedsRevisit(${r.id})">🔁</button>
+                <button class="custom-done-btn ${r.done ? 'active' : ''}" title="${r.done ? 'Mark as pending' : 'Mark as done'}" onclick="toggleCustomRevisitDone(${r.id})">${r.done ? '✓ Done' : '○ Done'}</button>
+                <button class="revisit-remove-btn" title="Remove" onclick="removeCustomRevisit(${r.id})">✕</button>
+            </div>
+        </div>`).join('');
+
+    revisitContent.innerHTML = `
+        <div class="revisit-dashboard">
+            <div class="revisit-section">
+                <h2 class="revisit-section-title">📌 Tracked Revisits <span class="revisit-count">${trackedItems.length}</span></h2>
+                <div class="revisit-list">${trackedHTML}</div>
+            </div>
+
+            <div class="revisit-section">
+                <h2 class="revisit-section-title">✏️ Custom Problems <span class="revisit-count">${customRevisits.length}</span></h2>
+                <form class="revisit-add-form" onsubmit="handleAddRevisit(event)">
+                    <input type="text" id="revisitNameInput" class="revisit-input" placeholder="Problem name..." required />
+                    <select id="revisitDiffSelect" class="revisit-select">
+                        <option value="E">Easy</option>
+                        <option value="M" selected>Medium</option>
+                        <option value="H">Hard</option>
+                    </select>
+                    <input type="url" id="revisitUrlInput" class="revisit-input revisit-url-input" placeholder="LeetCode URL (optional)" />
+                    <button type="submit" class="revisit-add-btn">Add Problem</button>
+                </form>
+                <div class="revisit-list">${customHTML}</div>
+            </div>
+        </div>`;
+}
+
+function handleAddRevisit(e) {
+    e.preventDefault();
+    const name = document.getElementById('revisitNameInput').value;
+    const diff = document.getElementById('revisitDiffSelect').value;
+    const url = document.getElementById('revisitUrlInput').value;
+    if (!name.trim()) return;
+    addCustomRevisit(name, diff, url);
+    document.getElementById('revisitNameInput').value = '';
+    document.getElementById('revisitUrlInput').value = '';
+}
+
+function switchToRevisitView() {
+    isRevisitView = true;
+    mainContent.style.display = 'none';
+    revisitContent.style.display = '';
+    document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('active'));
+    revisitTabBtn.classList.add('active');
+    renderRevisitView();
+}
+
+function switchToMainView() {
+    isRevisitView = false;
+    mainContent.style.display = '';
+    revisitContent.style.display = 'none';
+    renderCategories(searchInput.value);
+    updateProgress();
+}
+
+revisitTabBtn.addEventListener('click', () => {
+    if (!isRevisitView) switchToRevisitView();
+});
+
+// Any non-revisit nav pill click switches back to main view
+document.querySelector('.nav-track').addEventListener('click', (e) => {
+    const pill = e.target.closest('.nav-pill');
+    if (pill && !pill.classList.contains('revisit-tab') && isRevisitView) {
+        switchToMainView();
+    }
+});

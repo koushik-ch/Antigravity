@@ -347,7 +347,12 @@
         padding: 0.4rem 0.8rem;
     }
 }
-.tier-badge.topicwise { background: rgba(147, 51, 234, 0.15); color: #c084fc; border: 1px solid rgba(147, 51, 234, 0.3); }
+
+.tier-badge.topicwise {
+    background: rgba(147, 51, 234, 0.15);
+    color: #c084fc;
+    border: 1px solid rgba(147, 51, 234, 0.3);
+}
 
 
 /* Make problem lists scrollable if they get too long */
@@ -361,9 +366,11 @@
 .problem-list::-webkit-scrollbar {
     width: 6px;
 }
+
 .problem-list::-webkit-scrollbar-track {
     background: transparent;
 }
+
 .problem-list::-webkit-scrollbar-thumb {
     background-color: rgba(255, 255, 255, 0.2);
     border-radius: 10px;
@@ -389,27 +396,30 @@
     min-width: 0;
 }
 
-.revisit-btn, .notes-toggle-btn {
+.revisit-btn,
+.notes-toggle-btn {
     flex-shrink: 0;
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 0.75rem;
-    padding: 0.25rem 0.35rem;
-    border-radius: 6px;
-    opacity: 0.35;
+    font-size: 1rem;
+    padding: 0.3rem 0.45rem;
+    border-radius: 7px;
+    opacity: 0.5;
     transition: opacity 0.2s, background 0.2s;
     line-height: 1;
 }
 
-.revisit-btn:hover, .notes-toggle-btn:hover {
+.revisit-btn:hover,
+.notes-toggle-btn:hover {
     opacity: 1;
-    background: rgba(255,255,255,0.06);
+    background: rgba(255, 255, 255, 0.06);
 }
 
 .revisit-btn.active {
     opacity: 1;
-    background: rgba(251, 188, 4, 0.18);
+    background: rgba(251, 188, 4, 0.2);
+    box-shadow: 0 0 0 1px rgba(251, 188, 4, 0.35);
 }
 
 .problem-row.revisit .problem-tag {
@@ -431,11 +441,11 @@
     width: 100%;
     min-height: 56px;
     max-height: 200px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 8px;
-    color: var(--text-secondary, #ccc);
-    font-size: 0.78rem;
+    color: #e8eaf0;
+    font-size: 0.82rem;
     font-family: var(--font-mono, monospace);
     padding: 0.5rem 0.6rem;
     resize: vertical;
@@ -452,4 +462,319 @@
 .problem-list:has(.problem-row) {
     flex-direction: column;
     flex-wrap: nowrap;
+}
+
+/* ===== REVISIT DASHBOARD ===== */
+.revisit-tab {
+    background: linear-gradient(135deg, rgba(251, 188, 4, 0.15), rgba(234, 67, 53, 0.15));
+    border-color: rgba(251, 188, 4, 0.3) !important;
+    color: #f6b73c !important;
+}
+
+.revisit-tab.active {
+    background: linear-gradient(135deg, rgba(251, 188, 4, 0.3), rgba(234, 67, 53, 0.25)) !important;
+    border-color: rgba(251, 188, 4, 0.6) !important;
+}
+
+.revisit-dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    padding: 2rem 0;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.revisit-section {
+    background: var(--bg-card, rgba(255, 255, 255, 0.03));
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+.revisit-section-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.revisit-count {
+    font-size: 0.75rem;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 0.1rem 0.55rem;
+    border-radius: 20px;
+    color: var(--text-muted, #888);
+    font-weight: 600;
+}
+
+.revisit-empty {
+    color: var(--text-muted, #888);
+    font-size: 0.88rem;
+    text-align: center;
+    padding: 1.5rem;
+    font-style: italic;
+}
+
+.revisit-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+}
+
+.revisit-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    padding: 1rem 1.25rem;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    transition: border-color 0.2s;
+}
+
+.revisit-item:hover {
+    border-color: rgba(255, 255, 255, 0.13);
+}
+
+.revisit-item.solved {
+    opacity: 0.5;
+}
+
+.custom-revisit {
+    border-left: 3px solid rgba(66, 133, 244, 0.5);
+}
+
+.revisit-item-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.revisit-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-decoration: none;
+    flex: 1;
+    min-width: 0;
+}
+
+.revisit-title:hover {
+    color: #6ba5f8;
+    text-decoration: underline;
+}
+
+.revisit-source {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: #d0d8ee;
+    background: rgba(255, 255, 255, 0.11);
+    padding: 0.15rem 0.5rem;
+    border-radius: 6px;
+}
+
+.revisit-remove-btn {
+    background: rgba(234, 67, 53, 0.08);
+    border: 1px solid rgba(234, 67, 53, 0.25);
+    cursor: pointer;
+    color: #e87070;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    margin-left: auto;
+}
+
+.revisit-remove-btn:hover {
+    background: rgba(234, 67, 53, 0.25);
+    color: #ff4f4f;
+    border-color: rgba(234, 67, 53, 0.6);
+}
+
+.revisit-note {
+    font-size: 0.82rem;
+    color: #d8dff0;
+    font-family: var(--font-mono, monospace);
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    white-space: pre-wrap;
+}
+
+/* Add-problem form */
+.revisit-add-form {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    align-items: center;
+}
+
+.revisit-input {
+    flex: 1;
+    min-width: 160px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: var(--text-primary, #eee);
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.revisit-input:focus {
+    border-color: rgba(66, 133, 244, 0.5);
+}
+
+.revisit-url-input {
+    min-width: 200px;
+}
+
+.revisit-select {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: var(--text-primary, #eee);
+    font-size: 0.85rem;
+    padding: 0.5rem 0.55rem;
+    outline: none;
+    cursor: pointer;
+}
+
+.revisit-add-btn {
+    background: linear-gradient(135deg, #4285F4, #34A853);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s;
+    white-space: nowrap;
+}
+
+.revisit-add-btn:hover {
+    opacity: 0.88;
+    transform: translateY(-1px);
+}
+
+/* ===== PATTERN-ADDITION FORM ROWS ===== */
+.revisit-add-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1.25rem;
+}
+
+.revisit-form-row {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.revisit-pattern-row {
+    align-items: center;
+}
+
+.revisit-pattern-label {
+    font-size: 0.8rem;
+    color: #b0b8cc;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.revisit-cat-select {
+    min-width: 160px;
+}
+
+.revisit-pattern-select {
+    flex: 1;
+    min-width: 180px;
+}
+
+.revisit-sub-title {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 1rem 0 0.5rem;
+}
+
+/* Custom badge on problem cards */
+.custom-badge {
+    font-size: 0.65rem;
+    font-weight: 700;
+    background: rgba(66, 133, 244, 0.2);
+    color: #4285F4;
+    border: 1px solid rgba(66, 133, 244, 0.35);
+    border-radius: 4px;
+    padding: 0.05rem 0.35rem;
+    margin-left: 0.25rem;
+    vertical-align: middle;
+}
+
+.problem-row.custom-addition .problem-tag {
+    border-color: rgba(66, 133, 244, 0.3);
+}
+/* Custom revisit done state */
+.revisit-item.done {
+    opacity: 0.45;
+}
+.revisit-item.done .revisit-title {
+    text-decoration: line-through;
+    color: #a0a8b8;
+}
+
+.custom-done-btn {
+    background: rgba(52, 168, 83, 0.08);
+    border: 1px solid rgba(52, 168, 83, 0.25);
+    border-radius: 6px;
+    color: #6ec48a;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.2rem 0.55rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+}
+.custom-done-btn:hover {
+    background: rgba(52, 168, 83, 0.2);
+    border-color: rgba(52, 168, 83, 0.5);
+    color: #4cae6a;
+}
+.custom-done-btn.active {
+    background: rgba(52, 168, 83, 0.22);
+    border-color: rgba(52, 168, 83, 0.55);
+    color: #5dd480;
+}
+
+/* Custom revisit flag button */
+.custom-revisit-flag-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0.2rem 0.35rem;
+    border-radius: 6px;
+    opacity: 0.4;
+    transition: opacity 0.2s, background 0.2s;
+}
+.custom-revisit-flag-btn:hover { opacity: 1; background: rgba(255,255,255,0.06); }
+.custom-revisit-flag-btn.active { opacity: 1; background: rgba(251,188,4,0.2); box-shadow: 0 0 0 1px rgba(251,188,4,0.35); }
+
+/* Highlight the card when flagged for revisit */
+.revisit-item.needs-revisit {
+    border-color: rgba(251,188,4,0.4);
+    background: rgba(251,188,4,0.05);
 }
