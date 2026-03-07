@@ -1,0 +1,455 @@
+/* Google L4 DSA Prep — Additional Styles */
+
+/* Google gradient */
+.google-gradient {
+    background: linear-gradient(135deg, #4285F4, #34A853, #FBBC05, #EA4335) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    background-size: 300% 300% !important;
+    animation: googleShimmer 6s ease-in-out infinite alternate !important;
+}
+
+@keyframes googleShimmer {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Progress Ring */
+.overall-progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    margin-bottom: 2rem;
+    animation: fadeInDown 0.7s var(--ease-out) 0.35s both;
+}
+
+.progress-ring-container {
+    position: relative;
+    width: 120px;
+    height: 120px;
+}
+
+.progress-ring {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.progress-ring-bg {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.06);
+    stroke-width: 8;
+}
+
+.progress-ring-fill {
+    fill: none;
+    stroke: url(#ringGrad);
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 326.73;
+    stroke-dashoffset: 326.73;
+    transition: stroke-dashoffset 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.progress-ring-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress-pct {
+    font-size: 1.6rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #4285F4, #34A853);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.progress-label {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+}
+
+.progress-stats {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.progress-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.progress-stat-num {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+}
+
+.progress-stat-label {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+}
+
+/* Tier Filter */
+.tier-filter {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    animation: fadeInDown 0.7s var(--ease-out) 0.45s both;
+}
+
+.tier-btn {
+    padding: 0.5rem 1.1rem;
+    border-radius: 100px;
+    border: 1px solid var(--border-color);
+    background: transparent;
+    color: var(--text-secondary);
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s var(--ease-out);
+}
+
+.tier-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+}
+
+.tier-btn.active {
+    color: #fff;
+    border-color: transparent;
+    font-weight: 600;
+}
+
+.tier-btn.active[data-tier="all"] {
+    background: linear-gradient(135deg, #4285F4, #34A853);
+    box-shadow: 0 3px 16px rgba(66, 133, 244, 0.3);
+}
+
+.tier-btn.active[data-tier="must"] {
+    background: linear-gradient(135deg, #EA4335, #FF6B6B);
+    box-shadow: 0 3px 16px rgba(234, 67, 53, 0.3);
+}
+
+.tier-btn.active[data-tier="important"] {
+    background: linear-gradient(135deg, #FBBC05, #F59E0B);
+    box-shadow: 0 3px 16px rgba(251, 188, 5, 0.3);
+}
+
+.tier-btn.active[data-tier="good"] {
+    background: linear-gradient(135deg, #34A853, #10B981);
+    box-shadow: 0 3px 16px rgba(52, 168, 83, 0.3);
+}
+
+/* Tier badges on pattern cards */
+.tier-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.15rem 0.55rem;
+    border-radius: 100px;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-left: 0.5rem;
+}
+
+.tier-badge.must {
+    background: rgba(234, 67, 53, 0.15);
+    color: #ff6b6b;
+}
+
+.tier-badge.important {
+    background: rgba(251, 188, 5, 0.15);
+    color: #fbbf24;
+}
+
+.tier-badge.good {
+    background: rgba(52, 168, 83, 0.15);
+    color: #34d399;
+}
+
+/* Google frequency badge */
+.google-freq {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.15rem 0.55rem;
+    border-radius: 100px;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    margin-left: 0.4rem;
+}
+
+.google-freq.high {
+    background: rgba(66, 133, 244, 0.15);
+    color: #60a5fa;
+}
+
+.google-freq.medium {
+    background: rgba(251, 188, 5, 0.12);
+    color: #fbbf24;
+}
+
+.google-freq.low {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-muted);
+}
+
+/* Difficulty badges */
+.diff-badge {
+    display: inline-block;
+    padding: 0.08rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.58rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-left: 0.3rem;
+    vertical-align: middle;
+}
+
+.diff-badge.easy {
+    background: rgba(52, 168, 83, 0.15);
+    color: #34d399;
+}
+
+.diff-badge.medium {
+    background: rgba(251, 188, 5, 0.12);
+    color: #fbbf24;
+}
+
+.diff-badge.hard {
+    background: rgba(234, 67, 53, 0.15);
+    color: #ff6b6b;
+}
+
+/* Checkbox for problem tracking */
+.problem-check {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+    margin-right: 0.35rem;
+    cursor: pointer;
+    transition: all 0.2s var(--ease-out);
+    flex-shrink: 0;
+    font-size: 0.6rem;
+    color: transparent;
+    background: transparent;
+}
+
+.problem-check:hover {
+    border-color: #4285F4;
+    background: rgba(66, 133, 244, 0.1);
+}
+
+.problem-check.checked {
+    background: linear-gradient(135deg, #4285F4, #34A853);
+    border-color: transparent;
+    color: #fff;
+}
+
+.problem-tag.solved {
+    opacity: 0.5;
+    text-decoration: line-through;
+}
+
+.problem-tag.solved .problem-num {
+    text-decoration: line-through;
+}
+
+/* Study order number */
+.study-order {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-color);
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+}
+
+/* Pattern card progress mini-bar */
+.card-progress {
+    height: 2px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 1px;
+    margin-top: 0.6rem;
+    overflow: hidden;
+}
+
+.card-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4285F4, #34A853);
+    border-radius: 1px;
+    transition: width 0.4s var(--ease-out);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .overall-progress {
+        flex-direction: column;
+        gap: 1.2rem;
+    }
+
+    .progress-ring-container {
+        width: 100px;
+        height: 100px;
+    }
+
+    .tier-filter {
+        gap: 0.35rem;
+    }
+
+    .tier-btn {
+        font-size: 0.7rem;
+        padding: 0.4rem 0.8rem;
+    }
+}
+.tier-badge.topicwise { background: rgba(147, 51, 234, 0.15); color: #c084fc; border: 1px solid rgba(147, 51, 234, 0.3); }
+
+
+/* Make problem lists scrollable if they get too long */
+.problem-list {
+    max-height: 400px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.problem-list::-webkit-scrollbar {
+    width: 6px;
+}
+.problem-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+.problem-list::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+}
+
+/* ===== PROBLEM ROW (Notes + Revisit) ===== */
+.problem-row {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.problem-row-main {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    width: 100%;
+}
+
+.problem-row-main .problem-tag {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.revisit-btn, .notes-toggle-btn {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.35rem;
+    border-radius: 6px;
+    opacity: 0.35;
+    transition: opacity 0.2s, background 0.2s;
+    line-height: 1;
+}
+
+.revisit-btn:hover, .notes-toggle-btn:hover {
+    opacity: 1;
+    background: rgba(255,255,255,0.06);
+}
+
+.revisit-btn.active {
+    opacity: 1;
+    background: rgba(251, 188, 4, 0.18);
+}
+
+.problem-row.revisit .problem-tag {
+    border-color: rgba(251, 188, 4, 0.4);
+}
+
+/* Notes area */
+.notes-area {
+    display: none;
+    padding: 0.3rem 0 0.1rem 0.5rem;
+    width: 100%;
+}
+
+.notes-area.open {
+    display: block;
+}
+
+.notes-input {
+    width: 100%;
+    min-height: 56px;
+    max-height: 200px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    color: var(--text-secondary, #ccc);
+    font-size: 0.78rem;
+    font-family: var(--font-mono, monospace);
+    padding: 0.5rem 0.6rem;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+.notes-input:focus {
+    border-color: rgba(124, 108, 240, 0.5);
+}
+
+/* Override problem-list flex-wrap when rows are used */
+.problem-list:has(.problem-row) {
+    flex-direction: column;
+    flex-wrap: nowrap;
+}

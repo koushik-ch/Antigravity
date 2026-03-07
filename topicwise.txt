@@ -1,0 +1,718 @@
+=> Array:
+
+Easy
+Remove Duplicates from Sorted Array - LeetCode 
+Remove Element - LeetCode 
+Pascal's Triangle - LeetCode 
+Best Time to Buy and Sell Stock - LeetCode 
+Majority Element - LeetCode 
+Summary Ranges - LeetCode 
+Max Consecutive Ones - LeetCode 
+Find Pivot Index - LeetCode 
+Largest Local Values in a Matrix - LeetCode 
+Row With Maximum Ones - LeetCode 
+Check if Grid Satisfies Conditions - LeetCode 
+Special Array With X Elements Greater Than or Equal X
+Maximum Score from Subarray Minimums | Practice | GeeksforGeeks (Revisit)
+
+Medium
+Maximum Subarray - LeetCode 
+Insert Interval - LeetCode 
+Majority Element II 
+H-Index 
+Find the Duplicate Number 
+Maximum Sum Circular Subarray
+Time Needed to Inform All Employees
+Queue Reconstruction by Height - LeetCode (Revisit)
+
+Hard
+
+=> Sorting:
+
+Easy
+Merge Intervals: Merge Intervals - LeetCode 
+Medium
+Global and Local Inversions (merge sort usage)
+Sort an Array
+Range Sum of Sorted Subarray Sums - LeetCode (Revisit: try with priority queue, insert all elements inititally)
+Quick Sort
+Hard
+Reverse Pairs
+
+=> Counting sort + greedy :
+
+Easy
+Relative Sort Array - LeetCode 
+Minimum Number of Moves to Seat Everyone - LeetCode 
+Medium
+Minimum Increment to Make Array Unique - LeetCode
+Most profit Assigning Work 
+Hard
+
+=> String
+
+Easy
+(kmp algo, z-algo): Find the Index of the First Occurrence in a String - LeetCode 
+Length of Last Word - LeetCode 
+Rotate String - LeetCode 
+Delete Columns to Make Sorted - LeetCode 
+Score of a String - LeetCode 
+Longest Uncommon Subsequence I - LeetCode (Revisit)
+
+Medium
+Zigzag Conversion - LeetCode 
+String to Integer (atoi) - LeetCode 
+Count and Say - LeetCode 
+Multiply Strings - LeetCode 
+Reverse Words in a String - LeetCode 
+Compare Version Numbers
+Repeated String Match
+Sum of Beauty of All Substrings
+Remove All Occurrences of a Substring
+Longest Uncommon Subsequence II - LeetCode (Revisit)
+Longest Word in Dictionary through Deleting - LeetCode (Revisit)
+Hard
+Text Justification
+Shortest Palindrome
+
+=> 2 Pointers:
+
+Easy
+Two Sum: https://leetcode.com/problems/two-sum/description/ 
+Merge Sorted Array: https://leetcode.com/problems/merge-sorted-array/description/ 
+Valid Palindrome: https://leetcode.com/problems/valid-palindrome/description/
+Move Zeros: https://leetcode.com/problems/move-zeroes/description/  
+Reverse String: https://leetcode.com/problems/reverse-string/description/ 
+Is Subsequence: https://leetcode.com/problems/is-subsequence/description/ 
+
+Medium
+Longest Palindromic Substring - LeetCode 
+Container With Most Water - LeetCode 
+Find the Index of the First Occurrence in a String - LeetCode 
+3Sum Closest - LeetCode 
+4Sum - LeetCode 
+Next Permutation - LeetCode 
+Sort Colors - LeetCode (Revisit)
+Remove Duplicates from Sorted Array II - LeetCode (Revisit)
+Remove Duplicates from Sorted List II - LeetCode 
+Two Sum II - Input Array Is Sorted
+Rotate Array
+String Compression
+Rearrange Array Elements by Sign
+The Latest Time to Catch a Bus
+Sum of Square Numbers - LeetCode (Revisit)
+Append Characters to String to Make Subsequence - LeetCode 
+Grumpy Bookstore Owner - LeetCode
+Hard
+Trapping Rain Water (Revisit 2 pointer approach)
+Maximum Score of a Good Subarray - LeetCode (Revisit)
+
+=> Bit Manipulation:
+
+Easy
+Add Binary: https://leetcode.com/problems/add-binary/description/ 
+Single Number: https://leetcode.com/problems/single-number/ 
+Missing Number: https://leetcode.com/problems/missing-number/description/ 
+Minimum Bit Flips to Convert Number: https://leetcode.com/problems/minimum-bit-flips-to-convert-number/description/ 
+
+Medium
+Minimum Number of Operations to make Array XOR Equal to K
+Integer Replacement - LeetCode (Revisit)
+Number of Steps to Reduce a Number in Binary Representation to One  (Revisit)
+Count Triplets That Can Form Two Arrays of Equal XOR
+Single Number III 
+Maximum Product of Word Lengths - LeetCode 
+Single Number II - LeetCode (Revisit)
+UTF-8 Validation - LeetCode (Revisit)
+Hard
+Shortest Path Visiting All Nodes - LeetCode (Revisit)
+
+=> Binary Search:
+
+Easy
+Search Insert Position - LeetCode 
+Sqrt(x) - LeetCode 
+Valid Perfect Square - LeetCode 
+Find the Index of the First Occurrence in a String - LeetCode 
+Kth Missing Positive Number - LeetCode 
+Check if Array Is Sorted and Rotated - LeetCode 
+
+Medium
+Search in Rotated Sorted Array - LeetCode 
+Find First and Last Position of Element in Sorted Array - LeetCode
+Search a 2D Matrix - LeetCode
+Search in Rotated Sorted Array II - LeetCode 
+Find Minimum in Rotated Sorted Array 
+Find Peak Element
+Search a 2D Matrix II
+Single Element in a Sorted Array
+Find K Closest Elements
+K-th Smallest Prime Fraction (Revisit)
+Peak Index in a Mountain Array
+Koko Eating Bananas
+Capacity To Ship Packages Within D Days
+Find the Smallest Divisor Given a Threshold
+Minimum Number of Days to Make m Bouquets
+Magnetic Force Between Two Balls
+Find a Peak Element II
+Heaters - LeetCode (Revisit)
+Hard
+Median of Two Sorted Arrays
+Russian Doll Envelopes (Revisit & understand)
+Split Array Largest Sum
+Kth Smallest Element in a Sorted Matrix - LeetCode  (Revisit)
+Kth Smallest Number in Multiplication Table - LeetCode (Revisit)
+
+=> Recursion & Backtracking:
+
+Easy
+Sum of All Subset XOR Totals
+Medium
+Letter Combinations of a Phone Number - LeetCode 
+Generate Parentheses - LeetCode 
+Combination Sum - LeetCode 
+Combination Sum II - LeetCode 
+Permutations - LeetCode 
+Permutations II - LeetCode
+1261. Find Elements in a Contaminated Binary Tree 
+Subsets - LeetCode 
+Word Search - LeetCode  
+Subsets II - LeetCode 
+Combination Sum III
+The Number of Beautiful Subsets (Revisit)
+Palindrome Partitioning - LeetCode 
+Count of Range Sum - LeetCode 
+Hard
+Sudoku Solver
+N-Queens
+N-Queens II
+Expression Add Operators
+Maximum Score Words Formed by Letters
+Word Break II
+24 Game - LeetCode (Revisit)
+
+=> Maths:
+
+Easy
+Palindrome Number - LeetCode
+Roman to Integer - LeetCode 
+Happy Number - LeetCode 
+Power of Two - LeetCode 
+Complement of Base 10 Integer - LeetCode 
+Distribute Candies to People - LeetCode 
+Power of Three - LeetCode 
+Medium
+Integer to Roman - LeetCode
+Product of Array Except Self - LeetCode 
+Pow(x, n) - LeetCode 
+Count Primes
+Ugly Number II 
+Count Good Numbers
+Reverse Integer - LeetCode 
+Fraction to Recurring Decimal - LeetCode
+Super Ugly Number - LeetCode 
+Find the Winner of the Circular Game - LeetCode
+Maximize Distance to Closest Person - LeetCode 
+Exam Room (Revisit)
+Nth Digit - LeetCode (Revisit)
+Random Pick with Weight - LeetCode (Revisit)
+Count Numbers with Unique Digits - LeetCode (Revisit)
+Hard
+Permutation Sequence (Revisit)
+First Missing Positive - LeetCode (Revisit)
+Integer to English Words - LeetCode (Revisit: look at failed edge cases)
+
+=> Matrix BFS & DFS:
+
+Easy
+Flood Fill: https://leetcode.com/problems/flood-fill/description/ 
+
+Medium
+Valid Sudoku: https://leetcode.com/problems/valid-sudoku/ 
+Rotate Image: https://leetcode.com/problems/rotate-image/description/ 
+Spiral Matrix: https://leetcode.com/problems/spiral-matrix/description/ 
+Set Matrix Zeroes: https://leetcode.com/problems/set-matrix-zeroes/description/ 
+Surrounded Regions: https://leetcode.com/problems/surrounded-regions/description/ 
+Number of Islands
+Minimum Number of Flips to Make Binary Grid Palindromic I - LeetCode 
+Game of Life
+Pacific Atlantic Water Flow
+Construct Quad Tree
+01 Matrix
+Max Area of Island
+Snakes and Ladders (Revisit)
+Shortest Bridge
+Rotting Oranges
+Number of Enclaves
+Coloring A Border
+Shortest Path in Binary Matrix
+As Far from Land as Possible
+Number of Closed Islands
+Check if Word Can Be Placed In Crossword - LeetCode (Revisit)
+Minimum Number of Flips to Make Binary Grid Palindromic II - LeetCode(Revisit)
+Spiral Matrix III
+Spiral Matrix II - LeetCode
+Spiral Matrix IV - LeetCode 
+Magic Squares In Grid - LeetCode 
+Hard
+Swim in Rising Water (Revisit)
+
+=> Trie:
+
+Easy
+Longest Common Prefix - LeetCode 
+
+Medium
+Implement Trie (Prefix Tree)
+Design Add and Search Words Data Structure (Revisit)
+Maximum XOR of Two Numbers in an Array
+Replace Words - LeetCode 
+Hard
+Word Search II (Revisit)
+Maximum XOR With an Element From Array
+Construct String with Minimum Cost - LeetCode
+Stream of Characters - LeetCode (Revisit)
+
+=> Stack:
+
+Easy
+Valid Parentheses - LeetCode 
+Next Greater Element I - LeetCode 
+Remove Outermost Parentheses - LeetCode 
+Remove All Adjacent Duplicates In String - LeetCode 
+Final Prices With a Special Discount in a Shop - LeetCode 
+Maximum Nesting Depth of the Parentheses - LeetCode 
+Min Stack
+
+Medium
+Simplify Path - LeetCode 
+Evaluate Reverse Polish Notation - LeetCode 
+Remove K Digits
+Next Greater Element II
+Valid Parenthesis String
+Asteroid Collision
+Online Stock Span
+Sum of Subarray Minimums
+Sum of Subarray Ranges
+Car Fleet - LeetCode 
+Reverse Substrings Between Each Pair of Parentheses - LeetCode 
+Minimum Deletions to Make String Balanced - LeetCode (Revisit)
+Verify Preorder Serialization of a Binary Tree - LeetCode (use stack)
+Longest Absolute File Path - LeetCode (Revisit)
+1717. Maximum Score From Removing Substrings (Revisit)
+Hard
+Largest Rectangle in Histogram
+Maximal Rectangle
+Robot Collisions - LeetCode 
+Number of Atoms - LeetCode 
+Car Fleet II - LeetCode (Revisit)
+
+=> Queue:
+
+Easy
+Implement Queue using Stacks: https://leetcode.com/problems/implement-queue-using-stacks/ 
+Medium
+Design Circular Queue
+Design Circular Deque
+Hard
+
+=> Randomization:
+
+Easy
+Medium
+Hard
+Guess the Word - LeetCode 
+
+=> Deque:
+
+Easy
+
+Medium
+Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit - LeetCode (Revisit)
+Hard
+
+=> Sliding Window:
+
+Easy
+Three Consecutive Odds - LeetCode 
+Alternating Groups I - LeetCode 
+Medium
+Maximum Subarray - LeetCode 
+Minimum Size Subarray Sum (Revisit)
+Longest Repeating Character Replacement  (Revisit Important)
+Permutation in String
+Max Consecutive Ones III
+Count Number of Nice Subarrays
+Number of Substrings Containing All Three Characters
+Maximum Points You Can Obtain from cards
+Frequency of the Most Frequent Element
+Get Equal Substrings Within Budget
+Alternating Groups II
+Minimum Operations to Make Binary Array Elements Equal to One I
+Minimum Swaps to Group All 1's Together II - LeetCode (Revisit)
+Maximum Sum of Two Non-Overlapping Subarrays - LeetCode (Revisit)
+Hard
+Substring with Concatenation of All Words
+Minimum Window Substring
+Sliding Window Maximum
+Subarrays with K Different Integers
+Sliding Window Median - LeetCode (Revisit)
+Maximum Sum of 3 Non-Overlapping Subarrays - LeetCode (Revisit)
+
+=> Ordered Set:
+
+Easy:
+
+Medium:
+
+Hard:
+Range Module - LeetCode (Revisit)
+Max Sum of Rectangle No Larger Than K - LeetCode (Revisit)
+Create Maximum Number - LeetCode (Revisit)
+Finding MK Average - LeetCode (Revisit)
+
+=> Heap:
+
+Easy
+Kth Largest Element in a Stream: https://leetcode.com/problems/kth-largest-element-in-a-stream/description/ 
+
+Medium
+Kth Largest Element in an Array
+Top K Frequent Elements
+Design Twitter
+Find K Pairs with Smallest Sums (Revisit)
+Sort Characters By Frequency
+Hand of Straights
+Task Scheduler - LeetCode (Better Solution)
+Hard
+Find Median from Data Stream
+IPO
+Smallest Range Covering Elements from K Lists (Revisit important: isko rata hai)
+
+=> Greedy Algorithm:
+
+Easy
+Assign Cookies - LeetCode 
+Lemonade Change - LeetCode
+Largest Odd Number in String - LeetCode  
+Height Checker - LeetCode 
+Maximum Height of a Triangle - LeetCode 
+
+Medium
+Jump Game II - LeetCode 
+Jump Game - LeetCode 
+Gas Station - LeetCode 
+Non-overlapping Intervals
+Minimum Number of Arrows to Burst Balloons
+Reorganize String (Revisit)
+Score After Flipping Matrix
+Car Pooling
+Maximize Happiness of Selected Children
+Car Fleet - LeetCode 
+Minimum Difference Between Largest and Smallest Value in Three Moves - LeetCode 
+Average Waiting Time - LeetCode 
+Maximum Points After Enemy Battles - LeetCode 
+Minimum Number of Pushes to Type Word II - LeetCode 
+Time Needed to Rearrange a Binary String - LeetCode (Revisit)
+Find Valid Matrix Given Row and Column Sums - LeetCode (Revisit)
+Find the Maximum Length of Valid Subsequence I - LeetCode  (Revisit)
+Hard
+Minimum Cost to Hire K Workers (Revisit)
+Put Marbles in Bags
+Find the Maximum Sum of Node Values  (Revisit)
+Patching Array - LeetCode 
+Candy
+
+=> Prefix Sum:
+
+Easy
+
+Medium
+Maximum Product Subarray (Revisit)
+Product of Array Except Self
+Subarray Sum Equals K
+Binary Subarrays With Sum
+Number of Wonderful Substrings (Revisit)
+Continuous Subarray Sum - LeetCode  (Revisit)
+Subarray Sums Divisible by K - LeetCode 
+Minimum Operations to Make Binary Array Elements Equal to One II
+Hard
+Minimum Number of K Consecutive Bit Flips - LeetCode  (Revisit)
+Number of Subarrays with AND value of K (Revisit)
+
+=> HashMap:
+
+Easy
+Isomorphic Strings - LeetCode 
+Contains Duplicate II - LeetCode 
+Valid Anagram - LeetCode 
+Word Pattern - LeetCode 
+Ransom Note - LeetCode 
+Find the Town Judge - LeetCode 
+Unique Number of Occurrences - LeetCode 
+Find Common Characters - LeetCode 
+
+Medium
+Group Anagrams - LeetCode (Revisit)
+Longest Consecutive Sequence - LeetCode 
+Insert Delete GetRandom O(1)
+Find All Duplicates in an Array
+Find the Index of the First Occurrence in a String - LeetCode 
+Employee Importance (Special)
+Hard
+
+=> Linked List:
+
+Easy
+Merge Two Sorted Lists - LeetCode 
+Remove Duplicates from Sorted List - LeetCode 
+Linked List Cycle - LeetCode 
+Intersection of Two Linked Lists - LeetCode 
+Reverse Linked List - LeetCode 
+Palindrome Linked List - LeetCode 
+Middle of the Linked List - LeetCode 
+Medium
+Add Two Numbers - LeetCode 
+Remove Nth Node From End of List - LeetCode 
+Swap Nodes in Pairs - LeetCode 
+Rotate List - LeetCode 
+Partition List - LeetCode 
+Reverse Linked List II - LeetCode 
+Copy List with Random Pointer - LeetCode 
+Linked List Cycle II - LeetCode 
+LRU Cache - LeetCode 
+Delete Node in a Linked List
+Odd Even Linked List
+2095. Delete the Middle Node of a Linked List
+Double a Number Represented as Linked List
+Find the Minimum and Maximum Number of Nodes Between Critical Points - LeetCode 
+Flatten Nested List Iterator - LeetCode 
+Hard
+Merge k Sorted Lists
+Reverse Nodes in k-Group
+LFU Cache
+
+=> Binary Tree:
+
+Easy
+Binary Tree Inorder Traversal - LeetCode 
+Binary Tree Preorder Traversal - LeetCode 
+Binary Tree Postorder Traversal - LeetCode 
+Same Tree - LeetCode 
+Symmetric Tree - LeetCode 
+Balanced Binary Tree - LeetCode 
+Path Sum - LeetCode 
+Count Complete Tree Nodes - LeetCode 
+Invert Binary Tree - LeetCode 
+Binary Tree Paths - LeetCode 
+Sum of Left Leaves - LeetCode 
+Diameter of Binary Tree - LeetCode 
+Evaluate Boolean Binary Tree - LeetCode 
+
+Medium
+Binary Tree Level Order Traversal - LeetCode 
+Binary Tree Zigzag Level Order Traversal - LeetCode 
+Construct Binary Tree from Preorder and Inorder Traversal - LeetCode 
+Sum Root to Leaf Numbers - LeetCode 
+Path Sum II - LeetCode 
+Flatten Binary Tree to Linked List - LeetCode 
+Populating Next Right Pointers in Each Node - LeetCode 
+Populating Next Right Pointers in Each Node II
+Binary Tree Right Side View 
+Lowest Common Ancestor of a Binary Tree
+Path Sum III
+Maximum Width of Binary Tree
+All Nodes Distance K in Binary Tree
+958. Check Completeness of a Binary Tree
+Distribute Coins in Binary Tree
+Delete Nodes And Return Forest
+Delete Leaves With a Given Value
+Count Good Nodes in Binary Tree
+Create Binary Tree From Descriptions - LeetCode 
+Number of Good Leaf Nodes Pairs - LeetCode (Revisit)
+Step-By-Step Directions From a Binary Tree Node to Another - LeetCode(Revisit)
+Hard
+Binary Tree Maximum Path Sum
+Serialize and Deserialize Binary Tree
+Vertical Order Traversal of a Binary Tree
+Maximum Sum BST in Binary Tree
+Find Duplicate Subtrees - LeetCode (Revisit)
+
+=> Binary Search Tree:
+
+Easy
+Convert Sorted Array to Binary Search Tree   
+Two Sum IV - Input is a BST - LeetCode 
+Search in a Binary Search Tree - LeetCode 
+
+Medium
+Validate Binary Search Tree - LeetCode 
+Recover Binary Search Tree - LeetCode 
+Sum Root to Leaf Numbers - LeetCode 
+Binary Search Tree Iterator
+Kth Smallest Element in a BST
+Lowest Common Ancestor of a Binary Search Tree
+Delete Node in a BST
+Insert into a Binary Search Tree
+1008. Construct Binary Search Tree from preorder traversal
+Balance a Binary Search Tree
+Binary Search Tree to Greater Sum Tree - LeetCode 
+Hard
+
+=> Dynamic Programming:
+
+Easy
+Climbing Stairs - LeetCode
+Fibonacci Number - LeetCode
+Min Cost Climbing Stairs - LeetCode 
+
+Medium
+Unique Paths - LeetCode 
+Unique Paths II - LeetCode 
+Minimum Path Sum - LeetCode 
+Edit Distance - LeetCode 
+Unique Binary Search Trees - LeetCode (Revisit)
+Interleaving String - LeetCode 
+Triangle - LeetCode 
+Best Time to Buy and Sell Stock II - LeetCode
+Word Break - LeetCode 
+House Robber
+House Robber II
+Maximal Square
+Perfect Squares
+Coin Change
+Largest Divisible Subset (Revisit)
+Guess Number Higher or Lower II (Revisit)
+Combination Sum IV
+Partition Equal Subset Sum
+Ones and Zeroes
+Target Sum (View a better solution)
+Longest Palindromic Subsequence
+Coin Change II
+Delete Operation for Two Strings
+Best Time to Buy and Sell Stock with Transaction fee
+Minimum Falling Path Sum
+Minimum Cost For Tickets (Revisit and code)
+Longest Arithmetic Subsequence (Revisit)
+Minimum Score Triangulation of Polygon (Revisit)
+Partition Array for Maximum Sum 
+Longest String Chain (Revisit)
+Minimum Cost Tree From Leaf Values
+Longest Common Subsequence
+Number of Dice Rolls With Target Sum
+Longest Arithmetic Subsequence of Given Difference (Revisit)
+Count Square Submatrices with All Ones
+Minimum Sideway Jumps (Revisit)
+Check if There is a Valid Partition For The Array
+Maximize Total Cost of Alternating Subarrays
+Longest Increasing Subsequence
+Best Time to Buy and Sell Stock with Cooldown
+Number of Longest Increasing Subsequence
+Path with Maximum Gold
+Filling Bookcase Shelves - LeetCode (Revisit)
+Find the Maximum Length of Valid Subsequence II - LeetCode (Revisit)
+Hard
+Regular Expression Matching (Revisit)
+Wildcard Matching
+Distinct Subsequences
+Best Time to Buy and Sell Stock III
+Palindrome Partitioning II
+Best Time to Buy and Sell Stock IV
+Burst Balloons
+Frog Jump (Revisit)
+Minimum Swaps To Make Sequences Increasing
+Super Egg Drop
+Shortest Common Supersequence
+Minimum Insertion Steps to Make a String Palindrome
+Pizza With 3n Slices (Revisit)
+Reducing Dishes
+Cherry Pickup II
+Minimum Cost to Cut a Stick
+Maximum Height by Stacking Cuboids (Revisit)
+Student Attendance Record II
+Freedom Trail - LeetCode 
+1240. Tiling a Rectangle with the Fewest Squares (Revisit)
+Count the Number of Inversions (Revisit)
+
+=> Graph:
+
+Easy
+Find Center of Star Graph - LeetCode 
+
+Medium
+Clone Graph - LeetCode 
+Maximum Total Importance of Roads - LeetCode 
+Course Schedule
+Course Schedule II
+Minimum Height Trees
+Evaluate Division
+Minimum Genetic Mutation
+Number of Provinces
+Network Delay Time (Revisit)
+Is Graph Bipartite?
+Cheapest Flights Within K Stops
+All Paths From Source to Target
+Find Eventual Safe States
+Keys and Rooms
+Possible Bipartition
+Find the City With the Smallest Number of Neighbors at a Threshold Distance
+Maximal Network Rank
+Path With Minimum Effort
+All Ancestors of a Node in a Directed Acyclic Graph - LeetCode 
+Minimum Cost to Convert String I - LeetCode (Floyd Warshall)
+Number of Ways to Arrive at Destination (Revisit)
+Find the Safest Path in a Grid (Revisit and understand)
+
+Hard
+Word Ladder II
+Word Ladder
+Find Minimum Diameter After Merging Two Trees - LeetCode 
+Build a Matrix With Conditions 
+K-Similar Strings - LeetCode (Revisit)
+Second Minimum Time to Reach Destination - LeetCode (Revisit: Dijkstra’s modification)
+Reconstruct Itinerary - LeetCode (Revisit)
+Critical Connections in a Network (Revisit)
+Shortest Path Visiting All Nodes - LeetCode (Revisit)
+Minimum Number of Days to Disconnect Island - LeetCode (Revisit: Articulation points)
+
+=> Union Find:
+
+Easy
+
+Medium
+Accounts Merge
+Most Stones Removed with Same Row or Column
+Satisfiability of Equality Equations
+Number of Operations to Make Network Connected
+Redundant Connection (Revisit)
+Hard
+Making A Large Island
+Similar String Groups - LeetCode 
+Remove Max Number of Edges to Keep Graph Fully Traversable (Revisit)
+Redundant Connection II - LeetCode  (Revisit and understand the why? )
+
+=> Geometry:
+
+Easy
+
+Medium
+Find the Minimum Area to Cover All Ones I
+Hard
+Find the Minimum Area to Cover All Ones II 
+
+=> Segment Tree:
+
+Easy
+Range Sum Query - Immutable - LeetCode 
+Medium
+Range Sum Query - Mutable - LeetCode 
+Hard
+Find the Minimum Area to Cover All Ones II 
+
+
+Google questions:
+
+https://leetcode.com/discuss/interview-question/4574669/Google-or-Onsite-or-Find-partitions/ 
+https://leetcode.com/discuss/interview-question/4964533/Google-Phone-Interview-Question 
+https://leetcode.com/discuss/interview-question/4173795/MAANG-interview-question/ 
+https://leetcode.com/discuss/interview-question/4102630/Google-Interview-Question 

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Combined List — LeetCode Patterns</title>
+    <meta name="description"
+        content="A combination of Google L4 curated problems and Topicwise sets, deduplicated. Master coding interviews with structured pattern-based problem solving.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="google-l4.css">
+</head>
+
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="bg-grid"></div>
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+    <div class="glow glow-3"></div>
+
+    <header class="hero">
+        <div class="hero-badge">📐 699 Unique Problems • L4 & Topics Combined</div>
+        <h1 class="hero-title">
+            <span class="gradient-text">Master Combined List</span>
+            <br>
+            <span class="subtitle">L4 + Topicwise Sync</span>
+        </h1>
+        <p class="hero-desc">The ultimate deduplicated prep sheet mapping Google L4 tiers directly alongside the massive
+            Topicwise list.</p>
+
+        <div class="search-container">
+            <div class="search-box">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="m21 21-4.35-4.35" />
+                </svg>
+                <input type="text" id="searchInput" placeholder="Search patterns or problems..." autocomplete="off">
+                <kbd class="search-kbd">⌘K</kbd>
+            </div>
+        </div>
+
+        <!-- Overall progress -->
+        <div class="overall-progress" id="overallProgress">
+            <div class="progress-ring-container">
+                <svg class="progress-ring" viewBox="0 0 120 120">
+                    <circle class="progress-ring-bg" cx="60" cy="60" r="52" />
+                    <circle class="progress-ring-fill" id="progressRing" cx="60" cy="60" r="52" />
+                </svg>
+                <div class="progress-ring-text">
+                    <span class="progress-pct" id="progressPct">0%</span>
+                    <span class="progress-label">solved</span>
+                </div>
+            </div>
+            <div class="progress-stats">
+                <div class="progress-stat">
+                    <span class="progress-stat-num" id="solvedCount">0</span>
+                    <span class="progress-stat-label">Solved</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="progress-stat">
+                    <span class="progress-stat-num" id="totalCount">0</span>
+                    <span class="progress-stat-label">Total</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="progress-stat">
+                    <span class="progress-stat-num" id="patternCount">0</span>
+                    <span class="progress-stat-label">Patterns</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tier filter -->
+        <div class="tier-nav" id="tierNav">
+            <div class="tier-track">
+                <button class="tier-btn active" data-tier="all">All Tiers</button>
+                <button class="tier-btn" data-tier="must">Must-Solve</button>
+                <button class="tier-btn" data-tier="important">Important</button>
+                <button class="tier-btn" data-tier="good">Good-to-Know</button>
+                <button class="tier-btn" data-tier="topicwise">Topicwise Extras</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="category-nav" id="categoryNav">
+        <div class="nav-track">
+            <button class="nav-pill active" data-category="all">All</button>
+        </div>
+    </nav>
+
+    <main class="content" id="mainContent"></main>
+
+    <footer class="footer">
+        <p>Built with ❤️ • <strong>Deduplicated Master List</strong></p>
+        <p class="footer-sub">Google L4 & Topicwise • Crack the code, one pattern at a time.</p>
+    </footer>
+
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M18 15l-6-6-6 6" />
+        </svg>
+    </button>
+
+    <script src="combined-data.js"></script>
+    <script src="combined-app.js"></script>
+</body>
+
+</html>
