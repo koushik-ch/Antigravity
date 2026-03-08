@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HLD Prep — SDE 2 Interview Mastery</title>
+    <meta name="description"
+        content="A structured 8-week HLD preparation roadmap for Google/Meta-level SDE 2 interviews. Covers core primitives, architectures, and back-of-the-envelope calculations.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="hld.css">
+</head>
+
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="bg-grid"></div>
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+    <div class="glow glow-3"></div>
+
+    <!-- HERO -->
+    <header class="hero">
+        <div class="hero-badge">🏗️ SDE 2 Interview Mastery • Target: August 2026</div>
+        <h1 class="hero-title">
+            <span class="gradient-text">HLD Prep</span>
+            <br>
+            <span class="subtitle">8-Week Roadmap to Google-Scale Thinking</span>
+        </h1>
+        <p class="hero-desc">Master the 4-step interview framework, core system primitives, and back-of-the-envelope
+            estimation. Go from knowing concepts to executing under pressure.</p>
+
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <span class="hero-stat-num" id="weeksCompleted">0</span>
+                <span class="hero-stat-label">Weeks Done</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="hero-stat">
+                <span class="hero-stat-num">8</span>
+                <span class="hero-stat-label">Total Weeks</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="hero-stat">
+                <span class="hero-stat-num">4</span>
+                <span class="hero-stat-label">Phases</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="hero-stat">
+                <span class="hero-stat-num" id="daysLeft">--</span>
+                <span class="hero-stat-label">Days to Aug 1</span>
+            </div>
+        </div>
+
+        <!-- Overall progress ring -->
+        <div class="progress-ring-wrap">
+            <svg class="progress-ring" viewBox="0 0 120 120">
+                <circle class="progress-ring-bg" cx="60" cy="60" r="52" />
+                <circle class="progress-ring-fill" id="progressRing" cx="60" cy="60" r="52" />
+            </svg>
+            <div class="progress-ring-inner">
+                <span class="progress-pct" id="progressPct">0%</span>
+                <span class="progress-label">complete</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- TAB NAV -->
+    <nav class="tab-nav" id="tabNav">
+        <button class="tab-btn active" data-tab="roadmap" id="tab-roadmap">📅 8-Week Roadmap</button>
+        <button class="tab-btn" data-tab="cheatsheet" id="tab-cheatsheet">⚡ Cheatsheet</button>
+        <button class="tab-btn" data-tab="framework" id="tab-framework">🎯 Interview Framework</button>
+    </nav>
+
+    <!-- ROADMAP TAB -->
+    <main class="content" id="view-roadmap">
+
+        <!-- Phase 1 -->
+        <div class="phase-block" id="phase-1">
+            <div class="phase-header">
+                <div class="phase-icon">🧱</div>
+                <div class="phase-meta">
+                    <h2 class="phase-title">Phase 1: Core Primitives &amp; Framework</h2>
+                    <span class="phase-weeks">Weeks 1–2</span>
+                </div>
+                <div class="phase-goal">Build the base layer. You cannot design a scalable system if you don't
+                    understand how data physically sits on a disk and moves across a network.</div>
+            </div>
+
+            <div class="weeks-grid">
+                <!-- Week 1 -->
+                <div class="week-card" id="week-1" data-week="1">
+                    <div class="week-card-header">
+                        <div class="week-badge">Week 1</div>
+                        <h3 class="week-title">The Base Layer &amp; Database Internals</h3>
+                        <div class="week-check-wrap">
+                            <button class="week-check-btn" id="wc-1" onclick="toggleWeek(1)"
+                                title="Mark week complete">✓</button>
+                        </div>
+                    </div>
+                    <div class="week-resources">
+                        <div class="resource-item">
+                            <span class="resource-tag alex">Alex Xu</span>
+                            <span class="resource-text">Vol 1 — Ch 1, 2, 3: Memorize latency numbers, learn to estimate
+                                storage/bandwidth.</span>
+                        </div>
+                        <div class="resource-item">
+                            <span class="resource-tag gurus">Design Gurus</span>
+                            <span class="resource-text">System Design Basics: Study Proxies, Load Balancers, and CAP
+                                Theorem.</span>
+                        </div>
+                        <div class="resource-item">
+                            <span class="resource-tag jordan">Jordan (P1)</span>
+                            <span class="resource-text">Masterclasses on <strong>Database Indexes</strong> — your cheat
+                                code for choosing databases.</span>
+                        </div>
+                    </div>
+                    <div class="week-takeaway">
+                        <div class="takeaway-label">🎯 Key Takeaway</div>
+                        <div class="takeaway-text">Lock in the 4-step framework: <strong>Understand → Propose → Deep
+                                Dive → Wrap Up</strong>. Understand the physical difference between:</div>
+                        <table class="mini-table">
+                            <thead>
+                                <tr>
+                                    <th>Storage Engine</th>
+                                    <th>Strengths</th>
+                                    <th>Use Case</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>B-Trees</strong></td>
+                                    <td>Optimized for reads &amp; range queries</td>
+                                    <td>MySQL, PostgreSQL</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>LSM Trees</strong></td>
+                                    <td>Optimized for high-throughput writes</td>
+                                    <td>Cassandra, RocksDB</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Week 2 -->
+                <div class="week-card" id="week-2" data-week="2">
+                    <div class="week-card-header">
+                        <div class="week-badge">Week 2</div>
+                        <h3 class="week-title">Data Distribution &amp; Concurrency <span class="l4-tag">L4 Filter</span>
+                        </h3>
+                        <div class="week-check-wrap">
+                            <button class="week-check-btn" id="wc-2" onclick="toggleWeek(2)"
+                                title="Mark week complete">✓</button>
+                        </div>
+                    </div>
+                    <div class="week-resources">
+                        <div class="resource-item">
+                            <span class="resource-tag alex">Alex Xu</span>
+                            <span class="resource-text">Vol 1 — Ch 5, 6; Vol 2 — Ch 7: Consistent Hashing and KV Stores.
+                                Learn how <strong>Virtual Nodes</strong> solve uneven data distribution.</span>
+                        </div>
+                        <div class="resource-item">
+                            <span class="resource-tag jordan">Jordan (P1)</span>
+                            <span class="resource-text">Videos on <strong>Isolation Levels</strong> and
+                                <strong>Replication</strong>.</span>
+                        </div>
+                        <div class="resource-item">
+                            <span class="resource-tag gurus">Design Gurus</span>
+                            <span class="resource-text">Partitioning strategies.</span>
+                        </div>
+                    </div>
+                    <div class="week-takeaway">
+                        <div class="takeaway-label">🎯 Key Takeaway</div>
+                        <div class="takeaway-text">When asked <em>"What if two users book the same room
+                                simultaneously?"</em> — confidently explain <strong>Snapshot Isolation</strong>,
+                            <strong>Pessimistic Locking</strong>, or <strong>Optimistic Concurrency Control</strong>.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 2 -->
+        <div class="phase-block" id="phase-2">
+            <div class="phase-header">
+                <div class="phase-icon">⚙️</div>
+                <div class="phase-meta">
+                    <h2 class="phase-title">Phase 2: Standard Architectures</h2>
+                    <span class="phase-weeks">Weeks 3–4</span>
+                </div>
+                <div class="phase-goal">Apply the primitives. Master stateless HTTP requests, basic REST APIs, and
+                    database schemas.</div>
+            </div>
+
+            <div class="weeks-grid">
+                <!-- Week 3 -->
+                <div class="week-card" id="week-3" data-week="3">
+                    <div class="week-card-header">
+                        <div class="week-badge">Week 3</div>
+                        <h3 class="week-title">Stateless APIs &amp; ID Generation</h3>
+                        <div class="week-check-wrap">
+                            <button class="week-check-btn" id="wc-3" onclick="toggleWeek(3)"
+                                title="Mark week complete">✓</button>
+                        </div>
+                    </div>
+                    <div class="week-resources">
+                        <div class="resource-item">
+                            <span class="resource-tag alex">Alex Xu</span>
+                            <span class="resource-text">Vol 1 — Ch 7, 8: Unique ID Generators and URL Shorteners.</span>
+                        </div>
+                        <div class="resource-item">
+                            <span class="resource-tag jordan">Jordan (P2)</span>
+                            <span class="resource-text"><a href="https://www.youtube.com/watch?v=5V6Lam8GZo4"
+                                    target="_blank" class="resource-link">TinyURL + PasteBin</a> — see Jordan apply
+                                fundamentals to a real system.</span>
+                        </div>
+                    </div>
+                    <div class="week-takeaway">
+                        <div class="takeaway-label">🎯 Key Takeaway</div>
+                        <div class="takeaway-text">Memorize Twitter's <strong>Snowflake ID</strong> structure (Timestamp
+                            + Datacenter ID + Machine ID + Sequence Number). Understand <strong>Base62
+                                encoding</strong>. Stop saying "I'll make an API." Write out exact REST endpoints:
+                            <code>POST /api/v1/urls</code> with <code>{"{"}"long_url": "..."{"}"}</code>.</div>
+                    </div>
+                </div>
+
+                <!-- Week 4 -->
+                <div class="week-card" id="week-4" data-week="4">
+                    <div class="week-card-header">
+                        <div class="week-badge">Week 4</div>
+                        <h3 class="week-title">Read-Heavy Systems &amp; Asynchrony</h3>
+                        <div class="week-check-wrap">
+                            <button class="week-check-btn" id="wc-4" onclick="toggleWeek(4)"
+                                title="Mark week complete">✓</button>
+                        </div>
+                    </div>
+                    <div class="week-resources">
+                        <div class="resource-item">
+                            <span class="resource-tag alex">Alex Xu</span>
+                            <span class="resource-text">Vol 1 — Ch 10, 11: News Feeds and Notification Systems.</span>
+                        </div>
+                        <div class="resource-item">
+                            <span class="resource-tag jordan">Jordan (P2)</span>
+                            <span class="resource-text">Top K Leaderboard and Twitter Search breakdowns.</span>
+                        </div>
+                    </div>
+                    <div class="week-takeaway">
+                        <div class="takeaway-label">🎯 Key Takeaway</div>
+                        <div class="takeaway-text">Master <strong>Fanout-on-Write</strong> (push new tweet to all
+                            followers immediately) vs. <strong>Fanout-on-Read</strong> (pull on demand — for celebrity
+                            accounts with millions of followers). Learn Redis clusters for pre-computed feeds.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 3 -->
+        <div class="phase-block" id="phase-3">
+            <div class="phase-header">
+                <div class="phase-icon">🔬</div>
+                <div class="phase-meta">
+                    <h2 class="phase-title">Phase 3: Complex Domains</h2>
+                    <span class="phase-weeks">Weeks 5–6</span>
+                </div>
+                <div class="phase-goal">Move from simple CRUD apps to stateful, persistent systems, and niche domains.
+                </div>
+            </div>
+
+            <div class="weeks-grid">
+                <!-- Week 5 -->
+                <div class="week-card" id="week-5" data-week="5">
+                    <div class="week-card-header">
+                        <div class="week-badge">Week 5</div>
+                        <h3 class="week-title">Persistent Connections &amp; Streaming</h3>
+                        <div class="week-check-wrap">
+                            <button class="week-check-btn" id="wc-5" onclick="toggleWeek(5)"
+                                title="Mark week complete">✓</button>
+                        </div>
+                    </div>
+                    <div class="week-resources">
+                        <div class="resource-item">
+                            <span class="resource-tag alex">Alex Xu</span>
+                            <span class="resource-text">Vol 1 — Ch 12; Vol 2 — Ch 4: Chat Systems and Distributed
+                                Message Queues (Kafka).</span>
+                        </div>
+                        <div class="resource-item">
+                            <span class="resource-tag jordan">Jordan (P2)</span>
+                            <span class="resource-text">Live Streaming (Twitch/YouTube) — distinct architecture for
+                                video protocols vs HTTP.</span>
+                        </div>
+                    </div>
+                    <div class="week-takeaway">
+                        <div class="takeaway-label">🎯 Key Takeaway</div>
+                        <div class="takeaway-text">Compare <strong>Long Polling</strong>, <strong>Server-Sent Events
+                                (SSE)</strong>, and <strong>WebSockets</strong>. Understand how Kafka acts as a shock
+                            absorber by storing data as an append-only log on disk.</div>
+                    </div>
+                </div>
+
+                <!-- Week 6 -->
+                <div class="week-card" id="week-6" data-week="6">
+                    <div class="week-card-header">
+                        <div class="week-badge">Week 6</div>
+                        <h3 class="week-title">Geospatial &amp; Transactional Services</h3>
+                        <div class="week-check-wrap">
+                            <button class="week-check-btn" id="wc-6" onclick="toggleWeek(6)"
+                                title="Mark week complete">✓</button>
+                        </div>
+                    </div>
+                    <div class="week-resources">
+                        <div class="resource-item">
+                            <span class="resource-tag alex">Alex Xu</span>
+                            <span class="resource-text">Vol 2 — Ch 1, 2, 3: Proximity Services and Google Maps.</span>
+                        </div>
+                        <div class="resource-item">
+                            <span class="resource-tag jordan">Jordan (P2)</span>
+                            <span class="resource-text">Yelp/Google Places and Design TicketMaster — ultimate test of
+                                transactional safety.</span>
+                        </div>
+                    </div>
+                    <div class="week-takeaway">
+                        <div class="takeaway-label">🎯 Key Takeaway</div>
+                        <div class="takeaway-text">Understand <strong>Geohash</strong> (converting 2D map into a 1D
+                            string) vs. <strong>Quadtree</strong> (in-memory tree splitting the map into grids). For
+                            TicketMaster, observe strict database locks handling high-contention inventory.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 4 -->
+        <div class="phase-block" id="phase-4">
+            <div class="phase-header">
+                <div class="phase-icon">🚀</div>
+                <div class="phase-meta">
+                    <h2 class="phase-title">Phase 4: Infrastructure &amp; Execution</h2>
+                    <span class="phase-weeks">Weeks 7–8</span>
+                </div>
+                <div class="phase-goal">Prove you can handle Google/Meta-scale infrastructure under pressure.</div>
+            </div>
+
+            <div class="weeks-grid">
+                <!-- Week 7 -->
+                <div class="week-card" id="week-7" data-week="7">
+                    <div class="week-card-header">
+                        <div class="week-badge">Week 7</div>
+                        <h3 class="week-title">Heavy Storage &amp; Rate Limiting</h3>
+                        <div class="week-check-wrap">
+                            <button class="week-check-btn" id="wc-7" onclick="toggleWeek(7)"
+                                title="Mark week complete">✓</button>
+                        </div>
+                    </div>
+                    <div class="week-resources">
+                        <div class="resource-item">
+                            <span class="resource-tag alex">Alex Xu</span>
+                            <span class="resource-text">Vol 1 — Ch 4, 14, 15; Vol 2 — Ch 9: Rate Limiters and
+                                YouTube/Drive architectures.</span>
+                        </div>
+                        <div class="resource-item">
+                            <span class="resource-tag jordan">Jordan (P2)</span>
+                            <span class="resource-text">Design a Rate Limiter and Google Drive/Dropbox.</span>
+                        </div>
+                    </div>
+                    <div class="week-takeaway">
+                        <div class="takeaway-label">🎯 Key Takeaway</div>
+                        <div class="takeaway-text">Never send a 10 GB file through your API server. Use
+                            <strong>Pre-signed URLs</strong> to upload directly to S3. Memorize the <strong>Token
+                                Bucket</strong> algorithm — implement it using Redis + Lua scripts to avoid race
+                            conditions.</div>
+                    </div>
+                </div>
+
+                <!-- Week 8 -->
+                <div class="week-card week-crucible" id="week-8" data-week="8">
+                    <div class="week-card-header">
+                        <div class="week-badge crucible-badge">Week 8</div>
+                        <h3 class="week-title">🔥 The Crucible — Mock Interview Polish</h3>
+                        <div class="week-check-wrap">
+                            <button class="week-check-btn" id="wc-8" onclick="toggleWeek(8)"
+                                title="Mark week complete">✓</button>
+                        </div>
+                    </div>
+                    <div class="week-resources">
+                        <div class="resource-item">
+                            <span class="resource-tag practice">Practice</span>
+                            <span class="resource-text">Drop the books. Pick 5–7 random problems from Playlist 2 or Alex
+                                Xu. Set a strict 45-minute countdown. Use Excalidraw. <strong>Talk out loud the entire
+                                    time.</strong></span>
+                        </div>
+                    </div>
+                    <div class="week-takeaway">
+                        <div class="takeaway-label">⏱️ The 45-Minute Execution Pacing</div>
+                        <div class="pacing-grid">
+                            <div class="pacing-item">
+                                <div class="pacing-time">0–5 min</div>
+                                <div class="pacing-desc">Ask clarifying questions. Establish read/write ratio and scale.
+                                </div>
+                            </div>
+                            <div class="pacing-item">
+                                <div class="pacing-time">5–10 min</div>
+                                <div class="pacing-desc">Define exact API endpoints and high-level database schema.
+                                </div>
+                            </div>
+                            <div class="pacing-item">
+                                <div class="pacing-time">10–25 min</div>
+                                <div class="pacing-desc">Draw the HLD: Client → CDN/LB → API Gateway → Microservices →
+                                    DB/Cache.</div>
+                            </div>
+                            <div class="pacing-item">
+                                <div class="pacing-time">25–40 min</div>
+                                <div class="pacing-desc">Deep Dive. Identify the major bottleneck and fix it.</div>
+                            </div>
+                            <div class="pacing-item">
+                                <div class="pacing-time">40–45 min</div>
+                                <div class="pacing-desc">Wrap up and summarize trade-offs.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- CHEATSHEET TAB -->
+    <main class="content hidden" id="view-cheatsheet">
+        <div class="cheatsheet-grid">
+
+            <!-- Section 1: Formulas -->
+            <div class="cs-card full-width">
+                <div class="cs-card-header">
+                    <span class="cs-icon">🧮</span>
+                    <h3>1. Core Estimation Formulas</h3>
+                </div>
+                <p class="cs-intro">Round 86,400 seconds/day up to <strong>100,000</strong> to make mental math easier
+                    during the interview.</p>
+                <div class="formula-grid">
+                    <div class="formula-block">
+                        <div class="formula-name">Queries Per Second (QPS)</div>
+                        <div class="formula-expr">QPS = (DAU × Avg Requests/User) ÷ 100,000</div>
+                    </div>
+                    <div class="formula-block">
+                        <div class="formula-name">Peak QPS</div>
+                        <div class="formula-expr">Peak QPS = Average QPS × 2</div>
+                        <div class="formula-note">Use ×3 or ×4 for spikey systems like live sports streaming.</div>
+                    </div>
+                    <div class="formula-block">
+                        <div class="formula-name">Total Storage (5-Year)</div>
+                        <div class="formula-expr">Storage = Daily New Data × 365 × 5</div>
+                    </div>
+                    <div class="formula-block">
+                        <div class="formula-name">Network Bandwidth</div>
+                        <div class="formula-expr">Bandwidth = Peak QPS × Avg Request Size</div>
+                    </div>
+                </div>
+
+                <!-- Interactive QPS Calculator -->
+                <div class="calculator-wrap">
+                    <div class="calc-title">⚡ Quick QPS Calculator</div>
+                    <div class="calc-inputs">
+                        <div class="calc-field">
+                            <label>DAU</label>
+                            <input type="number" id="calcDau" value="10000000" min="1">
+                        </div>
+                        <div class="calc-field">
+                            <label>Avg Req/User/Day</label>
+                            <input type="number" id="calcReq" value="10" min="1">
+                        </div>
+                        <div class="calc-field">
+                            <label>Avg Object Size (KB)</label>
+                            <input type="number" id="calcSize" value="100" min="1">
+                        </div>
+                    </div>
+                    <div class="calc-results">
+                        <div class="calc-result-item">
+                            <span class="calc-result-label">Average QPS</span>
+                            <span class="calc-result-val" id="resQps">1,000</span>
+                        </div>
+                        <div class="calc-result-item">
+                            <span class="calc-result-label">Peak QPS</span>
+                            <span class="calc-result-val peak" id="resPeakQps">2,000</span>
+                        </div>
+                        <div class="calc-result-item">
+                            <span class="calc-result-label">5-Year Storage</span>
+                            <span class="calc-result-val" id="resStorage">—</span>
+                        </div>
+                        <div class="calc-result-item">
+                            <span class="calc-result-label">Bandwidth</span>
+                            <span class="calc-result-val" id="resBandwidth">—</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Powers of 2 -->
+            <div class="cs-card">
+                <div class="cs-card-header">
+                    <span class="cs-icon">💾</span>
+                    <h3>2. Powers of 2 &amp; Storage</h3>
+                </div>
+                <table class="cs-table">
+                    <thead>
+                        <tr>
+                            <th>Power</th>
+                            <th>Name</th>
+                            <th>Abbr.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2¹⁰</td>
+                            <td>1 Kilobyte</td>
+                            <td class="mono">1 KB</td>
+                        </tr>
+                        <tr>
+                            <td>2²⁰</td>
+                            <td>1 Megabyte</td>
+                            <td class="mono">1 MB</td>
+                        </tr>
+                        <tr>
+                            <td>2³⁰</td>
+                            <td>1 Gigabyte</td>
+                            <td class="mono">1 GB</td>
+                        </tr>
+                        <tr>
+                            <td>2⁴⁰</td>
+                            <td>1 Terabyte</td>
+                            <td class="mono">1 TB</td>
+                        </tr>
+                        <tr>
+                            <td>2⁵⁰</td>
+                            <td>1 Petabyte</td>
+                            <td class="mono">1 PB</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="cs-card-header" style="margin-top:1.5rem">
+                    <span class="cs-icon">📦</span>
+                    <h3>3. Standard Object Sizes</h3>
+                </div>
+                <div class="object-sizes">
+                    <div class="obj-size-row"><span class="obj-label">User/Metadata Record</span><span
+                            class="obj-val">~1 KB</span></div>
+                    <div class="obj-size-row"><span class="obj-label">Text Message / Tweet</span><span
+                            class="obj-val">~100–200 B</span></div>
+                    <div class="obj-size-row"><span class="obj-label">Standard Image</span><span class="obj-val">~2
+                            MB</span></div>
+                    <div class="obj-size-row"><span class="obj-label">Video (per minute)</span><span class="obj-val">~50
+                            MB</span></div>
+                </div>
+            </div>
+
+            <!-- Section 3: Latency -->
+            <div class="cs-card">
+                <div class="cs-card-header">
+                    <span class="cs-icon">⚡</span>
+                    <h3>4. Latency Numbers to Memorize</h3>
+                </div>
+                <p class="cs-intro">You need to instantly recognize why disk reads are the ultimate bottleneck.</p>
+                <div class="latency-list">
+                    <div class="latency-row l1">
+                        <div class="latency-op">L1 Cache Reference</div>
+                        <div class="latency-val">0.5 ns</div>
+                        <div class="latency-analogy">🖊️ Grabbing a pen on your desk</div>
+                    </div>
+                    <div class="latency-row l2">
+                        <div class="latency-op">L2 Cache Reference</div>
+                        <div class="latency-val">7 ns</div>
+                        <div class="latency-analogy">📚 Grabbing a book from your shelf</div>
+                    </div>
+                    <div class="latency-row ram">
+                        <div class="latency-op">Main Memory (RAM) Read</div>
+                        <div class="latency-val">100 ns</div>
+                        <div class="latency-analogy">🚶 Walking to the room next door</div>
+                    </div>
+                    <div class="latency-row ssd">
+                        <div class="latency-op">SSD Random Read</div>
+                        <div class="latency-val">150 µs</div>
+                        <div class="latency-analogy">🏃 Walking down the street</div>
+                    </div>
+                    <div class="latency-row hdd">
+                        <div class="latency-op">Disk Seek (HDD)</div>
+                        <div class="latency-val">10 ms</div>
+                        <div class="latency-analogy">✈️ Flying NYC → London</div>
+                    </div>
+                    <div class="latency-row net">
+                        <div class="latency-op">Read 1 MB from Network</div>
+                        <div class="latency-val">10 ms</div>
+                        <div class="latency-analogy">✈️ Flying NYC → London</div>
+                    </div>
+                    <div class="latency-row dc">
+                        <div class="latency-op">RTT — Same Datacenter</div>
+                        <div class="latency-val">0.5 ms</div>
+                        <div class="latency-analogy">🚗 Driving to the grocery store</div>
+                    </div>
+                    <div class="latency-row global">
+                        <div class="latency-op">RTT — California to Europe</div>
+                        <div class="latency-val">150 ms</div>
+                        <div class="latency-analogy">🌍 A literal trip around the globe</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4: Availability -->
+            <div class="cs-card full-width">
+                <div class="cs-card-header">
+                    <span class="cs-icon">🛡️</span>
+                    <h3>5. Availability &amp; SLAs — The "Nines"</h3>
+                </div>
+                <div class="avail-grid">
+                    <div class="avail-card two-nines">
+                        <div class="avail-pct">99%</div>
+                        <div class="avail-name">Two Nines</div>
+                        <div class="avail-down">~3.65 days/yr</div>
+                        <div class="avail-use">Internal tools, non-critical batch jobs</div>
+                    </div>
+                    <div class="avail-card three-nines">
+                        <div class="avail-pct">99.9%</div>
+                        <div class="avail-name">Three Nines</div>
+                        <div class="avail-down">~8.76 hrs/yr</div>
+                        <div class="avail-use">Standard consumer web applications</div>
+                    </div>
+                    <div class="avail-card four-nines">
+                        <div class="avail-pct">99.99%</div>
+                        <div class="avail-name">Four Nines</div>
+                        <div class="avail-down">~52.6 min/yr</div>
+                        <div class="avail-use">E-commerce, payment gateways</div>
+                    </div>
+                    <div class="avail-card five-nines">
+                        <div class="avail-pct">99.999%</div>
+                        <div class="avail-name">Five Nines</div>
+                        <div class="avail-down">~5.26 min/yr</div>
+                        <div class="avail-use">Telecom, pacemakers, Google Search</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FRAMEWORK TAB -->
+    <main class="content hidden" id="view-framework">
+        <div class="framework-wrap">
+
+            <div class="framework-intro">
+                <h2>The 4-Step Interview Framework</h2>
+                <p>Every system design interview at Google/Meta follows this structure. Internalize this so deeply that
+                    it becomes automatic under pressure.</p>
+            </div>
+
+            <div class="framework-steps">
+                <div class="fw-step" id="fw-step-1">
+                    <div class="fw-step-num">1</div>
+                    <div class="fw-step-content">
+                        <div class="fw-step-name">Understand</div>
+                        <div class="fw-step-time">Minutes 0–5 (+ Est. 0–10)</div>
+                        <ul class="fw-step-points">
+                            <li>Ask clarifying questions before touching the whiteboard</li>
+                            <li>Establish the read/write ratio — is this read-heavy (10:1) or write-heavy?</li>
+                            <li>Define scale: How many DAUs? What's the target QPS?</li>
+                            <li>Ask about latency requirements: real-time vs. eventual consistency?</li>
+                            <li>Run the back-of-the-envelope estimation right here</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="fw-connector"></div>
+
+                <div class="fw-step" id="fw-step-2">
+                    <div class="fw-step-num">2</div>
+                    <div class="fw-step-content">
+                        <div class="fw-step-name">Propose</div>
+                        <div class="fw-step-time">Minutes 5–10</div>
+                        <ul class="fw-step-points">
+                            <li>State the exact REST API endpoints: <code>POST /api/v1/resource</code></li>
+                            <li>Define the high-level database schema (table names, key columns)</li>
+                            <li>State your technology choices with reasoning, not just names</li>
+                            <li>Sketch the high-level architecture: Client → CDN → LB → API → DB</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="fw-connector"></div>
+
+                <div class="fw-step" id="fw-step-3">
+                    <div class="fw-step-num">3</div>
+                    <div class="fw-step-content">
+                        <div class="fw-step-name">Deep Dive</div>
+                        <div class="fw-step-time">Minutes 10–40</div>
+                        <ul class="fw-step-points">
+                            <li>Identify the single biggest bottleneck in your design</li>
+                            <li>For read-heavy: add caching layer (Redis), CDN for static assets</li>
+                            <li>For write-heavy: async processing with Kafka, sharding strategy</li>
+                            <li>Address the hard problem: concurrency, consistency, or geo-distribution</li>
+                            <li>Draw the detailed data flow through each component</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="fw-connector"></div>
+
+                <div class="fw-step" id="fw-step-4">
+                    <div class="fw-step-num">4</div>
+                    <div class="fw-step-content">
+                        <div class="fw-step-name">Wrap Up</div>
+                        <div class="fw-step-time">Minutes 40–45</div>
+                        <ul class="fw-step-points">
+                            <li>Summarize the key trade-offs you made (e.g., consistency vs. availability)</li>
+                            <li>Mention what you would do differently at even larger scale</li>
+                            <li>Proactively discuss failure modes: what happens when a node goes down?</li>
+                            <li>Show the interviewer you think about operational concerns, not just theory</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key concepts quick-ref -->
+            <div class="concepts-grid">
+                <div class="concept-card">
+                    <div class="concept-title">🔀 Fanout Strategies</div>
+                    <div class="concept-body">
+                        <div class="concept-row"><strong>Write</strong> — Push tweet to all followers at write time.
+                            Fast reads, slow writes. Best for accounts with few followers.</div>
+                        <div class="concept-row"><strong>Read</strong> — Pull/merge feeds at query time. Slower reads,
+                            no write overhead. Best for celebrity accounts (millions of followers).</div>
+                    </div>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-title">🔒 Concurrency Control</div>
+                    <div class="concept-body">
+                        <div class="concept-row"><strong>Pessimistic Lock</strong> — Lock the row before read. Safe, but
+                            slow under high contention.</div>
+                        <div class="concept-row"><strong>Optimistic CC</strong> — No lock, check version on write; retry
+                            if conflict. High throughput.</div>
+                        <div class="concept-row"><strong>Snapshot Isolation</strong> — Each transaction sees a
+                            consistent snapshot; no dirty reads.</div>
+                    </div>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-title">📡 Real-Time Connections</div>
+                    <div class="concept-body">
+                        <div class="concept-row"><strong>Long Polling</strong> — Client holds connection open; server
+                            responds when new data. Simple.</div>
+                        <div class="concept-row"><strong>SSE</strong> — Server pushes to client over HTTP. One-way,
+                            lightweight.</div>
+                        <div class="concept-row"><strong>WebSocket</strong> — Full duplex. Required for chat/gaming.
+                            More complex to scale.</div>
+                    </div>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-title">🗺️ Geo Distribution</div>
+                    <div class="concept-body">
+                        <div class="concept-row"><strong>Geohash</strong> — Maps 2D coordinates to a 1D string. Nearby
+                            points share a prefix. Good for range queries.</div>
+                        <div class="concept-row"><strong>Quadtree</strong> — In-memory tree. Recursively splits map
+                            grids. Better for dynamic density.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>Built for SDE 2 HLD prep • <strong>Target: Google / Top Companies • Aug 1, 2026</strong></p>
+        <p class="footer-sub">Stay consistent. One phase at a time. 🚀</p>
+    </footer>
+
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M18 15l-6-6-6 6" />
+        </svg>
+    </button>
+
+    <script src="hld-app.js"></script>
+</body>
+
+</html>
