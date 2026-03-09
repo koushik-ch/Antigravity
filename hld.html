@@ -1018,24 +1018,31 @@
                 <div class="ms-cols">
 
                     <div class="ms-card">
-                        <div class="ms-card-title">⚙️ Jenkins &amp; CI/CD Pipeline</div>
+                        <div class="ms-card-title">⚙️ Jenkins &amp; Microservice Pipelines</div>
                         <ul class="ms-list">
-                            <li>Trace a pull request from merge to production — what are every stage in your
-                                Jenkinsfile?</li>
-                            <li>Understand the difference between declarative vs scripted pipelines. Which does your
-                                team use?</li>
-                            <li>Learn about blue/green and canary deployments — does your company do gradual rollouts?
-                            </li>
-                            <li>Understand artifact storage: where does your built Node.js app live between build and
-                                deploy?</li>
-                            <li>Map the rollback procedure: what happens if a bad deploy goes live at 2am during a flash
-                                sale?</li>
+                            <li><strong>One pipeline per service:</strong> each microservice (cart, fulfillment, etc.)
+                                has its own Jenkinsfile and independent deploy lifecycle. A change to the cart service
+                                should not require deploying fulfillment. Understand how your team manages this — shared
+                                library? Separate repos?</li>
+                            <li><strong>Pipeline stages:</strong> trace one service's full pipeline — Checkout → Build
+                                Docker image → Run tests → Push to registry → Deploy to K8s (staging) → Integration
+                                tests → Deploy to prod (gated or automated?)</li>
+                            <li><strong>Blue/green &amp; canary:</strong> does your company route a small % of traffic
+                                (e.g., 5%) to a new version before full rollout? This is critical for high-traffic ecom
+                                — a bad deploy during peak hours must be stoppable.</li>
+                            <li><strong>Rollback speed:</strong> for a distributed microservice architecture, a rollback
+                                isn't just one service. If cart updated, fulfillment updated, and they're now
+                                incompatible, you need to roll back both. Does your team use feature flags to decouple
+                                deploys from releases?</li>
+                            <li><strong>Secrets &amp; config:</strong> each microservice needs environment-specific
+                                secrets (DB connection strings, API keys). Understand whether you use K8s Secrets, AWS
+                                Secrets Manager, or Vault — and how Jenkins injects them at deploy time.</li>
                         </ul>
                         <div class="ms-investigate">
                             <span class="ms-inv-label">🔍 Investigate in your codebase</span>
-                            Open your Jenkinsfile. Draw the pipeline stages end-to-end. Find where environment variables
-                            are injected (secrets management). Identify the production deploy trigger — is it automatic
-                            or gated?
+                            Pick two services — cart and fulfillment. Compare their Jenkinsfiles. Are stages the same or
+                            do they differ? Find your shared Jenkins library (if any). Identify the deploy trigger for
+                            each — is one auto-deployed and the other gated? Find where secrets are defined.
                         </div>
                     </div>
 
@@ -1119,38 +1126,41 @@
                     </div>
 
                     <div class="ms-card">
-                        <div class="ms-card-title">🪳 CockroachDB — Why It Exists Alongside Postgres</div>
+                        <div class="ms-card-title">🪳 CockroachDB &amp; Postgres — Per-Service Ownership</div>
                         <ul class="ms-list">
-                            <li><strong>CockroachDB's purpose:</strong> distributed SQL for horizontal write scale-out.
-                                Postgres maxes out on a single primary node — you can add read replicas but writes are
-                                bottlenecked. CockroachDB distributes writes across N nodes automatically.</li>
-                            <li><strong>Ranges &amp; Raft:</strong> data is divided into ~128MB <em>ranges</em>. Each
-                                range is independently replicated via Raft to 3+ replicas. A write commits only when a
-                                majority (quorum) of replicas acknowledges it — this is what makes it fault-tolerant
-                                without a single point of failure.</li>
-                            <li><strong>HLC (Hybrid Logical Clocks):</strong> because nodes are geographically
-                                distributed, wall clocks drift. CockroachDB uses HLCs to assign causally-consistent
-                                timestamps to transactions <em>without</em> requiring a global lock — this is what
-                                enables serializable isolation at scale.</li>
-                            <li><strong>Postgres wire protocol:</strong> CockroachDB is Postgres-compatible at the
-                                protocol level — your Node.js services connect using the same <code>pg</code> driver.
-                                This is why the migration was feasible, but subtle SQL differences (e.g., sequences,
-                                certain JOINs) can surface as bugs.</li>
-                            <li><strong>Serializable isolation by default:</strong> unlike Postgres (default: Read
-                                Committed), CockroachDB defaults to Serializable — the highest isolation level. Cost:
-                                higher abort/retry rates under write contention. Your Node.js code must handle
-                                <code>RETRY_WRITE_TOO_OLD</code> errors.
-                            </li>
-                            <li><strong>Key decision:</strong> Cockroach for high-volume transactional data where writes
-                                scale horizontally (orders, inventory, cart), Postgres for relational complexity,
-                                analytics, and reporting where a single primary is sufficient.</li>
+                            <li><strong>The split pattern:</strong> different services own different databases — this
+                                isn't a single shared DB. Services with extreme write throughput and horizontal scaling
+                                needs (orders, inventory, cart) use CockroachDB. Services with complex relational
+                                queries, lower write rates, or legacy reasons (user accounts, product catalog,
+                                reporting) use Postgres. Know which of your services owns which.</li>
+                            <li><strong>Why CockroachDB for orders/inventory:</strong> during a flash sale, you might
+                                process 50K+ order writes per second. A single Postgres primary node bottlenecks on
+                                write throughput — CockroachDB distributes writes across N nodes automatically via its
+                                Ranges/Raft model.</li>
+                            <li><strong>Why Postgres for catalog/user:</strong> product catalog reads dwarf writes
+                                (millions of reads, handful of writes). Postgres with read replicas handles this
+                                perfectly. The ORM relationships, JOINs, and reporting queries are also easier on
+                                Postgres without CockroachDB's SQL compatibility edge cases.</li>
+                            <li><strong>No cross-service joins:</strong> in a microservices architecture, each service
+                                owns its DB and <em>other services cannot query it directly</em>. If fulfillment needs
+                                cart data, it calls the cart service's API or subscribes to an event — never a cross-DB
+                                join. This boundary is critical.</li>
+                            <li><strong>Ranges &amp; Raft (CockroachDB internals):</strong> data is split into ~128MB
+                                ranges, each replicated via Raft to 3+ nodes. A write commits only when a majority
+                                acknowledges it. HLC (Hybrid Logical Clocks) provide causally-consistent timestamps
+                                without a global lock — enabling serializable isolation at scale.</li>
+                            <li><strong>RETRY_WRITE_TOO_OLD:</strong> CockroachDB defaults to Serializable isolation.
+                                Under write contention, transactions abort with this error. Your Node.js services on
+                                CockroachDB <em>must</em> implement retry logic — if they don't, you have a latent bug
+                                waiting for a traffic spike.</li>
                         </ul>
                         <div class="ms-investigate">
                             <span class="ms-inv-label">🔍 Investigate in your codebase</span>
-                            Find which services use which DB. Search for retry logic around CockroachDB transactions —
-                            if it's missing, you have a latent bug. Check if your ORM handles <code>40001</code>
-                            serialization errors. Look at your CockroachDB Admin UI: check range distribution, hotspot
-                            ranges, and replication factor.
+                            List every microservice and which DB it owns. Search for retry logic around CockroachDB
+                            transactions across those services. Check if ORM handles <code>40001</code> errors. For
+                            Postgres services, run <code>EXPLAIN ANALYZE</code> on the 3 most-called queries and look
+                            for Seq Scans. Find any service that joins data across service boundaries — that's a design
+                            smell.
                         </div>
                     </div>
 
@@ -1311,39 +1321,42 @@
                     </div>
 
                     <div class="ms-card">
-                        <div class="ms-card-title">🔭 Observability — How You Know Things Are Broken</div>
+                        <div class="ms-card-title">🔭 Observability — Your ELK Stack</div>
                         <ul class="ms-list">
-                            <li><strong>Structured logging (Pino/Winston):</strong> logs must be JSON — not plain
-                                strings. Every log line needs a <code>correlationId</code> (trace ID from the incoming
-                                request). This is how you find all logs for a single customer's failing checkout across
-                                5 microservices in Datadog/Splunk.</li>
-                            <li><strong>Correlation ID propagation:</strong> the frontend generates a
-                                <code>X-Correlation-ID</code> header on every request. Node.js reads it, passes it to
-                                every downstream call (Postgres queries via log context, RabbitMQ message headers,
-                                outgoing HTTP). Without this, distributed debugging is nearly impossible.
-                            </li>
-                            <li><strong>4 Golden Signals (Google SRE):</strong> Latency (p50/p95/p99), Traffic (RPS),
-                                Errors (rate %), Saturation (CPU/memory/DB connection pool %). P99 checkout latency
-                                crossing 500ms is usually your most important alert.</li>
-                            <li><strong>Distributed tracing (OpenTelemetry):</strong> auto-instruments Node.js, Postgres
-                                (via <code>pg</code>), RabbitMQ, and HTTP clients. Each operation becomes a
-                                <em>span</em> — you see the full waterfall for a single request. Essential for
-                                diagnosing which layer caused a latency spike.
-                            </li>
-                            <li><strong>RabbitMQ observability:</strong> three critical metrics: queue depth (growing =
-                                consumers behind), consumer count (dropped to 0 = consumer crashed), DLQ depth (growing
-                                = silent processing failures). Wire these to PagerDuty.</li>
-                            <li><strong>K8s + Node.js health:</strong> <code>readinessProbe</code> tells K8s when a pod
-                                is ready to receive traffic. <code>livenessProbe</code> restarts a hung pod. Understand
-                                what your probes check — a bad liveness probe causes thrashing restarts during DB
-                                connection issues.</li>
+                            <li><strong>ELK = Elasticsearch + Logstash + Kibana:</strong> Elasticsearch stores and
+                                indexes your logs as JSON documents. Kibana is the UI for querying, dashboards, and
+                                alerting. Logstash (or the lighter Filebeat) ships logs from K8s containers into
+                                Elasticsearch. In K8s, Filebeat typically runs as a DaemonSet, tailing container stdout
+                                logs.</li>
+                            <li><strong>Structured logging is mandatory:</strong> Pino/Winston must output JSON. When
+                                Filebeat ships logs to Elasticsearch, each JSON field becomes a searchable indexed
+                                field. A log like
+                                <code>{"correlationId":"abc", "service":"cart", "level":"error"}</code> lets you search
+                                <code>correlationId:"abc"</code> across all microservices in Kibana instantly.</li>
+                            <li><strong>Correlation ID across microservices:</strong> your React frontend sets
+                                <code>X-Correlation-ID</code> on every request. Each Node.js service reads it, logs it
+                                in every log line, and passes it to downstream service calls (HTTP headers) and RabbitMQ
+                                message headers. This is how you trace a customer's checkout across cart → order →
+                                fulfillment → notification in a single Kibana KQL query.</li>
+                            <li><strong>Elastic APM:</strong> the ELK stack ships an APM agent that auto-instruments
+                                Node.js apps — capturing HTTP request traces, DB query spans (Postgres + CockroachDB),
+                                and RabbitMQ message handling as distributed traces. Integrated in Kibana alongside your
+                                logs. Check if your services have the Elastic APM Node.js agent installed.</li>
+                            <li><strong>4 Golden Signals in Kibana:</strong> Latency (p50/p95/p99 from APM), Traffic
+                                (log count per service), Errors (filter <code>level:error</code>), Saturation (from K8s
+                                metrics). Build a single Kibana dashboard that shows all 4 per microservice — this is
+                                your incident command center.</li>
+                            <li><strong>Index strategy &amp; retention:</strong> Elasticsearch uses time-based indices
+                                (e.g., <code>logs-2026.03.09</code>). Understand your retention policy — how many days
+                                of logs are kept? Old indices roll over to cold storage. Searching 90 days of ecom logs
+                                in one query is expensive — know your ILM (Index Lifecycle Management) policy.</li>
                         </ul>
                         <div class="ms-investigate">
                             <span class="ms-inv-label">🔍 Investigate in your codebase</span>
-                            Search for <code>X-Correlation-ID</code> or <code>x-request-id</code> — is it propagated
-                            through all service calls? Find your OpenTelemetry or tracing SDK setup. Pick a recent slow
-                            API call in your tracing tool and identify which span accounts for the most time. Check if
-                            RabbitMQ metrics feed into your primary dashboard.
+                            Open Kibana. Search for a correlationId from a request you can trace end-to-end. How many
+                            services logged it? Is it present in all of them? Find the Filebeat DaemonSet in your K8s
+                            config. Check if Elastic APM is configured in your Node.js services — look for
+                            <code>elastic-apm-node</code> in package.json. Find the ILM policy for your log indices.
                         </div>
                     </div>
 
