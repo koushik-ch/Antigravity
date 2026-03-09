@@ -72,6 +72,7 @@ const tabs = {
     roadmap: document.getElementById('view-roadmap'),
     cheatsheet: document.getElementById('view-cheatsheet'),
     framework: document.getElementById('view-framework'),
+    mystack: document.getElementById('view-mystack'),
 };
 
 document.getElementById('tabNav').addEventListener('click', (e) => {

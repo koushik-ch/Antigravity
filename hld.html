@@ -74,6 +74,7 @@
         <button class="tab-btn active" data-tab="roadmap" id="tab-roadmap">📅 8-Week Roadmap</button>
         <button class="tab-btn" data-tab="cheatsheet" id="tab-cheatsheet">⚡ Cheatsheet</button>
         <button class="tab-btn" data-tab="framework" id="tab-framework">🎯 Interview Framework</button>
+        <button class="tab-btn" data-tab="mystack" id="tab-mystack">🏢 My Company Stack</button>
     </nav>
 
     <!-- ROADMAP TAB -->
@@ -966,6 +967,419 @@
             <path d="M18 15l-6-6-6 6" />
         </svg>
     </button>
+
+    <!-- MY COMPANY STACK TAB -->
+    <main class="content hidden" id="view-mystack">
+        <div class="mystack-wrap">
+
+            <!-- Header -->
+            <div class="mystack-hero">
+                <div class="mystack-hero-badge">🏢 Internal Deep Dive • Top US E-Commerce</div>
+                <h2 class="mystack-hero-title">Understand Your System. End to End.</h2>
+                <p class="mystack-hero-desc">This isn't prep from a book — it's forensic engineering. Over 4 weeks
+                    you'll go from knowing your codebase to understanding <em>why</em> every architectural decision was
+                    made, how traffic at scale flows through each layer, and where the real failure points are.</p>
+                <div class="stack-pills">
+                    <span class="stack-pill node">Node.js</span>
+                    <span class="stack-pill react">React</span>
+                    <span class="stack-pill postgres">PostgreSQL</span>
+                    <span class="stack-pill cockroach">CockroachDB</span>
+                    <span class="stack-pill rabbit">RabbitMQ</span>
+                    <span class="stack-pill jenkins">Jenkins</span>
+                </div>
+            </div>
+
+            <!-- System Architecture Flow -->
+            <div class="ms-flow-bar">
+                <div class="ms-flow-label">📐 How a customer "Place Order" click flows through your entire stack</div>
+                <div class="ms-flow-steps">
+                    <div class="ms-flow-step react-step">⚛️ React<span>SSR/CDN</span></div>
+                    <div class="ms-flow-arrow">→</div>
+                    <div class="ms-flow-step node-step">⚙️ Node.js API<span>Event Loop</span></div>
+                    <div class="ms-flow-arrow">→</div>
+                    <div class="ms-flow-step pg-step">🐘 Postgres<span>User/Session</span></div>
+                    <div class="ms-flow-arrow">→</div>
+                    <div class="ms-flow-step cockroach-step">🪳 CockroachDB<span>Orders/Inventory</span></div>
+                    <div class="ms-flow-arrow">→</div>
+                    <div class="ms-flow-step rabbit-step">🐇 RabbitMQ<span>Async Events</span></div>
+                    <div class="ms-flow-arrow">→</div>
+                    <div class="ms-flow-step jenkins-step">⚙️ Jenkins<span>Deploy Pipeline</span></div>
+                </div>
+                <div class="ms-flow-note">This is the mental model to build. Every week adds depth to one or more arrows
+                    in this chain.</div>
+            </div>
+
+            <!-- Week 1 -->
+            <div class="ms-phase">
+                <div class="ms-phase-label" style="--phase-color: #4285F4">Week 1 — Infrastructure &amp; Deployment
+                </div>
+                <p class="ms-phase-goal">Goal: Understand how your code actually gets to production, how traffic enters
+                    the system, and how Node.js handles tens of thousands of concurrent requests.</p>
+                <div class="ms-cols">
+
+                    <div class="ms-card">
+                        <div class="ms-card-title">⚙️ Jenkins &amp; CI/CD Pipeline</div>
+                        <ul class="ms-list">
+                            <li>Trace a pull request from merge to production — what are every stage in your
+                                Jenkinsfile?</li>
+                            <li>Understand the difference between declarative vs scripted pipelines. Which does your
+                                team use?</li>
+                            <li>Learn about blue/green and canary deployments — does your company do gradual rollouts?
+                            </li>
+                            <li>Understand artifact storage: where does your built Node.js app live between build and
+                                deploy?</li>
+                            <li>Map the rollback procedure: what happens if a bad deploy goes live at 2am during a flash
+                                sale?</li>
+                        </ul>
+                        <div class="ms-investigate">
+                            <span class="ms-inv-label">🔍 Investigate in your codebase</span>
+                            Open your Jenkinsfile. Draw the pipeline stages end-to-end. Find where environment variables
+                            are injected (secrets management). Identify the production deploy trigger — is it automatic
+                            or gated?
+                        </div>
+                    </div>
+
+                    <div class="ms-card">
+                        <div class="ms-card-title">🌐 Traffic Entry, Containers &amp; Node.js at Scale</div>
+                        <ul class="ms-list">
+                            <li><strong>Container model:</strong> at a top ecom company, Node.js runs in Docker
+                                containers orchestrated by Kubernetes (K8s). Each container is <em>single-process</em> —
+                                horizontal scaling happens by adding more pods, not via the Node.js cluster module. The
+                                cluster module / PM2 clustering is relevant only if you're on bare VMs.</li>
+                            <li><strong>Event loop:</strong> Node.js is single-threaded with a non-blocking event loop.
+                                CPU-bound work (image processing, crypto, complex JSON transforms) blocks the loop and
+                                kills throughput — these should be offloaded to worker threads or separate services.
+                            </li>
+                            <li><strong>Graceful shutdown (SIGTERM):</strong> when K8s removes a pod it sends SIGTERM —
+                                your Node.js server must catch it, stop accepting new connections, drain in-flight
+                                requests, and close DB connections cleanly. Failure to do this causes request drops on
+                                every deploy.</li>
+                            <li><strong>Load balancer:</strong> understand your AWS ALB or Nginx setup — how it
+                                terminates SSL, routes to K8s service endpoints, and performs health checks
+                                (<code>/healthz</code>).</li>
+                            <li><strong>Traffic spikes:</strong> K8s HPA (Horizontal Pod Autoscaler) scales pods based
+                                on CPU/memory metrics. Understand your scaling policy's warmup time — a pod that starts
+                                cold can't serve traffic until it's warmed its caches and opened its DB connections.
+                            </li>
+                        </ul>
+                        <div class="ms-investigate">
+                            <span class="ms-inv-label">🔍 Investigate in your codebase</span>
+                            Find your Dockerfile and K8s deployment YAML. Check <code>replicas</code>, resource
+                            <code>requests/limits</code>, and <code>livenessProbe</code> / <code>readinessProbe</code>
+                            config. Search for <code>SIGTERM</code> handling in your Node server. Check your pg pool
+                            <code>max</code> config — multiplied by pod count, does total connections stay under
+                            Postgres <code>max_connections</code>?
+                        </div>
+                    </div>
+
+                </div>
+                <div class="ms-qa-block">
+                    <div class="ms-qa-label">✅ Questions you should be able to answer after Week 1</div>
+                    <div class="ms-qa-grid">
+                        <div class="ms-qa">How long does a prod deploy take? What can go wrong at each stage?</div>
+                        <div class="ms-qa">If CPU spikes to 100% on a Node pod — what are the 3 most likely causes in
+                            your system?</div>
+                        <div class="ms-qa">What happens when your connection pool is exhausted during a traffic spike?
+                        </div>
+                        <div class="ms-qa">How does your load balancer decide which Node pod gets a request?</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 2 -->
+            <div class="ms-phase">
+                <div class="ms-phase-label" style="--phase-color: #7c6cf0">Week 2 — PostgreSQL Internals &amp;
+                    CockroachDB</div>
+                <p class="ms-phase-goal">Goal: Understand exactly how your data is stored, queried, replicated, and kept
+                    consistent at scale. Know when each database is used and why.</p>
+                <div class="ms-cols">
+
+                    <div class="ms-card">
+                        <div class="ms-card-title">🐘 PostgreSQL Deep Dive</div>
+                        <ul class="ms-list">
+                            <li><strong>MVCC (Multi-Version Concurrency Control):</strong> how Postgres allows
+                                concurrent reads/writes without locking by maintaining multiple row versions</li>
+                            <li><strong>WAL (Write-Ahead Log):</strong> every write goes to the WAL before the heap —
+                                this is how Postgres survives crashes and enables replication</li>
+                            <li><strong>VACUUM &amp; autovacuum:</strong> dead tuples accumulate from MVCC — vacuum
+                                reclaims space. Understand why vacuum falling behind causes bloat and slowdowns</li>
+                            <li><strong>Query planner &amp; EXPLAIN ANALYZE:</strong> learn to read query plans — Seq
+                                Scan vs Index Scan vs Bitmap Scan, why the planner sometimes ignores your index</li>
+                            <li><strong>Connection pooling (PgBouncer):</strong> Node.js can't open 500 raw Postgres
+                                connections — PgBouncer pools them. Understand transaction vs session pooling modes</li>
+                            <li><strong>Read replicas:</strong> how does your company offload analytics or heavy reads
+                                to replicas? What's the replication lag?</li>
+                        </ul>
+                        <div class="ms-investigate">
+                            <span class="ms-inv-label">🔍 Investigate in your codebase</span>
+                            Run <code>EXPLAIN ANALYZE</code> on your 3 most-called API queries. Look for Seq Scans on
+                            large tables. Check your pg_stat_activity for long-running queries. Find your most-bloated
+                            tables using pg_stat_user_tables.
+                        </div>
+                    </div>
+
+                    <div class="ms-card">
+                        <div class="ms-card-title">🪳 CockroachDB — Why It Exists Alongside Postgres</div>
+                        <ul class="ms-list">
+                            <li><strong>CockroachDB's purpose:</strong> distributed SQL for horizontal write scale-out.
+                                Postgres maxes out on a single primary node — you can add read replicas but writes are
+                                bottlenecked. CockroachDB distributes writes across N nodes automatically.</li>
+                            <li><strong>Ranges &amp; Raft:</strong> data is divided into ~128MB <em>ranges</em>. Each
+                                range is independently replicated via Raft to 3+ replicas. A write commits only when a
+                                majority (quorum) of replicas acknowledges it — this is what makes it fault-tolerant
+                                without a single point of failure.</li>
+                            <li><strong>HLC (Hybrid Logical Clocks):</strong> because nodes are geographically
+                                distributed, wall clocks drift. CockroachDB uses HLCs to assign causally-consistent
+                                timestamps to transactions <em>without</em> requiring a global lock — this is what
+                                enables serializable isolation at scale.</li>
+                            <li><strong>Postgres wire protocol:</strong> CockroachDB is Postgres-compatible at the
+                                protocol level — your Node.js services connect using the same <code>pg</code> driver.
+                                This is why the migration was feasible, but subtle SQL differences (e.g., sequences,
+                                certain JOINs) can surface as bugs.</li>
+                            <li><strong>Serializable isolation by default:</strong> unlike Postgres (default: Read
+                                Committed), CockroachDB defaults to Serializable — the highest isolation level. Cost:
+                                higher abort/retry rates under write contention. Your Node.js code must handle
+                                <code>RETRY_WRITE_TOO_OLD</code> errors.
+                            </li>
+                            <li><strong>Key decision:</strong> Cockroach for high-volume transactional data where writes
+                                scale horizontally (orders, inventory, cart), Postgres for relational complexity,
+                                analytics, and reporting where a single primary is sufficient.</li>
+                        </ul>
+                        <div class="ms-investigate">
+                            <span class="ms-inv-label">🔍 Investigate in your codebase</span>
+                            Find which services use which DB. Search for retry logic around CockroachDB transactions —
+                            if it's missing, you have a latent bug. Check if your ORM handles <code>40001</code>
+                            serialization errors. Look at your CockroachDB Admin UI: check range distribution, hotspot
+                            ranges, and replication factor.
+                        </div>
+                    </div>
+
+                </div>
+                <div class="ms-qa-block">
+                    <div class="ms-qa-label">✅ Questions you should be able to answer after Week 2</div>
+                    <div class="ms-qa-grid">
+                        <div class="ms-qa">When a customer places an order simultaneously from two browser tabs — which
+                            DB handles it and how is the race condition prevented?</div>
+                        <div class="ms-qa">What happens to your Postgres queries when autovacuum kicks in during peak
+                            traffic?</div>
+                        <div class="ms-qa">If a CockroachDB node goes down — what happens to in-flight transactions? How
+                            long before recovery?</div>
+                        <div class="ms-qa">Why can't you just use Postgres everywhere and drop CockroachDB?</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 3 -->
+            <div class="ms-phase">
+                <div class="ms-phase-label" style="--phase-color: #EA4335">Week 3 — RabbitMQ &amp; Async Architecture
+                </div>
+                <p class="ms-phase-goal">Goal: Understand every asynchronous flow in your system — what goes through
+                    RabbitMQ, why it's async instead of synchronous, and what happens when a consumer dies.</p>
+                <div class="ms-cols">
+
+                    <div class="ms-card">
+                        <div class="ms-card-title">🐇 RabbitMQ Internals</div>
+                        <ul class="ms-list">
+                            <li><strong>AMQP concepts:</strong> producers publish to <em>exchanges</em>, not queues
+                                directly. Exchanges route to queues via <em>bindings</em>. Know all 4 types: Direct
+                                (exact routing key), Fanout (broadcast to all bound queues), Topic (wildcard —
+                                <code>order.#</code> matches any sub-key), Headers (match on message metadata).
+                            </li>
+                            <li><strong>Quorum queues (RabbitMQ 3.8+):</strong> classic mirrored queues are
+                                <em>deprecated</em>. Quorum queues use Raft to replicate messages to a majority of nodes
+                                before acknowledging — this is the correct HA setup for production. Classic queues can
+                                lose messages on broker failover.
+                            </li>
+                            <li><strong>Message persistence:</strong> <code>durable: true</code> queue +
+                                <code>persistent: 2</code> delivery mode = messages survive broker restart. Without
+                                both, a RabbitMQ crash loses all queued messages. Note: persistence has a disk I/O cost.
+                            </li>
+                            <li><strong>ACK / NACK routing:</strong> <code>nack(requeue=true)</code> re-queues the
+                                message immediately (risk: infinite retry loop). <code>nack(requeue=false)</code> routes
+                                it to the Dead Letter Exchange → DLQ. Always use the latter with a retry count header to
+                                avoid poison message loops.</li>
+                            <li><strong>Dead Letter Queues (DLQ):</strong> silent production failures. A message that
+                                fails processing N times lands in DLQ. You need alerting on DLQ depth — a piling DLQ is
+                                usually the first sign of a downstream outage or a code regression.</li>
+                            <li><strong>Prefetch / QoS:</strong> <code>channel.prefetch(N)</code> limits unACKed
+                                in-flight messages per consumer. Without prefetch, one slow consumer can hoard all
+                                messages. Tune N to match your consumer's processing speed.</li>
+                        </ul>
+                        <div class="ms-investigate">
+                            <span class="ms-inv-label">🔍 Investigate in your codebase</span>
+                            Open the RabbitMQ Management UI. Check whether your queues are <em>Quorum</em> or
+                            <em>Classic</em> type. Find every NACK in your consumer code — does it use
+                            <code>requeue: false</code>? Check if you have a max retry count mechanism. Find DLQ
+                            bindings and verify they're monitored.
+                        </div>
+                    </div>
+
+                    <div class="ms-card">
+                        <div class="ms-card-title">🔄 Async Flows in E-Commerce</div>
+                        <ul class="ms-list">
+                            <li><strong>Sync vs async boundary:</strong> payment auth and inventory reservation are
+                                synchronous (customer waits). Email confirmation, warehouse pick-list, analytics events,
+                                and loyalty points are async via RabbitMQ — the customer shouldn't wait for these.</li>
+                            <li><strong>Idempotency key pattern:</strong> payment webhooks are delivered at-least-once —
+                                Stripe can deliver the same <code>payment_intent.succeeded</code> event twice. Your
+                                handler must store the event ID in Postgres/Cockroach <em>before</em> processing, with a
+                                unique constraint — second delivery hits the constraint and returns 200 immediately
+                                without double-crediting.</li>
+                            <li><strong>Inventory consistency:</strong> product page shows <em>eventually
+                                    consistent</em> count (cached, stale is OK). Checkout atomically decrements
+                                inventory in CockroachDB with a <code>SELECT ... FOR UPDATE</code> — if it hits 0, the
+                                order is rejected. Never trust the display count at checkout.</li>
+                            <li><strong>Saga pattern — compensating transactions:</strong> if Order Service succeeds but
+                                Inventory Service fails, you can't rollback the order in a distributed system. Instead,
+                                a <em>compensating transaction</em> runs: publish an <code>order.cancelled</code> event,
+                                refund the payment, restore inventory. This is the core of saga choreography.</li>
+                            <li><strong>RabbitMQ vs Kafka:</strong> RabbitMQ is a task queue — once a message is ACKed
+                                it's deleted. You cannot replay old messages. If you need event replay or audit trails
+                                (e.g., full order history), you need Kafka or a separate event store. Know which pattern
+                                your system uses and the implications.</li>
+                        </ul>
+                        <div class="ms-investigate">
+                            <span class="ms-inv-label">🔍 Investigate in your codebase</span>
+                            Find your payment webhook handler. Is there a <code>processed_webhook_ids</code> table or
+                            equivalent? Find your inventory decrement query — does it use a row lock? Search for
+                            compensating transaction logic. Find out if any RabbitMQ messages are critical enough to
+                            need replay — if yes, is there a separate event log?
+                        </div>
+                    </div>
+
+                </div>
+                <div class="ms-qa-block">
+                    <div class="ms-qa-label">✅ Questions you should be able to answer after Week 3</div>
+                    <div class="ms-qa-grid">
+                        <div class="ms-qa">If RabbitMQ goes down for 2 minutes during peak — which user-facing
+                            operations fail immediately? Which degrade gracefully?</div>
+                        <div class="ms-qa">A consumer crashes after processing a message but before ACKing — what does
+                            the customer see? What does your system do?</div>
+                        <div class="ms-qa">Your DLQ has 10,000 messages piling up — what's your runbook for diagnosing
+                            and replaying them?</div>
+                        <div class="ms-qa">Why is the inventory "quantity shown on PDP" eventually consistent but the
+                            quantity checked at checkout strongly consistent?</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 4 -->
+            <div class="ms-phase">
+                <div class="ms-phase-label" style="--phase-color: #34A853">Week 4 — React Frontend, APIs &amp;
+                    Full-System Observability</div>
+                <p class="ms-phase-goal">Goal: Connect the frontend to every backend layer. Understand how a customer
+                    action propagates end-to-end, and how your team knows when something is broken <em>before</em>
+                    customers do.</p>
+                <div class="ms-cols">
+
+                    <div class="ms-card">
+                        <div class="ms-card-title">⚛️ React at Ecom Scale</div>
+                        <ul class="ms-list">
+                            <li><strong>SSR vs CSR vs SSG per route:</strong> PDP (product detail page) needs SSR for
+                                SEO — Google must see the product content. Cart and user dashboard can be CSR since
+                                they're personalized and not indexed. Understand which rendering mode each route uses
+                                and why.</li>
+                            <li><strong>Core Web Vitals (CWV):</strong> Google's ranking signals measured in real user
+                                sessions — LCP (Largest Contentful Paint, target &lt;2.5s), INP (Interaction to Next
+                                Paint, target &lt;200ms), CLS (Cumulative Layout Shift, target &lt;0.1). Your ecom
+                                revenue is directly affected by these scores.</li>
+                            <li><strong>Server-state vs client-state:</strong> UI state (modals, tabs) lives in React
+                                state. Server-state (cart contents, product data) should be managed by TanStack Query
+                                (React Query) — it handles caching, deduplication, background refetch, and
+                                stale-while-revalidate automatically. Not Redux.</li>
+                            <li><strong>Code splitting:</strong> React.lazy + Suspense splits the bundle per route.
+                                Critical path should only load the JS for the current page — pdp.bundle.js shouldn't
+                                load on the homepage. Check your Webpack or Vite chunk analysis.</li>
+                            <li><strong>Hydration mismatches:</strong> if your SSR-rendered HTML differs from what React
+                                expects on the client (e.g., server renders a timestamp, client renders a different
+                                one), React throws a hydration error and falls back to full CSR — defeating the SSR
+                                performance benefit entirely.</li>
+                            <li><strong>CDN strategy:</strong> static assets use
+                                <code>Cache-Control: immutable, max-age=31536000</code> (content-addressed filenames).
+                                API responses use short TTLs (<code>s-maxage=60</code>) or <code>no-store</code> for
+                                personalized data. Understand which API routes your CDN is caching.
+                            </li>
+                        </ul>
+                        <div class="ms-investigate">
+                            <span class="ms-inv-label">🔍 Investigate in your codebase</span>
+                            Run a Lighthouse audit on your PDP and homepage. Check LCP, INP, CLS scores. Open Network
+                            tab and filter by JS — count bundles, find the largest. Check your bundle with <a
+                                href="https://www.npmjs.com/package/webpack-bundle-analyzer" target="_blank"
+                                class="resource-link">webpack-bundle-analyzer</a>. Find where TanStack Query or your
+                            data-fetching library is configured.
+                        </div>
+                    </div>
+
+                    <div class="ms-card">
+                        <div class="ms-card-title">🔭 Observability — How You Know Things Are Broken</div>
+                        <ul class="ms-list">
+                            <li><strong>Structured logging (Pino/Winston):</strong> logs must be JSON — not plain
+                                strings. Every log line needs a <code>correlationId</code> (trace ID from the incoming
+                                request). This is how you find all logs for a single customer's failing checkout across
+                                5 microservices in Datadog/Splunk.</li>
+                            <li><strong>Correlation ID propagation:</strong> the frontend generates a
+                                <code>X-Correlation-ID</code> header on every request. Node.js reads it, passes it to
+                                every downstream call (Postgres queries via log context, RabbitMQ message headers,
+                                outgoing HTTP). Without this, distributed debugging is nearly impossible.
+                            </li>
+                            <li><strong>4 Golden Signals (Google SRE):</strong> Latency (p50/p95/p99), Traffic (RPS),
+                                Errors (rate %), Saturation (CPU/memory/DB connection pool %). P99 checkout latency
+                                crossing 500ms is usually your most important alert.</li>
+                            <li><strong>Distributed tracing (OpenTelemetry):</strong> auto-instruments Node.js, Postgres
+                                (via <code>pg</code>), RabbitMQ, and HTTP clients. Each operation becomes a
+                                <em>span</em> — you see the full waterfall for a single request. Essential for
+                                diagnosing which layer caused a latency spike.
+                            </li>
+                            <li><strong>RabbitMQ observability:</strong> three critical metrics: queue depth (growing =
+                                consumers behind), consumer count (dropped to 0 = consumer crashed), DLQ depth (growing
+                                = silent processing failures). Wire these to PagerDuty.</li>
+                            <li><strong>K8s + Node.js health:</strong> <code>readinessProbe</code> tells K8s when a pod
+                                is ready to receive traffic. <code>livenessProbe</code> restarts a hung pod. Understand
+                                what your probes check — a bad liveness probe causes thrashing restarts during DB
+                                connection issues.</li>
+                        </ul>
+                        <div class="ms-investigate">
+                            <span class="ms-inv-label">🔍 Investigate in your codebase</span>
+                            Search for <code>X-Correlation-ID</code> or <code>x-request-id</code> — is it propagated
+                            through all service calls? Find your OpenTelemetry or tracing SDK setup. Pick a recent slow
+                            API call in your tracing tool and identify which span accounts for the most time. Check if
+                            RabbitMQ metrics feed into your primary dashboard.
+                        </div>
+                    </div>
+
+                </div>
+                <div class="ms-qa-block">
+                    <div class="ms-qa-label">✅ Questions you should be able to answer after Week 4</div>
+                    <div class="ms-qa-grid">
+                        <div class="ms-qa">A customer reports checkout is "broken" at 11pm — what's the exact sequence
+                            of dashboards and queries you run to diagnose the source in under 5 minutes?</div>
+                        <div class="ms-qa">Your p99 checkout latency spiked from 300ms to 2s — walk through every layer
+                            (React → Node.js → PgBouncer → Postgres/Cockroach → RabbitMQ) and identify where the
+                            bottleneck most likely is.</div>
+                        <div class="ms-qa">Which metrics tell you that you need to scale out Node.js instances before
+                            traffic peaks?</div>
+                        <div class="ms-qa">How would you design an A/B test on the checkout flow without breaking any
+                            consistency guarantees?</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Final callout -->
+            <div class="ms-final-card">
+                <div class="ms-final-icon">🎯</div>
+                <div class="ms-final-content">
+                    <div class="ms-final-title">After 4 weeks — what you should own</div>
+                    <div class="ms-final-body">You should be able to draw the full system architecture on a whiteboard
+                        from memory — from a customer clicking "Buy Now" to the order confirmation email landing in
+                        their inbox. Every arrow on that diagram should have a "why" you can articulate: why RabbitMQ
+                        and not a direct service call, why CockroachDB for that table and not Postgres, why that
+                        particular Jenkins stage exists. That level of understanding is what separates senior engineers
+                        from everyone else.</div>
+                </div>
+            </div>
+
+        </div>
+    </main>
 
     <script src="hld-app.js"></script>
 </body>
