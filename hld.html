@@ -12,6 +12,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
         rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="favicon-hld.svg">
     <link rel="stylesheet" href="hld.css">
 </head>
 
@@ -105,17 +106,26 @@
                         <div class="resource-item">
                             <span class="resource-tag alex">Alex Xu</span>
                             <span class="resource-text">Vol 1 — Ch 1, 2, 3: Memorize latency numbers, learn to estimate
-                                storage/bandwidth.</span>
+                                storage/bandwidth. The numbers from Ch 1 are what you'll be quoting verbatim in every
+                                interview.</span>
                         </div>
                         <div class="resource-item">
                             <span class="resource-tag gurus">Design Gurus</span>
                             <span class="resource-text">System Design Basics: Study Proxies, Load Balancers, and CAP
-                                Theorem.</span>
+                                Theorem. Also read the PACELC theorem — it's the more realistic model interviewers
+                                expect you to know.</span>
                         </div>
                         <div class="resource-item">
                             <span class="resource-tag jordan">Jordan (P1)</span>
                             <span class="resource-text">Masterclasses on <strong>Database Indexes</strong> — your cheat
                                 code for choosing databases.</span>
+                        </div>
+                        <div class="resource-item">
+                            <span class="resource-tag gaurav">Gaurav Sen</span>
+                            <span class="resource-text"><a href="https://www.youtube.com/c/GauravSensei" target="_blank"
+                                    class="resource-link">YouTube channel</a> — watch his videos on Consistent Hashing
+                                and Introduction to Databases. His intuition-first style fills gaps Jordan doesn't
+                                cover.</span>
                         </div>
                     </div>
                     <div class="week-takeaway">
@@ -161,23 +171,35 @@
                         <div class="resource-item">
                             <span class="resource-tag alex">Alex Xu</span>
                             <span class="resource-text">Vol 1 — Ch 5, 6; Vol 2 — Ch 7: Consistent Hashing and KV Stores.
-                                Learn how <strong>Virtual Nodes</strong> solve uneven data distribution.</span>
+                                Learn how <strong>Virtual Nodes</strong> solve uneven data distribution when a node
+                                crashes.</span>
                         </div>
                         <div class="resource-item">
                             <span class="resource-tag jordan">Jordan (P1)</span>
-                            <span class="resource-text">Videos on <strong>Isolation Levels</strong> and
-                                <strong>Replication</strong>.</span>
+                            <span class="resource-text">Videos on <strong>Isolation Levels</strong>,
+                                <strong>Replication</strong>, and his deep-dive on <strong>Leader Election</strong> —
+                                how systems like ZooKeeper use Raft to elect a leader without a split-brain
+                                scenario.</span>
+                        </div>
+                        <div class="resource-item">
+                            <span class="resource-tag gaurav">Gaurav Sen</span>
+                            <span class="resource-text">Watch his <strong>Consistent Hashing</strong> video — clearest
+                                visual explanation of the ring and virtual nodes.</span>
                         </div>
                         <div class="resource-item">
                             <span class="resource-tag gurus">Design Gurus</span>
-                            <span class="resource-text">Partitioning strategies.</span>
+                            <span class="resource-text">Sharding patterns: Range-based, Hash-based, and Directory-based.
+                                Know the hotspot problem and how to solve it.</span>
                         </div>
                     </div>
                     <div class="week-takeaway">
                         <div class="takeaway-label">🎯 Key Takeaway</div>
-                        <div class="takeaway-text">When asked <em>"What if two users book the same room
-                                simultaneously?"</em> — confidently explain <strong>Snapshot Isolation</strong>,
-                            <strong>Pessimistic Locking</strong>, or <strong>Optimistic Concurrency Control</strong>.
+                        <div class="takeaway-text">When asked <em>"What if two users book the same seat
+                                simultaneously?"</em> — explain <strong>Pessimistic Locking</strong> (safe, slow),
+                            <strong>Optimistic CC</strong> (fast, retry on conflict), or <strong>Snapshot
+                                Isolation</strong> (consistent read, no dirty reads). Also understand <strong>Raft
+                                consensus</strong> at a high level — how distributed systems agree on a leader without
+                            human intervention.
                         </div>
                     </div>
                 </div>
@@ -201,7 +223,7 @@
                 <div class="week-card" id="week-3" data-week="3">
                     <div class="week-card-header">
                         <div class="week-badge">Week 3</div>
-                        <h3 class="week-title">Stateless APIs &amp; ID Generation</h3>
+                        <h3 class="week-title">APIs, Caching &amp; ID Generation</h3>
                         <div class="week-check-wrap">
                             <button class="week-check-btn" id="wc-3" onclick="toggleWeek(3)"
                                 title="Mark week complete">✓</button>
@@ -210,21 +232,33 @@
                     <div class="week-resources">
                         <div class="resource-item">
                             <span class="resource-tag alex">Alex Xu</span>
-                            <span class="resource-text">Vol 1 — Ch 7, 8: Unique ID Generators and URL Shorteners.</span>
+                            <span class="resource-text">Vol 1 — Ch 6, 7, 8: Caching strategies, Unique ID Generators,
+                                and URL Shorteners. Ch 6 on caching is <em>critical</em> — cache invalidation is the
+                                hardest part.</span>
                         </div>
                         <div class="resource-item">
                             <span class="resource-tag jordan">Jordan (P2)</span>
                             <span class="resource-text"><a href="https://www.youtube.com/watch?v=5V6Lam8GZo4"
-                                    target="_blank" class="resource-link">TinyURL + PasteBin</a> — see Jordan apply
-                                fundamentals to a real system.</span>
+                                    target="_blank" class="resource-link">TinyURL + PasteBin</a> and <strong>Typeahead /
+                                    Autocomplete</strong> — the autocomplete question is extremely common at Google
+                                (tests Trie data structure knowledge).</span>
+                        </div>
+                        <div class="resource-item">
+                            <span class="resource-tag gaurav">Gaurav Sen</span>
+                            <span class="resource-text">Watch his <strong>Caching</strong> video — covers write-through,
+                                write-behind, write-around, and the cache stampede problem.</span>
                         </div>
                     </div>
                     <div class="week-takeaway">
                         <div class="takeaway-label">🎯 Key Takeaway</div>
-                        <div class="takeaway-text">Memorize Twitter's <strong>Snowflake ID</strong> structure (Timestamp
-                            + Datacenter ID + Machine ID + Sequence Number). Understand <strong>Base62
-                                encoding</strong>. Stop saying "I'll make an API." Write out exact REST endpoints:
-                            <code>POST /api/v1/urls</code> with <code>{"{"}"long_url": "..."{"}"}</code>.</div>
+                        <div class="takeaway-text">Memorize Twitter's <strong>Snowflake ID</strong> (Timestamp +
+                            Datacenter ID + Machine ID + Sequence). For <strong>Typeahead</strong>: a
+                            <strong>Trie</strong> holds prefixes in memory at each node, but at scale use a distributed
+                            approach — Cassandra for persistence, Redis for top-K per prefix. For caching: know
+                            <strong>LRU eviction</strong>, <strong>write-through vs. write-behind</strong>, and always
+                            mention <strong>cache stampede protection</strong> (probabilistic early expiration or
+                            locking).
+                        </div>
                     </div>
                 </div>
 
@@ -232,7 +266,7 @@
                 <div class="week-card" id="week-4" data-week="4">
                     <div class="week-card-header">
                         <div class="week-badge">Week 4</div>
-                        <h3 class="week-title">Read-Heavy Systems &amp; Asynchrony</h3>
+                        <h3 class="week-title">Read-Heavy Systems, Feeds &amp; Top-K</h3>
                         <div class="week-check-wrap">
                             <button class="week-check-btn" id="wc-4" onclick="toggleWeek(4)"
                                 title="Mark week complete">✓</button>
@@ -241,18 +275,33 @@
                     <div class="week-resources">
                         <div class="resource-item">
                             <span class="resource-tag alex">Alex Xu</span>
-                            <span class="resource-text">Vol 1 — Ch 10, 11: News Feeds and Notification Systems.</span>
+                            <span class="resource-text">Vol 1 — Ch 10, 11: News Feeds and Notification Systems. Pay
+                                attention to the push vs. pull notification delivery model (APNs for iOS, FCM for
+                                Android, silent push for background refresh).</span>
                         </div>
                         <div class="resource-item">
                             <span class="resource-tag jordan">Jordan (P2)</span>
-                            <span class="resource-text">Top K Leaderboard and Twitter Search breakdowns.</span>
+                            <span class="resource-text"><strong>Top K Leaderboard</strong> and <strong>Twitter
+                                    Search</strong>. The Top K problem is a direct test of probabilistic data structures
+                                — <strong>Count-Min Sketch</strong> for frequency estimation,
+                                <strong>HyperLogLog</strong> for unique counts.</span>
+                        </div>
+                        <div class="resource-item">
+                            <span class="resource-tag blog">Engineering Blog</span>
+                            <span class="resource-text">Read the <a
+                                    href="https://engineering.fb.com/2021/02/22/production-engineering/mysql/"
+                                    target="_blank" class="resource-link">Meta MySQL at Scale</a> post. Referencing real
+                                company decisions in your answers is a strong L4 signal.</span>
                         </div>
                     </div>
                     <div class="week-takeaway">
                         <div class="takeaway-label">🎯 Key Takeaway</div>
-                        <div class="takeaway-text">Master <strong>Fanout-on-Write</strong> (push new tweet to all
-                            followers immediately) vs. <strong>Fanout-on-Read</strong> (pull on demand — for celebrity
-                            accounts with millions of followers). Learn Redis clusters for pre-computed feeds.</div>
+                        <div class="takeaway-text">Master <strong>Fanout-on-Write</strong> (push to all followers at
+                            write time — fast reads, slow writes) vs. <strong>Fanout-on-Read</strong> (merge on query —
+                            for celebrities with 10M+ followers). For Top K trending: don't use a simple counter — use a
+                            <strong>Count-Min Sketch</strong> (hash to multiple arrays, take the minimum) to save ~99%
+                            memory at the cost of a small overcount error.
+                        </div>
                     </div>
                 </div>
             </div>
@@ -275,7 +324,7 @@
                 <div class="week-card" id="week-5" data-week="5">
                     <div class="week-card-header">
                         <div class="week-badge">Week 5</div>
-                        <h3 class="week-title">Persistent Connections &amp; Streaming</h3>
+                        <h3 class="week-title">Streaming, Web Crawlers &amp; Search</h3>
                         <div class="week-check-wrap">
                             <button class="week-check-btn" id="wc-5" onclick="toggleWeek(5)"
                                 title="Mark week complete">✓</button>
@@ -284,20 +333,33 @@
                     <div class="week-resources">
                         <div class="resource-item">
                             <span class="resource-tag alex">Alex Xu</span>
-                            <span class="resource-text">Vol 1 — Ch 12; Vol 2 — Ch 4: Chat Systems and Distributed
-                                Message Queues (Kafka).</span>
+                            <span class="resource-text">Vol 1 — Ch 9 (Web Crawler) and Ch 12 (Chat). Vol 2 — Ch 4
+                                (Kafka). The <strong>Web Crawler</strong> design is one of the most common Google
+                                interview questions — directly relevant.</span>
                         </div>
                         <div class="resource-item">
                             <span class="resource-tag jordan">Jordan (P2)</span>
-                            <span class="resource-text">Live Streaming (Twitch/YouTube) — distinct architecture for
-                                video protocols vs HTTP.</span>
+                            <span class="resource-text">Live Streaming (Twitch/YouTube) — understand the RTMP ingest →
+                                transcoding pipeline → HLS/DASH delivery chain. Also watch his <strong>Search
+                                    System</strong> video for inverted index design.</span>
+                        </div>
+                        <div class="resource-item">
+                            <span class="resource-tag gaurav">Gaurav Sen</span>
+                            <span class="resource-text">Watch his <strong>Message Queue</strong> video and pay attention
+                                to how Kafka's consumer groups enable parallel processing without duplicate
+                                delivery.</span>
                         </div>
                     </div>
                     <div class="week-takeaway">
                         <div class="takeaway-label">🎯 Key Takeaway</div>
-                        <div class="takeaway-text">Compare <strong>Long Polling</strong>, <strong>Server-Sent Events
-                                (SSE)</strong>, and <strong>WebSockets</strong>. Understand how Kafka acts as a shock
-                            absorber by storing data as an append-only log on disk.</div>
+                        <div class="takeaway-text">For <strong>Web Crawler</strong>: the bottleneck is URL deduplication
+                            at scale. A naive hash set won't fit in RAM for billions of URLs — use a <strong>Bloom
+                                Filter</strong> (space-efficient, allows small false positives). Deep dive: URL frontier
+                            (priority queue by domain), politeness (rate-limit per domain), DNS caching. For streaming:
+                            compare <strong>Long Polling</strong>, <strong>SSE</strong>, and
+                            <strong>WebSockets</strong>. Kafka acts as a shock absorber — append-only log, consumers
+                            pull at their own rate.
+                        </div>
                     </div>
                 </div>
 
@@ -305,7 +367,7 @@
                 <div class="week-card" id="week-6" data-week="6">
                     <div class="week-card-header">
                         <div class="week-badge">Week 6</div>
-                        <h3 class="week-title">Geospatial &amp; Transactional Services</h3>
+                        <h3 class="week-title">Geospatial, Transactions &amp; Job Scheduling</h3>
                         <div class="week-check-wrap">
                             <button class="week-check-btn" id="wc-6" onclick="toggleWeek(6)"
                                 title="Mark week complete">✓</button>
@@ -314,19 +376,32 @@
                     <div class="week-resources">
                         <div class="resource-item">
                             <span class="resource-tag alex">Alex Xu</span>
-                            <span class="resource-text">Vol 2 — Ch 1, 2, 3: Proximity Services and Google Maps.</span>
+                            <span class="resource-text">Vol 2 — Ch 1, 2, 3: Proximity Services and Google Maps. Also Ch
+                                8: Distributed Email — covers a rarely-studied domain that comes up at Meta.</span>
                         </div>
                         <div class="resource-item">
                             <span class="resource-tag jordan">Jordan (P2)</span>
-                            <span class="resource-text">Yelp/Google Places and Design TicketMaster — ultimate test of
-                                transactional safety.</span>
+                            <span class="resource-text">Yelp/Google Places and Design TicketMaster. Also look for his
+                                <strong>Distributed Job Scheduler</strong> video — common at Meta, Uber, Stripe. Tests
+                                your understanding of idempotency and exactly-once execution.</span>
+                        </div>
+                        <div class="resource-item">
+                            <span class="resource-tag blog">Engineering Blog</span>
+                            <span class="resource-text">Read <a
+                                    href="https://eng.uber.com/the-uber-engineering-tech-stack/" target="_blank"
+                                    class="resource-link">Uber's geospatial architecture</a> post — they moved from
+                                PostGIS to their own H3 hexagonal grid system. Great talking point.</span>
                         </div>
                     </div>
                     <div class="week-takeaway">
                         <div class="takeaway-label">🎯 Key Takeaway</div>
-                        <div class="takeaway-text">Understand <strong>Geohash</strong> (converting 2D map into a 1D
-                            string) vs. <strong>Quadtree</strong> (in-memory tree splitting the map into grids). For
-                            TicketMaster, observe strict database locks handling high-contention inventory.</div>
+                        <div class="takeaway-text"><strong>Geohash</strong> (2D → 1D string, nearby places share prefix,
+                            great for range queries) vs. <strong>Quadtree</strong> (in-memory, recursively splits dense
+                            areas, better for dynamic density). For <strong>Job Scheduler</strong>: the hard problems
+                            are idempotency (what if a job runs twice?), at-least-once vs. exactly-once delivery, and
+                            worker failure recovery. For TicketMaster: use <strong>SELECT … FOR UPDATE</strong>
+                            (pessimistic lock) during the booking window — not optimistic concurrency, because ticket
+                            inventory is too valuable to retry.</div>
                     </div>
                 </div>
             </div>
@@ -348,7 +423,7 @@
                 <div class="week-card" id="week-7" data-week="7">
                     <div class="week-card-header">
                         <div class="week-badge">Week 7</div>
-                        <h3 class="week-title">Heavy Storage &amp; Rate Limiting</h3>
+                        <h3 class="week-title">Storage, Rate Limiting &amp; Multi-Region</h3>
                         <div class="week-check-wrap">
                             <button class="week-check-btn" id="wc-7" onclick="toggleWeek(7)"
                                 title="Mark week complete">✓</button>
@@ -358,19 +433,36 @@
                         <div class="resource-item">
                             <span class="resource-tag alex">Alex Xu</span>
                             <span class="resource-text">Vol 1 — Ch 4, 14, 15; Vol 2 — Ch 9: Rate Limiters and
-                                YouTube/Drive architectures.</span>
+                                YouTube/Drive. <strong>Also Vol 2 — Ch 6 (Ad Click Aggregator)</strong> — tests your
+                                streaming and CDC knowledge. Highly asked at Meta/Google.</span>
                         </div>
                         <div class="resource-item">
                             <span class="resource-tag jordan">Jordan (P2)</span>
-                            <span class="resource-text">Design a Rate Limiter and Google Drive/Dropbox.</span>
+                            <span class="resource-text">Design a Rate Limiter and Google Drive/Dropbox. For multi-region
+                                design, watch his video on <strong>Distributed Systems Tradeoffs</strong> —
+                                active-passive vs. active-active replication.</span>
+                        </div>
+                        <div class="resource-item">
+                            <span class="resource-tag blog">Engineering Blog</span>
+                            <span class="resource-text">Read Netflix's <a
+                                    href="https://netflixtechblog.com/active-active-for-multi-regional-resiliency-c47719f6685b"
+                                    target="_blank" class="resource-link">Active-Active for Multi-Regional
+                                    Resiliency</a>. Google interviewers love when you mention stateless services +
+                                regional routing via Anycast.</span>
                         </div>
                     </div>
                     <div class="week-takeaway">
                         <div class="takeaway-label">🎯 Key Takeaway</div>
-                        <div class="takeaway-text">Never send a 10 GB file through your API server. Use
-                            <strong>Pre-signed URLs</strong> to upload directly to S3. Memorize the <strong>Token
-                                Bucket</strong> algorithm — implement it using Redis + Lua scripts to avoid race
-                            conditions.</div>
+                        <div class="takeaway-text">Never route a 10 GB upload through your API server — use
+                            <strong>Pre-signed S3 URLs</strong>. For rate limiting: memorize <strong>Token
+                                Bucket</strong> (allows burst) vs. <strong>Sliding Window Log</strong> (precise) vs.
+                            <strong>Fixed Window Counter</strong> (simple, cheap). Implement Token Bucket in Redis + Lua
+                            (atomic script = no race conditions). For multi-region: <strong>Active-Passive</strong> =
+                            simple, high RPO. <strong>Active-Active</strong> = low RPO but requires conflict resolution
+                            strategy — know which to use for each system type. Also understand <strong>Change Data
+                                Capture (CDC)</strong> via Debezium → Kafka for syncing databases across regions without
+                            tight coupling.
+                        </div>
                     </div>
                 </div>
 
@@ -387,9 +479,15 @@
                     <div class="week-resources">
                         <div class="resource-item">
                             <span class="resource-tag practice">Practice</span>
-                            <span class="resource-text">Drop the books. Pick 5–7 random problems from Playlist 2 or Alex
-                                Xu. Set a strict 45-minute countdown. Use Excalidraw. <strong>Talk out loud the entire
-                                    time.</strong></span>
+                            <span class="resource-text">Drop the books. Pick 5–7 problems from this list and do them
+                                under timed conditions in Excalidraw. <strong>Talk out loud the entire time.</strong>
+                                Prioritize: News Feed, URL Shortener, Rate Limiter, Web Crawler, Typeahead,
+                                TicketMaster, Dropbox.</span>
+                        </div>
+                        <div class="resource-item">
+                            <span class="resource-tag blog">Pramp / Interviewing.io</span>
+                            <span class="resource-text">Do at least 2 real mock interviews with another engineer. You
+                                will discover you talk very differently with a real person vs. alone.</span>
                         </div>
                     </div>
                     <div class="week-takeaway">
@@ -397,26 +495,28 @@
                         <div class="pacing-grid">
                             <div class="pacing-item">
                                 <div class="pacing-time">0–5 min</div>
-                                <div class="pacing-desc">Ask clarifying questions. Establish read/write ratio and scale.
-                                </div>
+                                <div class="pacing-desc">Clarifying questions. Read/write ratio, scale, latency SLA,
+                                    consistency requirement.</div>
                             </div>
                             <div class="pacing-item">
                                 <div class="pacing-time">5–10 min</div>
-                                <div class="pacing-desc">Define exact API endpoints and high-level database schema.
-                                </div>
+                                <div class="pacing-desc">Exact REST/RPC API endpoints + high-level DB schema (table
+                                    names + key columns). Run back-of-the-envelope estimate.</div>
                             </div>
                             <div class="pacing-item">
                                 <div class="pacing-time">10–25 min</div>
                                 <div class="pacing-desc">Draw the HLD: Client → CDN/LB → API Gateway → Microservices →
-                                    DB/Cache.</div>
+                                    DB/Cache. State WHY each component exists.</div>
                             </div>
                             <div class="pacing-item">
                                 <div class="pacing-time">25–40 min</div>
-                                <div class="pacing-desc">Deep Dive. Identify the major bottleneck and fix it.</div>
+                                <div class="pacing-desc">Name the single biggest bottleneck. Go deep on it — sharding,
+                                    caching, replication, consistency, failure modes.</div>
                             </div>
                             <div class="pacing-item">
                                 <div class="pacing-time">40–45 min</div>
-                                <div class="pacing-desc">Wrap up and summarize trade-offs.</div>
+                                <div class="pacing-desc">Summarize trade-offs made. Mention what you'd change at 10×
+                                    scale. Proactively flag failure modes.</div>
                             </div>
                         </div>
                     </div>
@@ -551,6 +651,55 @@
                             MB</span></div>
                     <div class="obj-size-row"><span class="obj-label">Video (per minute)</span><span class="obj-val">~50
                             MB</span></div>
+                </div>
+            </div>
+
+            <!-- Probabilistic Data Structures -->
+            <div class="cs-card full-width">
+                <div class="cs-card-header">
+                    <span class="cs-icon">🎲</span>
+                    <h3>6. Probabilistic Data Structures — L4 Differentiator</h3>
+                </div>
+                <p class="cs-intro">These come up in deep dives and instantly signal senior-level thinking. Know when to
+                    use each and what error guarantees they provide.</p>
+                <div class="prob-ds-grid">
+                    <div class="prob-ds-card">
+                        <div class="prob-ds-name">Bloom Filter</div>
+                        <div class="prob-ds-use">URL deduplication in web crawlers, spam detection, cache pre-check
+                        </div>
+                        <div class="prob-ds-how">Hash the item into multiple bit positions. <strong>No false
+                                negatives</strong> (if it says absent, it's absent). Small false positive rate. Uses ~10
+                            bits per element vs. 64-bit hash per element.</div>
+                        <div class="prob-ds-when">When: "How do you check if a URL has been crawled before at
+                            billions-of-URLs scale without RAM exploding?"</div>
+                    </div>
+                    <div class="prob-ds-card">
+                        <div class="prob-ds-name">HyperLogLog</div>
+                        <div class="prob-ds-use">Approximate unique counts: DAU, unique IPs, unique searches</div>
+                        <div class="prob-ds-how">Estimates cardinality using the max number of leading zeros in hashed
+                            values. Uses only <strong>~1.5 KB RAM</strong> regardless of set size. ~2% error rate.</div>
+                        <div class="prob-ds-when">When: "How does YouTube count 4B unique daily views without storing
+                            each viewer ID?" (Redis HLL natively)</div>
+                    </div>
+                    <div class="prob-ds-card">
+                        <div class="prob-ds-name">Count-Min Sketch</div>
+                        <div class="prob-ds-use">Frequency estimation: Top K trending topics, heavy hitter detection
+                        </div>
+                        <div class="prob-ds-how">Hash item into d arrays of width w; increment all. On query, take the
+                            <strong>minimum</strong> across all arrays. Overcounts (never undercounts). Memory: O(d ×
+                            w).
+                        </div>
+                        <div class="prob-ds-when">When: "How does Twitter find trending hashtags at 100K tweets/sec
+                            without storing all tweets?"</div>
+                    </div>
+                    <div class="prob-ds-card">
+                        <div class="prob-ds-name">Trie (Prefix Tree)</div>
+                        <div class="prob-ds-use">Autocomplete / Typeahead, IP routing tables, spell checkers</div>
+                        <div class="prob-ds-how">Tree where each node is a character. All descendants of a node share a
+                            prefix. Store top-K completions at each node for O(prefix-length) lookup.</div>
+                        <div class="prob-ds-when">When: "Design Google's Search Autocomplete." Store in Redis (hot
+                            prefix cache) + Cassandra (full Trie persistence).</div>
+                    </div>
                 </div>
             </div>
 
@@ -721,43 +870,86 @@
             <!-- Key concepts quick-ref -->
             <div class="concepts-grid">
                 <div class="concept-card">
-                    <div class="concept-title">🔀 Fanout Strategies</div>
+                    <div class="concept-title">� L4 Signal vs. L3 Signal</div>
                     <div class="concept-body">
-                        <div class="concept-row"><strong>Write</strong> — Push tweet to all followers at write time.
-                            Fast reads, slow writes. Best for accounts with few followers.</div>
-                        <div class="concept-row"><strong>Read</strong> — Pull/merge feeds at query time. Slower reads,
-                            no write overhead. Best for celebrity accounts (millions of followers).</div>
+                        <div class="concept-row"><strong>L3:</strong> "I'll add a cache." <strong>L4:</strong> "I'll add
+                            Redis with LRU eviction, write-through policy, and probabilistic early expiration to prevent
+                            stampedes."</div>
+                        <div class="concept-row"><strong>L3:</strong> "I'll shard the database." <strong>L4:</strong>
+                            "I'll shard by user_id using consistent hashing with 150 virtual nodes. Hot users get their
+                            own shard."</div>
+                        <div class="concept-row"><strong>L3:</strong> Waits to be asked about failure modes.
+                            <strong>L4:</strong> Proactively says "If the cache node goes down, here's what happens..."
+                        </div>
                     </div>
                 </div>
                 <div class="concept-card">
-                    <div class="concept-title">🔒 Concurrency Control</div>
+                    <div class="concept-title">🔀 Fanout + Caching Strategy</div>
                     <div class="concept-body">
-                        <div class="concept-row"><strong>Pessimistic Lock</strong> — Lock the row before read. Safe, but
-                            slow under high contention.</div>
-                        <div class="concept-row"><strong>Optimistic CC</strong> — No lock, check version on write; retry
-                            if conflict. High throughput.</div>
-                        <div class="concept-row"><strong>Snapshot Isolation</strong> — Each transaction sees a
-                            consistent snapshot; no dirty reads.</div>
+                        <div class="concept-row"><strong>Fanout-Write</strong> — Push to followers at write. Fast reads.
+                            Bad for celebrities (10M writes per post).</div>
+                        <div class="concept-row"><strong>Fanout-Read</strong> — Merge on query. Slow reads. Use for
+                            high-follower accounts.</div>
+                        <div class="concept-row"><strong>Hybrid</strong> — Write-fanout for normal users, read-fanout
+                            for celebrities. Instagram's actual approach.</div>
+                        <div class="concept-row"><strong>Cache Eviction</strong> — LRU (most common), LFU (better for
+                            viral content), TTL-based.</div>
                     </div>
                 </div>
                 <div class="concept-card">
-                    <div class="concept-title">📡 Real-Time Connections</div>
+                    <div class="concept-title">🔒 Concurrency &amp; Consistency</div>
                     <div class="concept-body">
-                        <div class="concept-row"><strong>Long Polling</strong> — Client holds connection open; server
-                            responds when new data. Simple.</div>
-                        <div class="concept-row"><strong>SSE</strong> — Server pushes to client over HTTP. One-way,
-                            lightweight.</div>
-                        <div class="concept-row"><strong>WebSocket</strong> — Full duplex. Required for chat/gaming.
-                            More complex to scale.</div>
+                        <div class="concept-row"><strong>Pessimistic Lock</strong> — <code>SELECT FOR UPDATE</code>.
+                            Safe, slow. Use for ticket booking, financial debit.</div>
+                        <div class="concept-row"><strong>Optimistic CC</strong> — Version check on write, retry on
+                            conflict. High throughput for low-contention.</div>
+                        <div class="concept-row"><strong>Snapshot Isolation</strong> — Each txn sees a consistent
+                            snapshot. No dirty reads.</div>
+                        <div class="concept-row"><strong>Eventual Consistency</strong> — Acceptable for likes/views
+                            counts. Never for balance or seat inventory.</div>
                     </div>
                 </div>
                 <div class="concept-card">
-                    <div class="concept-title">🗺️ Geo Distribution</div>
+                    <div class="concept-title">📡 Real-Time + Streaming</div>
                     <div class="concept-body">
-                        <div class="concept-row"><strong>Geohash</strong> — Maps 2D coordinates to a 1D string. Nearby
-                            points share a prefix. Good for range queries.</div>
-                        <div class="concept-row"><strong>Quadtree</strong> — In-memory tree. Recursively splits map
-                            grids. Better for dynamic density.</div>
+                        <div class="concept-row"><strong>Long Polling</strong> — Simple. Connection held open until
+                            data. ~1 req/sec per user overhead.</div>
+                        <div class="concept-row"><strong>SSE</strong> — One-way push over HTTP/2. Lightweight. Use for
+                            notifications, live scores.</div>
+                        <div class="concept-row"><strong>WebSocket</strong> — Full duplex. Required for chat. Scale by
+                            sticky sessions + pub/sub (Redis).</div>
+                        <div class="concept-row"><strong>CDC (Debezium → Kafka)</strong> — Capture DB changes as events
+                            without polling. Use for cross-service sync.</div>
+                    </div>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-title">🗺️ Geo + Multi-Region</div>
+                    <div class="concept-body">
+                        <div class="concept-row"><strong>Geohash</strong> — 2D → 1D string. Nearby points share prefix.
+                            Use for proximity search (Yelp, Uber).</div>
+                        <div class="concept-row"><strong>Quadtree</strong> — In-memory tree, recursive grid splits.
+                            Better for dynamic density.</div>
+                        <div class="concept-row"><strong>Active-Passive</strong> — One region serves traffic; failover
+                            to passive. Simple, higher RPO.</div>
+                        <div class="concept-row"><strong>Active-Active</strong> — Both regions serve traffic. Requires
+                            conflict resolution. Use for Google Search, payments at Stripe.</div>
+                    </div>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-title">� Technology Choice Cheat Sheet</div>
+                    <div class="concept-body">
+                        <div class="concept-row"><strong>Heavy writes, scale-out:</strong> Cassandra (LSM tree, no joins
+                            needed)</div>
+                        <div class="concept-row"><strong>Strong ACID, relational:</strong> PostgreSQL / MySQL with read
+                            replicas</div>
+                        <div class="concept-row"><strong>Text search, full-text:</strong> Elasticsearch (inverted index)
+                        </div>
+                        <div class="concept-row"><strong>Time-series metrics:</strong> InfluxDB or Prometheus + Grafana
+                        </div>
+                        <div class="concept-row"><strong>Graph queries:</strong> Neo4j or Amazon Neptune (social
+                            networks, fraud detection)</div>
+                        <div class="concept-row"><strong>Object storage:</strong> S3 (never serve large files through
+                            API servers)</div>
                     </div>
                 </div>
             </div>

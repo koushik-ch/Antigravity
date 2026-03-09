@@ -524,6 +524,17 @@ body {
     color: #fcd34d;
 }
 
+.resource-tag.gaurav {
+    background: rgba(52, 168, 83, 0.14);
+    color: #4ade80;
+}
+
+.resource-tag.blog {
+    background: rgba(20, 184, 166, 0.14);
+    color: #2dd4bf;
+}
+
+
 .resource-text {
     font-size: 0.85rem;
     color: var(--text-secondary);
@@ -617,6 +628,55 @@ body {
     font-size: 0.83rem;
     color: var(--text-secondary);
     line-height: 1.5;
+}
+
+/* ===== PROBABILISTIC DS ===== */
+.prob-ds-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.prob-ds-card {
+    background: rgba(124, 108, 240, 0.06);
+    border: 1px solid rgba(124, 108, 240, 0.2);
+    border-radius: 12px;
+    padding: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.prob-ds-name {
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: #a89af0;
+}
+
+.prob-ds-use {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.prob-ds-how {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.prob-ds-when {
+    font-size: 0.78rem;
+    color: #7ab4ff;
+    line-height: 1.5;
+    background: rgba(66, 133, 244, 0.08);
+    padding: 0.45rem 0.6rem;
+    border-radius: 7px;
+    border-left: 3px solid rgba(66, 133, 244, 0.4);
+    margin-top: 0.2rem;
 }
 
 /* ===== CHEATSHEET ===== */
