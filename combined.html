@@ -91,11 +91,131 @@
         <div class="nav-track">
             <button class="nav-pill active" data-category="all">All</button>
             <button class="nav-pill revisit-tab" id="revisitTabBtn" data-category="__revisit__">📌 Revisit</button>
+            <button class="nav-pill plan-tab" id="revisionTabBtn" data-category="__revision__">🗓️ 7-Day Revision</button>
         </div>
     </nav>
 
     <main class="content" id="mainContent"></main>
     <main class="content" id="revisitContent" style="display:none"></main>
+    
+    <main class="content" id="revisionContent" style="display:none">
+        <div class="roadmap-header">
+            <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem; background: linear-gradient(135deg, #4285F4, #7c6cf0); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">FAANG 7-Day Revision Sprint</h2>
+            <p style="color: var(--text-secondary); max-width: 600px; line-height: 1.6; margin-bottom: 2rem;">A highly focused 7-day loop designed to maintain muscle memory across all 15 core Google L4 topics.</p>
+        </div>
+
+        <div class="roadmap-grid">
+            <!-- Day 1 -->
+            <div class="week-card" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 1.5rem; border-radius: 12px; margin-bottom: 1rem;">
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                    <span style="background: rgba(66, 133, 244, 0.15); color: #7aB4ff; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700;">Day 1</span>
+                    <h3 style="font-size: 1.1rem; font-weight: 700;">Arrays, Strings & Two Pointers</h3>
+                </div>
+                <ul style="color: var(--text-secondary); font-size: 0.85rem; padding-left: 1.25rem; line-height: 1.6; margin-bottom: 1rem;">
+                    <li><strong>Array/Matrix:</strong> Prefix Sum, Cyclic Sort, In-place Tracking</li>
+                    <li><strong>String:</strong> Palindromes, Anagrams (Hashing), Window Formats</li>
+                    <li><strong>Two Pointers:</strong> Converging (2Sum/3Sum), Fast, & Slow (Cycles)</li>
+                </ul>
+                <div style="font-size: 0.8rem; color: #FCD34D; background: rgba(245, 158, 11, 0.1); padding: 0.75rem; border-radius: 8px; border-left: 3px solid #F59E0B;">
+                    <strong>Recall Drill:</strong> Write the Cycle Detection (Tortoise and Hare) template natively in 2 mins.
+                </div>
+            </div>
+
+            <!-- Day 2 -->
+            <div class="week-card" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 1.5rem; border-radius: 12px; margin-bottom: 1rem;">
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                    <span style="background: rgba(66, 133, 244, 0.15); color: #7aB4ff; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700;">Day 2</span>
+                    <h3 style="font-size: 1.1rem; font-weight: 700;">Sliding Window, Linked Lists & Stacks</h3>
+                </div>
+                <ul style="color: var(--text-secondary); font-size: 0.85rem; padding-left: 1.25rem; line-height: 1.6; margin-bottom: 1rem;">
+                    <li><strong>Sliding Window:</strong> Fixed Size (Max Params), Variable (Longest Substring)</li>
+                    <li><strong>Linked List:</strong> In-place Reversal, Intersection, Merging K Lists</li>
+                    <li><strong>Stack:</strong> Monotonic Decreasing (Next Greater Element), Parsing</li>
+                </ul>
+                <div style="font-size: 0.8rem; color: #FCD34D; background: rgba(245, 158, 11, 0.1); padding: 0.75rem; border-radius: 8px; border-left: 3px solid #F59E0B;">
+                    <strong>Recall Drill:</strong> Write the full Variable Sliding Window template ("expand right, shrink left conditionally").
+                </div>
+            </div>
+
+            <!-- Day 3 -->
+            <div class="week-card" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 1.5rem; border-radius: 12px; margin-bottom: 1rem;">
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                    <span style="background: rgba(66, 133, 244, 0.15); color: #7aB4ff; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700;">Day 3</span>
+                    <h3 style="font-size: 1.1rem; font-weight: 700;">Binary Search, Heaps & Greedy</h3>
+                </div>
+                <ul style="color: var(--text-secondary); font-size: 0.85rem; padding-left: 1.25rem; line-height: 1.6; margin-bottom: 1rem;">
+                    <li><strong>Binary Search:</strong> Value vs. Index, Min/Max Limits, Rotated Arrays</li>
+                    <li><strong>Heap:</strong> Top K Elements, 2-Heap Combinations (Median)</li>
+                    <li><strong>Greedy:</strong> Interval Merging, Jump Game Variants</li>
+                </ul>
+                <div style="font-size: 0.8rem; color: #FCA5A5; background: rgba(239, 68, 68, 0.1); padding: 0.75rem; border-radius: 8px; border-left: 3px solid #EF4444;">
+                    <strong>Crucible Drill:</strong> Write Binary Search on Answer logic (e.g., Koko Eating Bananas limit checks).
+                </div>
+            </div>
+
+            <!-- Day 4 -->
+            <div class="week-card" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 1.5rem; border-radius: 12px; margin-bottom: 1rem;">
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                    <span style="background: rgba(66, 133, 244, 0.15); color: #7aB4ff; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700;">Day 4</span>
+                    <h3 style="font-size: 1.1rem; font-weight: 700;">Trees & Systems Design Patterns</h3>
+                </div>
+                <ul style="color: var(--text-secondary); font-size: 0.85rem; padding-left: 1.25rem; line-height: 1.6; margin-bottom: 1rem;">
+                    <li><strong>Tree Traversal:</strong> Level Order (BFS), In/Pre/Post (DFS), LCA</li>
+                    <li><strong>Design:</strong> Tries (Prefix Trees), LRU Cache, Custom Data structures</li>
+                </ul>
+                <div style="font-size: 0.8rem; color: #FCD34D; background: rgba(245, 158, 11, 0.1); padding: 0.75rem; border-radius: 8px; border-left: 3px solid #F59E0B;">
+                    <strong>Recall Drill:</strong> Build out an LRU Cache backbone (Doubly Linked + HashMap) within 4 mins.
+                </div>
+            </div>
+
+            <!-- Day 5 -->
+            <div class="week-card" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 1.5rem; border-radius: 12px; margin-bottom: 1rem;">
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                    <span style="background: rgba(66, 133, 244, 0.15); color: #7aB4ff; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700;">Day 5</span>
+                    <h3 style="font-size: 1.1rem; font-weight: 700;">Graphs & Bit Manipulation</h3>
+                </div>
+                <ul style="color: var(--text-secondary); font-size: 0.85rem; padding-left: 1.25rem; line-height: 1.6; margin-bottom: 1rem;">
+                    <li><strong>Graph:</strong> DFS/BFS Counting, Topo Sort (Kahn's), Union-Find, Dijkstra</li>
+                    <li><strong>Bit Manipulation:</strong> XOR properties, Hamming Weights</li>
+                </ul>
+                <div style="font-size: 0.8rem; color: #C4B5FD; background: rgba(139, 92, 246, 0.1); padding: 0.75rem; border-radius: 8px; border-left: 3px solid #8B5CF6;">
+                    <strong>Heavy Drill:</strong> Write a fully optimized Union-Find class (Path Compression + Union by Rank).
+                </div>
+            </div>
+
+            <!-- Day 6 -->
+            <div class="week-card" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 1.5rem; border-radius: 12px; margin-bottom: 1rem;">
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                    <span style="background: rgba(66, 133, 244, 0.15); color: #7aB4ff; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700;">Day 6</span>
+                    <h3 style="font-size: 1.1rem; font-weight: 700;">Dynamic Programming (Deep Dive)</h3>
+                </div>
+                <ul style="color: var(--text-secondary); font-size: 0.85rem; padding-left: 1.25rem; line-height: 1.6; margin-bottom: 1rem;">
+                    <li><strong>1D DP:</strong> Fibonacci, Subsequence Sums (House Robber)</li>
+                    <li><strong>2D DP:</strong> Grid Paths, LCS, 0/1 Knapsack variations</li>
+                    <li><strong>State Combos:</strong> Stock Problems, Edit Distance</li>
+                </ul>
+                <div style="font-size: 0.8rem; color: #FCA5A5; background: rgba(239, 68, 68, 0.1); padding: 0.75rem; border-radius: 8px; border-left: 3px solid #EF4444;">
+                    <strong>Crucible Drill:</strong> Understand the grid DP framework. Write Longest Common Subsequence logic flawlessly.
+                </div>
+            </div>
+
+            <!-- Day 7 -->
+            <div class="week-card" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 1.5rem; border-radius: 12px; margin-bottom: 1rem;">
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                    <span style="background: rgba(66, 133, 244, 0.15); color: #7aB4ff; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700;">Day 7</span>
+                    <h3 style="font-size: 1.1rem; font-weight: 700;">Backtracking & Simulation</h3>
+                </div>
+                <ul style="color: var(--text-secondary); font-size: 0.85rem; padding-left: 1.25rem; line-height: 1.6; margin-bottom: 1rem;">
+                    <li><strong>Backtracking:</strong> Subsets, Permutations, Combination Sum, Word Search</li>
+                    <li><strong>Matrix Simulation:</strong> Spiral Paths, Game of Life checks</li>
+                </ul>
+                <div style="font-size: 0.8rem; color: #FCA5A5; background: rgba(239, 68, 68, 0.1); padding: 0.75rem; border-radius: 8px; border-left: 3px solid #EF4444;">
+                    <strong>Crucible Drill:</strong> Write the Subset generation algorithm recursively pushing and popping paths cleanly.
+                </div>
+            </div>
+
+        </div>
+    </main>
 
     <footer class="footer">
         <p>Built with ❤️ • <strong>Deduplicated Master List</strong></p>

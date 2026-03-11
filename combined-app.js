@@ -334,8 +334,11 @@ const TRACKED_DONE_KEY = STORAGE_KEY + '_tracked_done';
 let trackedDone = JSON.parse(localStorage.getItem(TRACKED_DONE_KEY) || '{}');
 
 const revisitContent = document.getElementById('revisitContent');
+const revisionContent = document.getElementById('revisionContent');
 const revisitTabBtn = document.getElementById('revisitTabBtn');
+const revisionTabBtn = document.getElementById('revisionTabBtn');
 let isRevisitView = false;
+let isRevisionView = false;
 
 function saveCustomRevisits() {
     localStorage.setItem(CUSTOM_REVISITS_KEY, JSON.stringify(customRevisits));
@@ -492,7 +495,9 @@ function handleAddRevisit(e) {
 
 function switchToRevisitView() {
     isRevisitView = true;
+    isRevisionView = false;
     mainContent.style.display = 'none';
+    revisionContent.style.display = 'none';
     revisitContent.style.display = '';
     document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('active'));
     revisitTabBtn.classList.add('active');
@@ -501,20 +506,36 @@ function switchToRevisitView() {
 
 function switchToMainView() {
     isRevisitView = false;
+    isRevisionView = false;
     mainContent.style.display = '';
     revisitContent.style.display = 'none';
+    revisionContent.style.display = 'none';
     renderCategories(searchInput.value);
     updateProgress();
+}
+
+function switchToRevisionView() {
+    isRevisitView = false;
+    isRevisionView = true;
+    mainContent.style.display = 'none';
+    revisitContent.style.display = 'none';
+    revisionContent.style.display = '';
+    document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('active'));
+    revisionTabBtn.classList.add('active');
 }
 
 revisitTabBtn.addEventListener('click', () => {
     if (!isRevisitView) switchToRevisitView();
 });
 
-// Any non-revisit nav pill click switches back to main view
+revisionTabBtn.addEventListener('click', () => {
+    if (!isRevisionView) switchToRevisionView();
+});
+
+// Any non-special nav pill click switches back to main view
 document.querySelector('.nav-track').addEventListener('click', (e) => {
     const pill = e.target.closest('.nav-pill');
-    if (pill && !pill.classList.contains('revisit-tab') && isRevisitView) {
+    if (pill && !pill.classList.contains('revisit-tab') && !pill.classList.contains('plan-tab') && (isRevisitView || isRevisionView)) {
         switchToMainView();
     }
 });
