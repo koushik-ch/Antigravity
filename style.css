@@ -1307,3 +1307,73 @@ mark {
 .problem-tag.solved {
     opacity: 0.7;
 }
+
+/* ===== RANDOM QUESTION BUTTON ===== */
+.random-question-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    animation: fadeInDown 0.7s var(--ease-out) 0.32s both;
+}
+
+.random-question-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--gradient-primary);
+    border: 1px solid rgba(124, 108, 240, 0.3);
+    border-radius: var(--pill-radius);
+    color: #fff;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s var(--ease-out);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 20px rgba(124, 108, 240, 0.25);
+}
+
+.random-question-btn:hover {
+    background: var(--gradient-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 28px rgba(124, 108, 240, 0.4);
+}
+
+.random-question-btn:active {
+    transform: translateY(0);
+}
+
+.random-question-icon {
+    font-size: 1.2rem;
+    animation: spin 3s linear infinite paused;
+}
+
+.random-question-btn:hover .random-question-icon {
+    animation-play-state: running;
+}
+
+.random-question-text {
+    letter-spacing: 0.02em;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ===== RESPONSIVE — RANDOM QUESTION BUTTON ===== */
+@media (max-width: 600px) {
+    .random-question-btn {
+        padding: 0.65rem 1.2rem;
+        font-size: 0.85rem;
+    }
+    
+    .random-question-icon {
+        font-size: 1.1rem;
+    }
+}

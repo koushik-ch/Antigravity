@@ -322,6 +322,39 @@ document.addEventListener('mousemove', (e) => {
     });
 });
 
+// ===== RANDOM QUESTION =====
+function pickRandomQuestion() {
+    const allProblems = [];
+    
+    // Flatten all problems from all categories and patterns
+    COMBINED_DATA.forEach(cat => {
+        cat.patterns.forEach(p => {
+            p.problems.forEach(pr => {
+                allProblems.push(pr.t);
+            });
+        });
+    });
+    
+    if (allProblems.length === 0) {
+        alert('No problems available!');
+        return;
+    }
+    
+    // Pick a random problem
+    const randomIndex = Math.floor(Math.random() * allProblems.length);
+    const randomProblem = allProblems[randomIndex];
+    
+    // Get LeetCode URL and navigate to it
+    const url = getLeetCodeUrl(randomProblem);
+    window.open(url, '_blank');
+}
+
+// Add event listener for random question button
+const randomQuestionBtn = document.getElementById('randomQuestionBtn');
+if (randomQuestionBtn) {
+    randomQuestionBtn.addEventListener('click', pickRandomQuestion);
+}
+
 // ===== INIT =====
 initNav();
 renderCategories();
