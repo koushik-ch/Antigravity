@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLD Design Patterns Cheatsheet</title>
+    <meta name="description"
+        content="A comprehensive cheatsheet for Creational, Structural, and Behavioral design patterns for top tech company interviews.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="design-patterns.css">
+</head>
+
+<body>
+    <!-- Animated background -->
+    <div class="bg-grid"></div>
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+    <div class="glow glow-3"></div>
+
+    <!-- Header -->
+    <header class="hero">
+        <div class="hero-badge">📐 Top-Tier LLD Prep • FAANG Standard</div>
+        <h1 class="hero-title">
+            <span class="gradient-text">Design Patterns</span>
+            <br>
+            <span class="subtitle">Ultimate Interview Cheatsheet</span>
+        </h1>
+        <p class="hero-desc">Master Creational, Structural, and Behavioral patterns. Recognize when to use them, how to implement them, and why they matter for scalable architecture.</p>
+
+        <div class="search-container">
+            <div class="search-box">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="m21 21-4.35-4.35" />
+                </svg>
+                <input type="text" id="searchInput" placeholder="Search for a pattern or concept..." autocomplete="off">
+                <kbd class="search-kbd">⌘K</kbd>
+            </div>
+        </div>
+    </header>
+
+    <!-- Category Navigation -->
+    <nav class="category-nav" id="categoryNav">
+        <div class="nav-track">
+            <button class="nav-pill active" data-category="all">All Patterns</button>
+            <button class="nav-pill" data-category="creational">Creational</button>
+            <button class="nav-pill" data-category="structural">Structural</button>
+            <button class="nav-pill" data-category="behavioral">Behavioral</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="content" id="mainContent">
+        <!-- Creational Section -->
+        <section class="pattern-section" id="section-creational">
+            <div class="section-header">
+                <h2>🛠️ Creational Patterns</h2>
+                <p class="section-desc">These design patterns provide various object creation mechanisms, which increase flexibility and reuse of existing code.</p>
+            </div>
+            <div class="pattern-list" id="list-creational">
+                
+                <!-- Factory Method -->
+                <div class="pattern-card filled">
+                    <h3>1. Factory Method</h3>
+                    <div class="pattern-card-content">
+                        <div class="pattern-notes">
+                            <img class="pattern-illustration" src="https://refactoring.guru/images/patterns/diagrams/factory-method/structure-2x.png" alt="Structure">
+                            <img class="pattern-illustration" src="https://refactoring.guru/images/patterns/diagrams/factory-method/example-2x.png" alt="Example">
+                            <div class="pattern-interview-prep">
+                                <h4>🎯 Interview Cheat Sheet</h4>
+                                <ul>
+                                    <li><strong>The Core Concept:</strong> Provides an interface to abstract away object instantiation (the <code>new</code> keyword), letting subclasses decide what concrete classes to create based on dynamic conditions or configurations.</li>
+                                    <li><strong>Mental Model:</strong> Think of a <em>Logistics App</em> or an <em>Asteroid Game</em>. Instead of complex <code>if/else</code> logic scattered everywhere to spawn a Ship vs. Truck (or a Fast vs. Slow Asteroid), you delegate the creation logic to dedicated Factory subclasses.</li>
+                                    <li><strong>FAANG Applications:</strong>
+                                        <ul>
+                                            <li><em>"Design a Notification System" (Amazon/Uber):</em> Decouples the main logic from the specifics of creating Email, SMS, or Push notification objects.</li>
+                                            <li><em>"Design a Document Reader" (Google):</em> The factory determines the appropriate parser when opening PDF, Word, or TXT files.</li>
+                                            <li><em>"Design an In-Memory File System" (Meta):</em> Spawning <code>Directory</code> or <code>File</code> nodes dynamically based on user input without exposing instantiation logic.</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            
+                        </div>
+                        <div class="pattern-code">
+                            <h4>☕ Java Implementation</h4>
+                            <pre><code class="language-java">interface Button { 
+    void render(); 
+}
+
+class WindowsButton implements Button { 
+    public void render() { 
+        System.out.println("Windows Button"); 
+    } 
+}
+
+// Creator Class
+abstract class Dialog {
+    // The Factory Method
+    abstract Button createButton();
+    
+    public void renderWindow() {
+        Button okButton = createButton();
+        okButton.render();
+    }
+}
+
+// Concrete Creator
+class WindowsDialog extends Dialog {
+    @Override
+    Button createButton() { 
+        return new WindowsButton(); 
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Abstract Factory -->
+                <div class="pattern-card filled">
+                    <h3>2. Abstract Factory</h3>
+                    <div class="pattern-card-content">
+                        <div class="pattern-notes">
+                            <img class="pattern-illustration" src="https://refactoring.guru/images/patterns/diagrams/abstract-factory/structure-2x.png" alt="Structure">
+                            <img class="pattern-illustration" src="https://refactoring.guru/images/patterns/diagrams/abstract-factory/example-2x.png" alt="Example">
+                            <div class="pattern-interview-prep">
+                                <h4>🎯 Interview Cheat Sheet</h4>
+                                <ul>
+                                    <li><strong>The Core Concept:</strong> A "factory of factories". It lets you produce <em>families</em> of related or dependent objects without specifying their concrete classes.</li>
+                                    <li><strong>Mental Model:</strong> Think of <em>UI Themes</em> (Light vs. Dark Mode) or a <em>Furniture Shop</em> (Modern vs. Victorian). You don't want to accidentally mix a Victorian Chair with a Modern Sofa. An Abstract Factory guarantees you get objects that match the current family/theme.</li>
+                                    <li><strong>FAANG Applications:</strong>
+                                        <ul>
+                                            <li><em>"Design a Payment Gateway System" (Stripe/PayPal):</em> Ensuring compatibility. E.g. Stripe requires StripeRequest and StripeValidator, while PayPal requires PayPalRequest and PayPalValidator.</li>
+                                            <li><em>"Design a Cross-Platform UI Framework" (Meta):</em> Rendering native UI elements (Buttons, Checkboxes) across Mac, Windows, and Linux simultaneously without mixing them.</li>
+                                            <li><em>"Design a Cloud Infrastructure Provisioner" (AWS/Google):</em> Generating sets of related resources (VM, Storage, Network) specific to AWS vs. GCP using a single codebase.</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            
+                        </div>
+                        <div class="pattern-code">
+                            <h4>☕ Java Implementation</h4>
+                            <pre><code class="language-java">interface GUIFactory {
+    Button createButton();
+    Checkbox createCheckbox();
+}
+
+class WinFactory implements GUIFactory {
+    public Button createButton() { return new WinButton(); }
+    public Checkbox createCheckbox() { return new WinCheckbox(); }
+}
+
+class Application {
+    private Button button;
+    
+    // The app doesn't know the exact concrete classes
+    public Application(GUIFactory factory) {
+        button = factory.createButton();
+    }
+    
+    public void paint() { 
+        button.paint(); 
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Builder -->
+                <div class="pattern-card filled">
+                    <h3>3. Builder</h3>
+                    <div class="pattern-card-content">
+                        <div class="pattern-notes">
+                            <img class="pattern-illustration" src="https://refactoring.guru/images/patterns/diagrams/builder/structure-2x.png" alt="Structure">
+                            <img class="pattern-illustration" src="https://refactoring.guru/images/patterns/diagrams/builder/example-en-2x.png" alt="Example">
+                            <div class="pattern-interview-prep">
+                                <h4>🎯 Interview Cheat Sheet</h4>
+                                <ul>
+                                    <li><strong>The Core Concept:</strong> Extracts object construction into separate <code>Builder</code> objects, allowing you to construct complex objects step by step and avoid massive "telescoping" constructors.</li>
+                                    <li><strong>Mental Model:</strong> Think of <em>Building a House</em>. It's built step-by-step (walls, roof, pool, garage). A <code>Director</code> class can even control the sequence of the builder's steps.</li>
+                                    <li><strong>FAANG Applications:</strong>
+                                        <ul>
+                                            <li><em>"Design an SDK or API Client" (Amazon/Google):</em> Building complex HTTP requests with optional headers, auth tokens, and payloads. It prevents bloated "telescoping" constructors.</li>
+                                            <li><em>"Design a Query Builder / ORM" (Meta):</em> Constructing complex SQL queries (SELECT, WHERE, JOIN) step-by-step before calling <code>.execute()</code>.</li>
+                                            <li><em>"Design a Document Converter" (Microsoft):</em> Parsing an RTF document and step-by-step building an HTML or PDF representation using different builders under a single director.</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            
+                        </div>
+                        <div class="pattern-code">
+                            <h4>☕ Java Implementation</h4>
+                            <pre><code class="language-java">class Car {
+    private String engine;
+    private int seats;
+    
+    // Private constructor prevents direct instantiation
+    private Car(Builder builder) {
+        this.engine = builder.engine;
+        this.seats = builder.seats;
+    }
+    
+    public static class Builder {
+        private String engine;
+        private int seats;
+        
+        public Builder setEngine(String engine) {
+            this.engine = engine;
+            return this;
+        }
+        public Builder setSeats(int seats) {
+            this.seats = seats;
+            return this;
+        }
+        public Car build() {
+            return new Car(this);
+        }
+    }
+}
+// Usage: Car c = new Car.Builder().setSeats(4).build();</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prototype -->
+                <div class="pattern-card filled">
+                    <h3>4. Prototype</h3>
+                    <div class="pattern-card-content">
+                        <div class="pattern-notes">
+                            <img class="pattern-illustration" src="https://refactoring.guru/images/patterns/diagrams/prototype/structure-2x.png" alt="Structure">
+                            <img class="pattern-illustration" src="https://refactoring.guru/images/patterns/diagrams/prototype/example-2x.png" alt="Example">
+                            <div class="pattern-interview-prep">
+                                <h4>🎯 Interview Cheat Sheet</h4>
+                                <ul>
+                                    <li><strong>The Core Concept:</strong> Lets you copy existing objects without making your code dependent on their classes. Usually implemented via a <code>clone()</code> method.</li>
+                                    <li><strong>Mental Model:</strong> Think of <em>Mitotic Cell Division</em> or copying a template document. The original object acts as the prototype and takes an active role in creating its own identical copy.</li>
+                                    <li><strong>FAANG Applications:</strong>
+                                        <ul>
+                                            <li><em>"Design a Game Engine" (Uber/Meta):</em> Instead of costly DB hits or parsing JSON to recreate heavy objects (like NPCs), keep pre-initialized prototypes in a registry and just <code>clone()</code> them when needed.</li>
+                                            <li><em>"Design a Collaborative Document Editor" (Google Docs):</em> When a user duplicates a massive slide or document page, a deep clone is much faster than re-instantiating all child elements.</li>
+                                            <li><em>"Design a Configuration Registry" (AWS):</em> Bootstrapping new microservices with identical base configurations by cloning a master template config.</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            
+                        </div>
+                        <div class="pattern-code">
+                            <h4>☕ Java Implementation</h4>
+                            <pre><code class="language-java">abstract class Shape implements Cloneable {
+    public int x, y;
+    
+    public Shape() {}
+    
+    // Copy constructor
+    public Shape(Shape target) {
+        if (target != null) {
+            this.x = target.x;
+            this.y = target.y;
+        }
+    }
+    
+    public abstract Shape clone();
+}
+
+class Circle extends Shape {
+    public int radius;
+    
+    public Circle(Circle target) {
+        super(target);
+        if (target != null) { 
+            this.radius = target.radius; 
+        }
+    }
+    
+    @Override
+    public Shape clone() { 
+        return new Circle(this); 
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Singleton -->
+                <div class="pattern-card filled">
+                    <h3>5. Singleton</h3>
+                    <div class="pattern-card-content">
+                        <div class="pattern-notes">
+                            <img class="pattern-illustration" src="https://refactoring.guru/images/patterns/diagrams/singleton/structure-en-2x.png" alt="Structure">
+                            <div class="pattern-interview-prep">
+                                <h4>🎯 Interview Cheat Sheet</h4>
+                                <ul>
+                                    <li><strong>The Core Concept:</strong> Ensures a class has only one instance and provides a global access point. It relies on a private constructor and a public static <code>getInstance()</code> method.</li>
+                                    <li><strong>Mental Model:</strong> Think of <em>The Government</em>. A country has only one official government globally accessible by title.</li>
+                                    <li><strong>FAANG Applications:</strong>
+                                        <ul>
+                                            <li><em>"Design a Logger or DB Connection Pool" (General FAANG):</em> You must ensure only one instance coordinates writes to a file or manages limited DB connections. Knowing how to implement <strong>Double-Checked Locking</strong> is critical.</li>
+                                            <li><em>"Design an In-Memory Cache" (Amazon):</em> A single, globally accessible cache store that multiple threads read/write to.</li>
+                                            <li><em>"Design a Rate Limiter" (Stripe/Uber):</em> A centralized component tracking IP requests across the entire application lifecycle.</li>
+                                        </ul>
+                                    </li>
+                                    <li>⚠️ <strong>Red Flag / Anti-Pattern:</strong> In modern design, Singleton is often considered a code smell. It introduces untestable global state and incorrectly assumes you will <em>never</em> need a second instance (e.g., a single Chat Room that later needs to scale to multiple rooms).</li>
+                                </ul>
+                            </div>
+
+                            
+                        </div>
+                        <div class="pattern-code">
+                            <h4>☕ Java Implementation</h4>
+                            <pre><code class="language-java">public class Database {
+    // volatile ensures changes to instance are 
+    // immediately visible to all threads
+    private static volatile Database instance;
+    
+    // Private constructor
+    private Database() {}
+    
+    // Double-checked locking
+    public static Database getInstance() {
+        if (instance == null) {
+            synchronized (Database.class) {
+                if (instance == null) {
+                    instance = new Database();
+                }
+            }
+        }
+        return instance;
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Structural Section -->
+        <section class="pattern-section" id="section-structural">
+            <div class="section-header">
+                <h2>🧱 Structural Patterns</h2>
+                <p class="section-desc">These patterns explain how to assemble objects and classes into larger structures while keeping these structures flexible and efficient.</p>
+            </div>
+            <div class="pattern-list" id="list-structural">
+
+                <!-- 1. Adapter -->
+                <div class="pattern-card filled">
+                    <h3>1. Adapter</h3>
+                    <div class="pattern-card-content">
+                        <div class="pattern-notes">
+                            <img class="pattern-illustration" src="https://refactoring.guru/images/patterns/diagrams/adapter/structure-object-adapter-2x.png" alt="Adapter Structure">
+                            <div class="pattern-interview-prep">
+                                <h4>🎯 Interview Cheat Sheet</h4>
+                                <ul>
+                                    <li><strong>The Core Concept:</strong> Allows objects with incompatible interfaces to collaborate by wrapping one object to adapt its interface to the other.</li>
+                                    <li><strong>Mental Model:</strong> Think of a <em>Power Plug Adapter</em> or a <em>USB-to-SD Card Reader</em>. You have an SD card, but your laptop only accepts USB. The adapter translates between the two interfaces.</li>
+                                    <li><strong>FAANG Applications:</strong>
+                                        <ul>
+                                            <li><em>"Design a Payment Gateway Integrator" (Stripe/PayPal):</em> Unifying a messy legacy XML payment API and a modern REST JSON API under one common internal interface.</li>
+                                            <li><em>"Design a Third-Party Auth Wrapper" (Google):</em> Adapting various OAuth providers (Facebook, Twitter) to a standardized <code>UserAuth</code> interface.</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>📺 Video Insight (ep 8):</strong> Instead of changing existing code (which violates the Open-Closed Principle), the Adapter implements the Target interface and wraps the Adaptee. E.g. Making a Turkey act like a Duck.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="pattern-code">
+                            <h4>☕ Java Implementation</h4>
+                            <pre><code class="language-java">// Target interface
+interface UsbPort { void plugInUsb(); }
+
+// Adaptee (Incompatible interface)
+class SdCard {
+    public void insertIntoSlot() { System.out.println("SD Card inserted."); }
+}
+
+// Adapter
+class SdCardAdapter implements UsbPort {
+    private SdCard sdCard;
+    
+    public SdCardAdapter(SdCard sdCard) {
+        this.sdCard = sdCard;
+    }
+    
+    @Override
+    public void plugInUsb() {
+        sdCard.insertIntoSlot();
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Bridge -->
+                <div class="pattern-card filled">
+                    <h3>2. Bridge</h3>
+                    <div class="pattern-card-content">
+                        <div class="pattern-notes">
+                            <img class="pattern-illustration" src="https://refactoring.guru/images/patterns/diagrams/bridge/structure-en-2x.png" alt="Bridge Structure">
+                            <div class="pattern-interview-prep">
+                                <h4>🎯 Interview Cheat Sheet</h4>
+                                <ul>
+                                    <li><strong>The Core Concept:</strong> Splits a large class into two separate hierarchies—Abstraction and Implementation—which can be developed independently. Prefer composition over inheritance.</li>
+                                    <li><strong>Mental Model:</strong> Think of <em>Universal Remote Controls</em>. You have a Remote (Abstraction) and a TV (Implementation). Instead of creating <code>SonyAdvancedRemote</code> and <code>SamsungBasicRemote</code>, you compose a generic <code>Remote</code> with a <code>Device</code> interface.</li>
+                                    <li><strong>FAANG Applications:</strong>
+                                        <ul>
+                                            <li><em>"Design a Cross-Platform GUI Toolkit" (Apple):</em> Separating logical UI components (Button, Window) from OS-specific rendering APIs (WindowsRenderer, MacRenderer).</li>
+                                            <li><em>"Design a Messaging App" (Meta):</em> Separating the logical message (EncryptedMessage) from the transmission protocol (SMS, WebSockets).</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>📺 Video Insight (ep 11):</strong> Prevents the "Cartesian Product" class explosion problem where adding one dimension of variation requires multiplying all existing subclasses.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="pattern-code">
+                            <h4>☕ Java Implementation</h4>
+                            <pre><code class="language-java">// Implementation
+interface Device {
+    void turnOn();
+    void turnOff();
+}
+
+// Abstraction
+abstract class RemoteControl {
+    protected Device device;
+    
+    public RemoteControl(Device device) { this.device = device; }
+    public abstract void togglePower();
+}
+
+// Refined Abstraction
+class AdvancedRemote extends RemoteControl {
+    public AdvancedRemote(Device device) { super(device); }
+    
+    @Override
+    public void togglePower() {
+        // delegates to device
+        device.turnOn(); 
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Composite -->
+                <div class="pattern-card filled">
+                    <h3>3. Composite</h3>
+                    <div class="pattern-card-content">
+                        <div class="pattern-notes">
+                            <img class="pattern-illustration" src="https://refactoring.guru/images/patterns/diagrams/composite/structure-en-2x.png" alt="Composite Structure">
+                            <div class="pattern-interview-prep">
+                                <h4>🎯 Interview Cheat Sheet</h4>
+                                <ul>
+                                    <li><strong>The Core Concept:</strong> Lets you compose objects into tree structures and work with them as if they were individual objects.</li>
+                                    <li><strong>Mental Model:</strong> Think of an <em>OS File System</em> or a <em>Delivery Box</em>. A folder contains files or other folders. A box contains items or smaller boxes. You call <code>getSize()</code> on the root folder, and it recursively calculates everything.</li>
+                                    <li><strong>FAANG Applications:</strong>
+                                        <ul>
+                                            <li><em>"Design a File System" (Microsoft):</em> <code>Directory</code> and <code>File</code> both implement <code>FileSystemNode</code>.</li>
+                                            <li><em>"Design a UI Component Tree" (Meta/React):</em> Elements and Containers. Calling <code>.render()</code> on the root DOM node cascades down.</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>📺 Video Insight (ep 14):</strong> Treats individual objects (Leaves) and compositions (Nodes) uniformly. Often used for Menus containing Sub-Menus and MenuItems.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="pattern-code">
+                            <h4>☕ Java Implementation</h4>
+                            <pre><code class="language-java">interface FileSystemNode {
+    int getSize();
+}
+
+class File implements FileSystemNode {
+    private int size;
+    public File(int size) { this.size = size; }
+    public int getSize() { return size; }
+}
+
+class Directory implements FileSystemNode {
+    private List<FileSystemNode> children = new ArrayList<>();
+    
+    public void add(FileSystemNode node) { children.add(node); }
+    
+    public int getSize() {
+        return children.stream().mapToInt(FileSystemNode::getSize).sum();
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Decorator -->
+                <div class="pattern-card filled">
+                    <h3>4. Decorator</h3>
+                    <div class="pattern-card-content">
+                        <div class="pattern-notes">
+                            <img class="pattern-illustration" src="https://refactoring.guru/images/patterns/diagrams/decorator/structure-2x.png" alt="Decorator Structure">
+                            <div class="pattern-interview-prep">
+                                <h4>🎯 Interview Cheat Sheet</h4>
+                                <ul>
+                                    <li><strong>The Core Concept:</strong> Lets you dynamically attach new behaviors to objects by placing them inside special wrapper objects that contain the behaviors.</li>
+                                    <li><strong>Mental Model:</strong> Think of <em>Wearing Clothes</em>. You are a base object. You put on a sweater (Decorator 1) and a raincoat (Decorator 2). You still implement the "Human" interface, but your behavior (warmth, waterproof) dynamically stacks.</li>
+                                    <li><strong>FAANG Applications:</strong>
+                                        <ul>
+                                            <li><em>"Design a Coffee Point-of-Sale" (UberEats):</em> Stacking condiments (Milk, Mocha) onto a base Beverage without subclass explosions.</li>
+                                            <li><em>"Design a Network Data Stream" (Java I/O):</em> Wrapping a file stream with <code>GZIPOutputStream</code> then <code>BufferedOutputStream</code>.</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>📺 Video Insight (ep 3):</strong> A primary application of the "Open-Closed Principle". It wraps the object to add functionality at runtime rather than relying on static compile-time inheritance.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="pattern-code">
+                            <h4>☕ Java Implementation</h4>
+                            <pre><code class="language-java">interface Coffee { double getCost(); }
+
+class SimpleCoffee implements Coffee {
+    public double getCost() { return 2.0; }
+}
+
+abstract class CoffeeDecorator implements Coffee {
+    protected Coffee decoratedCoffee;
+    public CoffeeDecorator(Coffee coffee) { this.decoratedCoffee = coffee; }
+}
+
+class MilkDecorator extends CoffeeDecorator {
+    public MilkDecorator(Coffee coffee) { super(coffee); }
+    
+    public double getCost() {
+        return super.decoratedCoffee.getCost() + 0.5;
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. Facade -->
+                <div class="pattern-card filled">
+                    <h3>5. Facade</h3>
+                    <div class="pattern-card-content">
+                        <div class="pattern-notes">
+                            <img class="pattern-illustration" src="https://refactoring.guru/images/patterns/diagrams/facade/structure-2x.png" alt="Facade Structure">
+                            <div class="pattern-interview-prep">
+                                <h4>🎯 Interview Cheat Sheet</h4>
+                                <ul>
+                                    <li><strong>The Core Concept:</strong> Provides a simplified, higher-level interface to a complex subsystem of classes, libraries, or frameworks.</li>
+                                    <li><strong>Mental Model:</strong> Think of a <em>Smart Home Hub</em>. Instead of manually controlling the TV, lights, and AC separately, you tell the Hub "Movie Mode" and it orchestrates the complex subsystems behind the scenes.</li>
+                                    <li><strong>FAANG Applications:</strong>
+                                        <ul>
+                                            <li><em>"Design a Video Conversion Library" (Netflix):</em> Hiding codec extraction, bitrates, and audio mixing behind a simple <code>convert("file.mp4")</code>.</li>
+                                            <li><em>"Design an Order Processing System" (Amazon):</em> Hiding Inventory, Payment, and Shipping APIs behind a single <code>checkout()</code> method.</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>📺 Video Insight (ep 9):</strong> Directly implements the "Principle of Least Knowledge" (Law of Demeter). It decouples the client code from the inner workings of a complex subsystem.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="pattern-code">
+                            <h4>☕ Java Implementation</h4>
+                            <pre><code class="language-java">// Complex subsystem parts
+class InventorySystem { void check() {} }
+class PaymentSystem { void process() {} }
+class ShippingSystem { void ship() {} }
+
+// Facade
+class OrderFacade {
+    private InventorySystem inventory = new InventorySystem();
+    private PaymentSystem payment = new PaymentSystem();
+    private ShippingSystem shipping = new ShippingSystem();
+    
+    public void placeOrder() {
+        inventory.check();
+        payment.process();
+        shipping.ship();
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. Flyweight -->
+                <div class="pattern-card filled">
+                    <h3>6. Flyweight</h3>
+                    <div class="pattern-card-content">
+                        <div class="pattern-notes">
+                            <img class="pattern-illustration" src="https://refactoring.guru/images/patterns/diagrams/flyweight/structure-2x.png" alt="Flyweight Structure">
+                            <div class="pattern-interview-prep">
+                                <h4>🎯 Interview Cheat Sheet</h4>
+                                <ul>
+                                    <li><strong>The Core Concept:</strong> Fits more objects into RAM by sharing common parts of state between multiple objects (intrinsic state) instead of keeping all data in each object.</li>
+                                    <li><strong>Mental Model:</strong> Think of a <em>Forest in a Video Game</em>. Instead of 1,000,000 tree objects each storing a heavy 3D mesh, store the mesh in one <code>TreeModel</code> (intrinsic) and let the lightweight <code>Tree</code> objects (extrinsic: X, Y coords) reference it.</li>
+                                    <li><strong>FAANG Applications:</strong>
+                                        <ul>
+                                            <li><em>"Design a Game Engine" (Epic/Meta):</em> Rendering thousands of particles, bullets, or NPCs by sharing the base models and textures.</li>
+                                            <li><em>"Design a Text Editor" (Google Docs):</em> Storing font and formatting data for millions of characters efficiently to prevent browser crashes.</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="pattern-code">
+                            <h4>☕ Java Implementation</h4>
+                            <pre><code class="language-java">// Intrinsic State (Heavy, Shared)
+class TreeType {
+    private String name;
+    private String color;
+    private String otherTreeData;
+    // constructor & methods
+}
+
+// Factory to manage shared pool
+class TreeFactory {
+    static Map<String, TreeType> treeTypes = new HashMap<>();
+    public static TreeType getTreeType(String name) {
+        return treeTypes.computeIfAbsent(name, n -> new TreeType(n));
+    }
+}
+
+// Extrinsic State (Lightweight, Unique)
+class Tree {
+    private int x, y;
+    private TreeType type; // Reference to shared state
+    
+    public Tree(int x, int y, TreeType type) {
+        this.x = x; this.y = y; this.type = type;
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. Proxy -->
+                <div class="pattern-card filled">
+                    <h3>7. Proxy</h3>
+                    <div class="pattern-card-content">
+                        <div class="pattern-notes">
+                            <img class="pattern-illustration" src="https://refactoring.guru/images/patterns/diagrams/proxy/structure-2x.png" alt="Proxy Structure">
+                            <div class="pattern-interview-prep">
+                                <h4>🎯 Interview Cheat Sheet</h4>
+                                <ul>
+                                    <li><strong>The Core Concept:</strong> Provides a substitute or placeholder for another object to control access to it, allowing you to intercept requests before or after they reach the original object.</li>
+                                    <li><strong>Mental Model:</strong> Think of a <em>Credit Card</em> or a <em>Club Bouncer</em>. A credit card is a proxy for a bank account (lazy loading of cash). A bouncer checks ID before letting you access the club (access control).</li>
+                                    <li><strong>FAANG Applications:</strong>
+                                        <ul>
+                                            <li><em>"Design a Rate Limiter / API Gateway" (Stripe/Netflix):</em> A <strong>Protection Proxy</strong> that blocks unauthorized or excessive requests before hitting the actual service.</li>
+                                            <li><em>"Design an Image Viewer with Infinite Scroll" (Pinterest):</em> A <strong>Virtual Proxy</strong> that shows a placeholder and only loads the high-res image when it scrolls into view (Lazy Initialization).</li>
+                                            <li><em>"Design a Distributed Cache" (Redis):</em> A <strong>Remote Proxy</strong> that handles network communication transparently.</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="pattern-code">
+                            <h4>☕ Java Implementation</h4>
+                            <pre><code class="language-java">interface VideoDownloader { void downloadVideo(String url); }
+
+class RealDownloader implements VideoDownloader {
+    public void downloadVideo(String url) {
+        System.out.println("Downloading from network...");
+    }
+}
+
+class CachedDownloaderProxy implements VideoDownloader {
+    private RealDownloader downloader = new RealDownloader();
+    private Map<String, String> cache = new HashMap<>();
+    
+    public void downloadVideo(String url) {
+        if (!cache.containsKey(url)) {
+            downloader.downloadVideo(url);
+            cache.put(url, "Downloaded Data");
+        } else {
+            System.out.println("Returning from cache...");
+        }
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COMPARISON SECTION -->
+                <div class="pattern-card filled" style="border-left: 4px solid #f59e0b;">
+                    <h3>⚔️ Pattern Comparisons: Composite vs Decorator</h3>
+                    <div class="pattern-card-content">
+                        <div class="pattern-notes">
+                            <div class="pattern-interview-prep" style="border-left-color: #f59e0b; background: rgba(245, 158, 11, 0.05);">
+                                <h4>📺 Video Insight (ep 15)</h4>
+                                <ul>
+                                    <li><strong>The Confusion:</strong> Both patterns rely on recursive composition and implementing a shared interface. They look identical structurally in code.</li>
+                                    <li><strong>The Difference (Intent):</strong>
+                                        <ul>
+                                            <li><strong>Composite:</strong> Focuses on aggregating objects into a <em>part-whole hierarchy</em> (a tree). The composite object itself adds <strong>no new behavior</strong>; it simply delegates the call to its children (e.g. summing up file sizes).</li>
+                                            <li><strong>Decorator:</strong> Focuses on <em>dynamically adding new behavior</em> or responsibilities to a <strong>single</strong> wrapped object at runtime (e.g. adding tax to a price).</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Mental Check:</strong> Ask yourself: <em>"Am I managing a collection of items (Composite), or am I extending the behavior of one specific item (Decorator)?"</em></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="pattern-code">
+                            <img class="pattern-illustration" src="https://refactoring.guru/images/patterns/diagrams/composite/example.png" alt="Comparison Structure" style="margin-top: 0;">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Behavioral Section -->
+        <section class="pattern-section" id="section-behavioral">
+            <div class="section-header">
+                <h2>🧠 Behavioral Patterns</h2>
+                <p class="section-desc">These patterns are concerned with algorithms and the assignment of responsibilities between objects.</p>
+            </div>
+            <div class="pattern-grid" id="grid-behavioral">
+                <div class="pattern-card placeholder">
+                    <h3>Observer</h3>
+                    <p class="pattern-short-desc">Content pending. Awaiting transcript...</p>
+                </div>
+                <div class="pattern-card placeholder">
+                    <h3>Strategy</h3>
+                    <p class="pattern-short-desc">Content pending. Awaiting transcript...</p>
+                </div>
+                <div class="pattern-card placeholder">
+                    <h3>Command</h3>
+                    <p class="pattern-short-desc">Content pending. Awaiting transcript...</p>
+                </div>
+                <div class="pattern-card placeholder">
+                    <h3>State</h3>
+                    <p class="pattern-short-desc">Content pending. Awaiting transcript...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Built for <strong>LLD Mastery</strong></p>
+        <p class="footer-sub">Crack the code, one pattern at a time.</p>
+    </footer>
+
+    <!-- Back to top -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M18 15l-6-6-6 6" />
+        </svg>
+    </button>
+
+    <!-- Highlight.js for Code -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <!-- Mermaid for Diagrams -->
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ 
+            startOnLoad: true, 
+            theme: 'dark',
+            securityLevel: 'loose',
+            fontFamily: 'Inter, sans-serif'
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((el) => {
+                hljs.highlightElement(el);
+            });
+        });
+    </script>
+    <script src="design-patterns.js"></script>
+</body>
+
+</html>
