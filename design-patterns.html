@@ -58,6 +58,17 @@
 
     <!-- Main Content -->
     <main class="content" id="mainContent">
+
+        <!-- When to Use Which Pattern Section -->
+        <section class="pattern-section" id="section-when-to-use" style="text-align: center; padding: 2rem; background: rgba(30, 41, 59, 0.5); border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.05); margin-bottom: 2rem;">
+            <h2>🧭 When to Use Which Design Pattern?</h2>
+            <p style="margin-top: 1rem; color: var(--text-secondary);">
+                <a href="Design%20Patterns%20Cheat%20Sheet%20-%20When%20to%20Use%20Which%20Design%20Pattern_%20-%20GeeksforGeeks.mhtml" target="_blank" style="color: var(--accent-primary); text-decoration: underline; font-weight: 600; font-size: 1.1rem;">
+                    📄 View the GeeksforGeeks Cheat Sheet
+                </a>
+            </p>
+        </section>
+
         <!-- Creational Section -->
         <section class="pattern-section" id="section-creational">
             <div class="section-header">
@@ -723,23 +734,478 @@ class CachedDownloaderProxy implements VideoDownloader {
                 <h2>🧠 Behavioral Patterns</h2>
                 <p class="section-desc">These patterns are concerned with algorithms and the assignment of responsibilities between objects.</p>
             </div>
-            <div class="pattern-grid" id="grid-behavioral">
-                <div class="pattern-card placeholder">
-                    <h3>Observer</h3>
-                    <p class="pattern-short-desc">Content pending. Awaiting transcript...</p>
+            <div class="pattern-list" id="list-behavioral">
+
+                <!-- 1. Chain of Responsibility -->
+                <div class="pattern-card filled">
+                    <h3>1. Chain of Responsibility</h3>
+                    <div class="pattern-card-content">
+                        <div class="pattern-notes">
+                            <img class="pattern-illustration" src="https://refactoring.guru/images/patterns/diagrams/chain-of-responsibility/structure-2x.png" alt="Chain of Responsibility Structure">
+                            <div class="pattern-interview-prep">
+                                <h4>🎯 Interview Cheat Sheet</h4>
+                                <ul>
+                                    <li><strong>The Core Concept:</strong> Passes a request along a chain of handlers. Upon receiving a request, each handler decides either to process it or to pass it to the next handler.</li>
+                                    <li><strong>Mental Model:</strong> Think of <em>Tech Support Escalation</em>. Level 1 support tries to fix your issue. If they can't, they pass you to Level 2, and so on until someone resolves it.</li>
+                                    <li><strong>FAANG Applications:</strong>
+                                        <ul>
+                                            <li><em>"Design an API Gateway/Middleware" (Stripe/Netflix):</em> Processing incoming HTTP requests through Authentication, Rate Limiting, Logging, and Routing handlers in sequence.</li>
+                                            <li><em>"Design an Event Bubbling System" (Meta/React):</em> A UI click event travels up the DOM tree until a component with an `onClick` listener catches and handles it.</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="pattern-code">
+                            <h4>☕ Java Implementation</h4>
+                            <pre><code class="language-java">abstract class Handler {
+    protected Handler next;
+    public void setNext(Handler next) { this.next = next; }
+    public abstract void handleRequest(String request);
+}
+
+class AuthHandler extends Handler {
+    public void handleRequest(String request) {
+        if (request.equals("AuthFailed")) {
+            System.out.println("Blocked by Auth.");
+        } else if (next != null) {
+            next.handleRequest(request);
+        }
+    }
+}
+
+class LogHandler extends Handler {
+    public void handleRequest(String request) {
+        System.out.println("Logging: " + request);
+        if (next != null) next.handleRequest(request);
+    }
+}</code></pre>
+                        </div>
+                    </div>
                 </div>
-                <div class="pattern-card placeholder">
-                    <h3>Strategy</h3>
-                    <p class="pattern-short-desc">Content pending. Awaiting transcript...</p>
+
+                <!-- 2. Command -->
+                <div class="pattern-card filled">
+                    <h3>2. Command</h3>
+                    <div class="pattern-card-content">
+                        <div class="pattern-notes">
+                            <img class="pattern-illustration" src="https://refactoring.guru/images/patterns/diagrams/command/structure-2x.png" alt="Command Structure">
+                            <div class="pattern-interview-prep">
+                                <h4>🎯 Interview Cheat Sheet</h4>
+                                <ul>
+                                    <li><strong>The Core Concept:</strong> Turns a request into a stand-alone object that contains all information about the request, allowing parameterization of methods, delayed execution, and queueing.</li>
+                                    <li><strong>Mental Model:</strong> Think of a <em>Restaurant Order</em>. You give your order (Command) to the waiter (Invoker). The order is written on paper, queued in the kitchen, and eventually executed by the chef (Receiver).</li>
+                                    <li><strong>FAANG Applications:</strong>
+                                        <ul>
+                                            <li><em>"Design a Text Editor with Undo/Redo" (Google Docs):</em> Every action (Type, Delete, Bold) is a Command object pushed to a stack. Calling `.undo()` reverses the state.</li>
+                                            <li><em>"Design a Task Scheduler" (AWS/Azure):</em> Wrapping background jobs into serialized Command objects that can be placed in an SQS queue and executed by worker nodes.</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="pattern-code">
+                            <h4>☕ Java Implementation</h4>
+                            <pre><code class="language-java">interface Command { void execute(); void undo(); }
+
+class Light { 
+    void turnOn() {} 
+    void turnOff() {} 
+}
+
+class LightOnCommand implements Command {
+    private Light light;
+    public LightOnCommand(Light light) { this.light = light; }
+    
+    public void execute() { light.turnOn(); }
+    public void undo() { light.turnOff(); }
+}
+
+class RemoteControl { // Invoker
+    private Command command;
+    public void setCommand(Command command) { this.command = command; }
+    public void pressButton() { command.execute(); }
+}</code></pre>
+                        </div>
+                    </div>
                 </div>
-                <div class="pattern-card placeholder">
-                    <h3>Command</h3>
-                    <p class="pattern-short-desc">Content pending. Awaiting transcript...</p>
+
+                <!-- 3. Iterator -->
+                <div class="pattern-card filled">
+                    <h3>3. Iterator</h3>
+                    <div class="pattern-card-content">
+                        <div class="pattern-notes">
+                            <img class="pattern-illustration" src="https://refactoring.guru/images/patterns/diagrams/iterator/structure-2x.png" alt="Iterator Structure">
+                            <div class="pattern-interview-prep">
+                                <h4>🎯 Interview Cheat Sheet</h4>
+                                <ul>
+                                    <li><strong>The Core Concept:</strong> Lets you traverse elements of a collection without exposing its underlying representation (list, stack, tree, etc.).</li>
+                                    <li><strong>Mental Model:</strong> Think of an <em>MP3 Player Playlist</em>. You just press "Next" to get the next song, regardless of whether the playlist is stored as an array, linked list, or pulled dynamically from the cloud.</li>
+                                    <li><strong>FAANG Applications:</strong>
+                                        <ul>
+                                            <li><em>"Design a Social Graph Traversal" (Meta/LinkedIn):</em> Providing a `FriendIterator` that abstracts away the complexity of a Graph traversal (BFS/DFS) behind `hasNext()` and `next()`.</li>
+                                            <li><em>"Design a Database Cursor" (Oracle/MongoDB):</em> Returning a cursor object that fetches rows incrementally from a database without loading the entire multi-GB result into RAM.</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="pattern-code">
+                            <h4>☕ Java Implementation</h4>
+                            <pre><code class="language-java">interface Iterator<T> {
+    boolean hasNext();
+    T next();
+}
+
+class BookCollection {
+    private String[] books = {"Design Patterns", "Clean Code"};
+    
+    public Iterator<String> createIterator() {
+        return new BookIterator();
+    }
+    
+    private class BookIterator implements Iterator<String> {
+        private int position = 0;
+        
+        public boolean hasNext() { return position < books.length; }
+        public String next() { return books[position++]; }
+    }
+}</code></pre>
+                        </div>
+                    </div>
                 </div>
-                <div class="pattern-card placeholder">
-                    <h3>State</h3>
-                    <p class="pattern-short-desc">Content pending. Awaiting transcript...</p>
+
+                <!-- 4. Mediator -->
+                <div class="pattern-card filled">
+                    <h3>4. Mediator</h3>
+                    <div class="pattern-card-content">
+                        <div class="pattern-notes">
+                            <img class="pattern-illustration" src="https://refactoring.guru/images/patterns/diagrams/mediator/structure-2x.png" alt="Mediator Structure">
+                            <div class="pattern-interview-prep">
+                                <h4>🎯 Interview Cheat Sheet</h4>
+                                <ul>
+                                    <li><strong>The Core Concept:</strong> Restricts direct communications between objects and forces them to collaborate only via a central mediator object. Reduces chaotic dependencies.</li>
+                                    <li><strong>Mental Model:</strong> Think of an <em>Air Traffic Controller</em>. Planes don't talk directly to each other to decide who lands. They all talk to the Tower (Mediator), which orchestrates the runway logic.</li>
+                                    <li><strong>FAANG Applications:</strong>
+                                        <ul>
+                                            <li><em>"Design a Chat Room" (Discord/Slack):</em> Users don't hold direct socket connections to every other user. They send messages to the ChatServer (Mediator) which broadcasts them.</li>
+                                            <li><em>"Design a Complex UI Form" (Apple):</em> When a "State" dropdown changes, it notifies the `FormMediator` which then disables/enables the "Zip Code" input, preventing spaghetti event listeners.</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="pattern-code">
+                            <h4>☕ Java Implementation</h4>
+                            <pre><code class="language-java">interface ChatMediator {
+    void sendMessage(String msg, User user);
+    void addUser(User user);
+}
+
+class ChatRoom implements ChatMediator {
+    private List<User> users = new ArrayList<>();
+    
+    public void addUser(User user) { users.add(user); }
+    public void sendMessage(String msg, User sender) {
+        for (User u : users) {
+            if (u != sender) u.receive(msg);
+        }
+    }
+}
+
+class User {
+    private ChatMediator mediator;
+    public User(ChatMediator m) { this.mediator = m; }
+    public void send(String msg) { mediator.sendMessage(msg, this); }
+    public void receive(String msg) { /* Handle msg */ }
+}</code></pre>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- 5. Memento -->
+                <div class="pattern-card filled">
+                    <h3>5. Memento</h3>
+                    <div class="pattern-card-content">
+                        <div class="pattern-notes">
+                            <img class="pattern-illustration" src="https://refactoring.guru/images/patterns/diagrams/memento/structure1-2x.png" alt="Memento Structure">
+                            <div class="pattern-interview-prep">
+                                <h4>🎯 Interview Cheat Sheet</h4>
+                                <ul>
+                                    <li><strong>The Core Concept:</strong> Lets you save and restore the previous state of an object without revealing the details of its implementation (encapsulation).</li>
+                                    <li><strong>Mental Model:</strong> Think of a <em>Video Game Save State</em>. The game engine creates a snapshot (Memento) of your health, position, and inventory. The memory card (Caretaker) holds the snapshot but can't tamper with its internal data.</li>
+                                    <li><strong>FAANG Applications:</strong>
+                                        <ul>
+                                            <li><em>"Design a Text Editor Undo Feature" (Google Docs):</em> Creating snapshots of the document state. Often paired with the Command pattern for robust Undo/Redo architectures.</li>
+                                            <li><em>"Design a Database Transaction Rollback" (Oracle):</em> Saving the state of records before a transaction begins, so they can be seamlessly restored if the transaction fails.</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="pattern-code">
+                            <h4>☕ Java Implementation</h4>
+                            <pre><code class="language-java">// Memento (Immutable snapshot)
+class EditorState {
+    private final String content;
+    public EditorState(String content) { this.content = content; }
+    public String getContent() { return content; }
+}
+
+// Originator
+class Editor {
+    private String content = "";
+    public void setContent(String content) { this.content = content; }
+    
+    public EditorState createSnapshot() {
+        return new EditorState(content);
+    }
+    public void restore(EditorState state) {
+        this.content = state.getContent();
+    }
+}
+
+// Caretaker
+class History {
+    private Stack<EditorState> states = new Stack<>();
+    public void push(EditorState state) { states.push(state); }
+    public EditorState pop() { return states.pop(); }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. Observer -->
+                <div class="pattern-card filled">
+                    <h3>6. Observer</h3>
+                    <div class="pattern-card-content">
+                        <div class="pattern-notes">
+                            <img class="pattern-illustration" src="https://refactoring.guru/images/patterns/diagrams/observer/structure-2x.png" alt="Observer Structure">
+                            <div class="pattern-interview-prep">
+                                <h4>🎯 Interview Cheat Sheet</h4>
+                                <ul>
+                                    <li><strong>The Core Concept:</strong> Defines a subscription mechanism to notify multiple objects about any events that happen to the object they're observing.</li>
+                                    <li><strong>Mental Model:</strong> Think of a <em>YouTube Channel Subscription</em>. You (Observer) subscribe to a Channel (Subject). When the channel uploads a video, you receive a notification automatically. You don't need to constantly refresh the page.</li>
+                                    <li><strong>FAANG Applications:</strong>
+                                        <ul>
+                                            <li><em>"Design a Stock Ticker Dashboard" (Bloomberg):</em> Multiple UI widgets (graphs, tables, tickers) subscribe to a single `StockData` feed and update automatically on price changes.</li>
+                                            <li><em>"Design a Publisher/Subscriber System" (Kafka/RabbitMQ):</em> The foundational pattern behind event-driven microservices architecture.</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="pattern-code">
+                            <h4>☕ Java Implementation</h4>
+                            <pre><code class="language-java">interface Observer { void update(String event); }
+
+class Subject {
+    private List<Observer> observers = new ArrayList<>();
+    
+    public void subscribe(Observer o) { observers.add(o); }
+    public void unsubscribe(Observer o) { observers.remove(o); }
+    
+    public void notifyObservers(String event) {
+        for (Observer o : observers) { o.update(event); }
+    }
+}
+
+class EmailListener implements Observer {
+    public void update(String event) {
+        System.out.println("Sending email about: " + event);
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. State -->
+                <div class="pattern-card filled">
+                    <h3>7. State</h3>
+                    <div class="pattern-card-content">
+                        <div class="pattern-notes">
+                            <img class="pattern-illustration" src="https://refactoring.guru/images/patterns/diagrams/state/structure-en-2x.png" alt="State Structure">
+                            <div class="pattern-interview-prep">
+                                <h4>🎯 Interview Cheat Sheet</h4>
+                                <ul>
+                                    <li><strong>The Core Concept:</strong> Lets an object alter its behavior when its internal state changes. It appears as if the object changed its class.</li>
+                                    <li><strong>Mental Model:</strong> Think of a <em>Vending Machine</em>. If you press "Dispense" while it's in the `NoCoinState`, it errors out. If you press it in the `CoinInsertedState`, it dispenses. Instead of giant `if/else` blocks, behavior is delegated to state objects.</li>
+                                    <li><strong>FAANG Applications:</strong>
+                                        <ul>
+                                            <li><em>"Design a Document Publishing Workflow" (WordPress):</em> A document moves between `Draft`, `Moderation`, and `Published` states, each with vastly different permission behaviors.</li>
+                                            <li><em>"Design a Media Player" (Spotify):</em> Handing play/pause clicks differently depending on whether the player is in `PlayingState`, `PausedState`, or `LockedState`.</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="pattern-code">
+                            <h4>☕ Java Implementation</h4>
+                            <pre><code class="language-java">interface State { void pressPlay(MediaPlayer context); }
+
+class PausedState implements State {
+    public void pressPlay(MediaPlayer context) {
+        System.out.println("Resuming playback.");
+        context.setState(new PlayingState());
+    }
+}
+
+class PlayingState implements State {
+    public void pressPlay(MediaPlayer context) {
+        System.out.println("Pausing playback.");
+        context.setState(new PausedState());
+    }
+}
+
+class MediaPlayer {
+    private State state = new PausedState();
+    public void setState(State state) { this.state = state; }
+    public void clickPlay() { state.pressPlay(this); }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. Strategy -->
+                <div class="pattern-card filled">
+                    <h3>8. Strategy</h3>
+                    <div class="pattern-card-content">
+                        <div class="pattern-notes">
+                            <img class="pattern-illustration" src="https://refactoring.guru/images/patterns/diagrams/strategy/structure-2x.png" alt="Strategy Structure">
+                            <div class="pattern-interview-prep">
+                                <h4>🎯 Interview Cheat Sheet</h4>
+                                <ul>
+                                    <li><strong>The Core Concept:</strong> Defines a family of algorithms, encapsulates each one, and makes them interchangeable at runtime.</li>
+                                    <li><strong>Mental Model:</strong> Think of <em>Google Maps Navigation</em>. You want to go from A to B. You can click "Drive", "Walk", or "Transit". The RouteCalculator (Context) delegates to a specific Algorithm (Strategy) to compute the ETA.</li>
+                                    <li><strong>FAANG Applications:</strong>
+                                        <ul>
+                                            <li><em>"Design a Payment Checkout" (Amazon):</em> Selecting between `CreditCardStrategy`, `PayPalStrategy`, or `CryptoStrategy` seamlessly at runtime.</li>
+                                            <li><em>"Design a Sorting Utility" (Java Collections):</em> Passing a specific `Comparator` (Strategy) to `Collections.sort()` without rewriting the sorting mechanism itself.</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="pattern-code">
+                            <h4>☕ Java Implementation</h4>
+                            <pre><code class="language-java">interface PaymentStrategy { void pay(int amount); }
+
+class CreditCardStrategy implements PaymentStrategy {
+    public void pay(int amount) { System.out.println("Paid with CC: " + amount); }
+}
+
+class PayPalStrategy implements PaymentStrategy {
+    public void pay(int amount) { System.out.println("Paid with PayPal: " + amount); }
+}
+
+class ShoppingCart {
+    private PaymentStrategy strategy;
+    
+    // Switch strategy dynamically at runtime
+    public void setPaymentStrategy(PaymentStrategy strategy) {
+        this.strategy = strategy;
+    }
+    
+    public void checkout(int amount) {
+        strategy.pay(amount);
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 9. Template Method -->
+                <div class="pattern-card filled">
+                    <h3>9. Template Method</h3>
+                    <div class="pattern-card-content">
+                        <div class="pattern-notes">
+                            <img class="pattern-illustration" src="https://refactoring.guru/images/patterns/diagrams/template-method/structure-2x.png" alt="Template Method Structure">
+                            <div class="pattern-interview-prep">
+                                <h4>🎯 Interview Cheat Sheet</h4>
+                                <ul>
+                                    <li><strong>The Core Concept:</strong> Defines the skeleton of an algorithm in the superclass but lets subclasses override specific steps of the algorithm without changing its overall structure.</li>
+                                    <li><strong>Mental Model:</strong> Think of <em>Baking a Cake</em>. The recipe (Template) says: 1. Mix ingredients, 2. Bake, 3. Frost. Subclasses like `ChocolateCake` and `VanillaCake` use the exact same process but implement "Mix" and "Frost" differently.</li>
+                                    <li><strong>FAANG Applications:</strong>
+                                        <ul>
+                                            <li><em>"Design a Data Miner" (Google):</em> The base class dictates `openFile()`, `extract()`, `parse()`, and `closeFile()`. PDF and CSV subclasses only override the extraction parsing logic.</li>
+                                            <li><em>"Design a UI Framework" (Android/React):</em> Lifecycle methods like `onCreate()`, `onStart()`, and `onDestroy()` are abstract steps in a fixed UI template that developers override.</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="pattern-code">
+                            <h4>☕ Java Implementation</h4>
+                            <pre><code class="language-java">abstract class DataParser {
+    // The Template Method (often declared final)
+    public final void parseData() {
+        openFile();
+        extractData();
+        closeFile();
+    }
+    
+    void openFile() { System.out.println("Opening file."); }
+    void closeFile() { System.out.println("Closing file."); }
+    
+    // Step left for subclasses
+    abstract void extractData();
+}
+
+class CSVParser extends DataParser {
+    @Override
+    void extractData() { System.out.println("Extracting CSV rows."); }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 10. Visitor -->
+                <div class="pattern-card filled">
+                    <h3>10. Visitor</h3>
+                    <div class="pattern-card-content">
+                        <div class="pattern-notes">
+                            <img class="pattern-illustration" src="https://refactoring.guru/images/patterns/diagrams/visitor/structure-en-2x.png" alt="Visitor Structure">
+                            <div class="pattern-interview-prep">
+                                <h4>🎯 Interview Cheat Sheet</h4>
+                                <ul>
+                                    <li><strong>The Core Concept:</strong> Lets you separate algorithms from the objects on which they operate. Avoids polluting domain classes with unrelated logic via "Double Dispatch".</li>
+                                    <li><strong>Mental Model:</strong> Think of an <em>Insurance Agent</em> (Visitor). The agent knocks on the door of a `House`, a `Bank`, and a `Factory`. The building "accepts" the agent, and the agent executes a specific policy review tailored to that specific building type.</li>
+                                    <li><strong>FAANG Applications:</strong>
+                                        <ul>
+                                            <li><em>"Design a Compiler/AST Parser" (Apple/LLVM):</em> You have an AST with `AssignmentNode`, `IfNode`, etc. Instead of adding `exportToXML()`, `compileToAssembly()`, and `typeCheck()` methods to every node, you create Visitor classes that traverse the nodes.</li>
+                                            <li><em>"Design a Tax Calculator" (Intuit):</em> Applying different tax formulas to `Cigarette`, `Liquor`, and `Necessity` classes without changing their code.</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="pattern-code">
+                            <h4>☕ Java Implementation</h4>
+                            <pre><code class="language-java">interface Visitor {
+    void visit(House house);
+    void visit(Bank bank);
+}
+
+interface Element {
+    void accept(Visitor visitor);
+}
+
+class House implements Element {
+    public void accept(Visitor visitor) { visitor.visit(this); }
+}
+
+class InsuranceAgent implements Visitor {
+    public void visit(House house) {
+        System.out.println("Selling medical insurance to residents.");
+    }
+    public void visit(Bank bank) {
+        System.out.println("Selling theft insurance to bank.");
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
     </main>
