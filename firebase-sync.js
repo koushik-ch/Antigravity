@@ -96,6 +96,17 @@
         return [];
     }
 
+    // Firebase RTDB forbids dots (.) in object keys, so we store data as
+    // JSON strings. This helper parses a field that might be a JSON string
+    // (new format) or a raw object/array (legacy format).
+    function parseJsonField(val, fallback) {
+        if (typeof val === 'string') {
+            try { return JSON.parse(val); } catch (e) { return fallback; }
+        }
+        if (val !== null && val !== undefined) return val;
+        return fallback;
+    }
+
     function getUserRef() {
         return syncUserId ? db.ref('users/' + syncUserId) : null;
     }
@@ -206,13 +217,14 @@
             var snapshot = await ref.once('value');
             var cloudRaw = snapshot.val() || {};
 
-            // Strip metadata fields
+            // Parse cloud data — stored as JSON strings to avoid Firebase
+            // key restrictions (dots in keys like "1::1. Two Sum")
             var cloudData = {
-                solved: cloudRaw.solved || {},
-                revisits: cloudRaw.revisits || {},
-                notes: cloudRaw.notes || {},
-                customRevisits: ensureArray(cloudRaw.customRevisits),
-                trackedDone: cloudRaw.trackedDone || {}
+                solved: parseJsonField(cloudRaw.solved, {}),
+                revisits: parseJsonField(cloudRaw.revisits, {}),
+                notes: parseJsonField(cloudRaw.notes, {}),
+                customRevisits: ensureArray(parseJsonField(cloudRaw.customRevisits, [])),
+                trackedDone: parseJsonField(cloudRaw.trackedDone, {})
             };
 
             var localData = getLocalData();
@@ -221,13 +233,13 @@
             // Apply locally (updates both localStorage and live state)
             applyData(merged);
 
-            // Push to cloud
+            // Push to cloud (as JSON strings to avoid Firebase key restrictions)
             await ref.set({
-                solved: merged.solved,
-                revisits: merged.revisits,
-                notes: merged.notes,
-                customRevisits: merged.customRevisits,
-                trackedDone: merged.trackedDone,
+                solved: JSON.stringify(merged.solved),
+                revisits: JSON.stringify(merged.revisits),
+                notes: JSON.stringify(merged.notes),
+                customRevisits: JSON.stringify(merged.customRevisits),
+                trackedDone: JSON.stringify(merged.trackedDone),
                 lastUpdated: firebase.database.ServerValue.TIMESTAMP
             });
 
@@ -248,11 +260,11 @@
         try {
             var localData = getLocalData();
             await getUserRef().set({
-                solved: localData.solved,
-                revisits: localData.revisits,
-                notes: localData.notes,
-                customRevisits: localData.customRevisits,
-                trackedDone: localData.trackedDone,
+                solved: JSON.stringify(localData.solved),
+                revisits: JSON.stringify(localData.revisits),
+                notes: JSON.stringify(localData.notes),
+                customRevisits: JSON.stringify(localData.customRevisits),
+                trackedDone: JSON.stringify(localData.trackedDone),
                 lastUpdated: firebase.database.ServerValue.TIMESTAMP
             });
             setSyncStatus('synced');
