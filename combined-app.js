@@ -88,6 +88,7 @@ function toggleSolved(patternNum, problemText) {
     if (solved[key]) delete solved[key];
     else solved[key] = 1;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(solved));
+    if (window._pushToCloud) window._pushToCloud();
     updateProgress();
     // Update specific checkbox and tag visuals
     const checkbox = document.querySelector(`[data-key="${CSS.escape(key)}"]`);
@@ -105,6 +106,7 @@ function toggleRevisit(patternNum, problemText) {
     if (revisits[key]) delete revisits[key];
     else revisits[key] = 1;
     localStorage.setItem(STORAGE_KEY + '_revisits', JSON.stringify(revisits));
+    if (window._pushToCloud) window._pushToCloud();
     const btn = document.querySelector(`[data-revisit-key="${CSS.escape(key)}"]`);
     if (btn) btn.classList.toggle('active', !!revisits[key]);
 }
@@ -114,6 +116,7 @@ function saveNote(patternNum, problemText, value) {
     if (value.trim()) notes[key] = value;
     else delete notes[key];
     localStorage.setItem(STORAGE_KEY + '_notes', JSON.stringify(notes));
+    if (window._pushToCloud) window._pushToCloud();
 }
 
 function updateCardProgress(patternNum) {
@@ -375,6 +378,7 @@ let isRevisionView = false;
 
 function saveCustomRevisits() {
     localStorage.setItem(CUSTOM_REVISITS_KEY, JSON.stringify(customRevisits));
+    if (window._pushToCloud) window._pushToCloud();
 }
 
 function addCustomRevisit(name, diff, url) {
@@ -409,6 +413,7 @@ function removeTrackedRevisit(key) {
     delete trackedDone[key];
     localStorage.setItem(STORAGE_KEY + '_revisits', JSON.stringify(revisits));
     localStorage.setItem(TRACKED_DONE_KEY, JSON.stringify(trackedDone));
+    if (window._pushToCloud) window._pushToCloud();
     renderRevisitView();
 }
 
@@ -416,6 +421,7 @@ function toggleTrackedDone(key) {
     if (trackedDone[key]) delete trackedDone[key];
     else trackedDone[key] = 1;
     localStorage.setItem(TRACKED_DONE_KEY, JSON.stringify(trackedDone));
+    if (window._pushToCloud) window._pushToCloud();
     renderRevisitView();
 }
 
