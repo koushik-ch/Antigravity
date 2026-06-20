@@ -37,6 +37,7 @@
     const SK_NOTES = SK + '_notes';
     const SK_CUSTOM = SK + '_custom_revisits';
     const SK_TRACKED = SK + '_tracked_done';
+    const SK_HISTORY = SK + '_history';
 
     // ===== CHECK FIREBASE SDK =====
     if (typeof firebase === 'undefined') {
@@ -118,7 +119,8 @@
             revisits: JSON.parse(localStorage.getItem(SK_REVISITS) || '{}'),
             notes: JSON.parse(localStorage.getItem(SK_NOTES) || '{}'),
             customRevisits: JSON.parse(localStorage.getItem(SK_CUSTOM) || '[]'),
-            trackedDone: JSON.parse(localStorage.getItem(SK_TRACKED) || '{}')
+            trackedDone: JSON.parse(localStorage.getItem(SK_TRACKED) || '{}'),
+            revisionHistory: JSON.parse(localStorage.getItem(SK_HISTORY) || '[]')
         };
     }
 
@@ -129,6 +131,7 @@
         var n  = data.notes || {};
         var cr = ensureArray(data.customRevisits);
         var td = data.trackedDone || {};
+        var rh = ensureArray(data.revisionHistory);
 
         // Persist to localStorage
         localStorage.setItem(SK, JSON.stringify(s));
@@ -136,6 +139,7 @@
         localStorage.setItem(SK_NOTES, JSON.stringify(n));
         localStorage.setItem(SK_CUSTOM, JSON.stringify(cr));
         localStorage.setItem(SK_TRACKED, JSON.stringify(td));
+        localStorage.setItem(SK_HISTORY, JSON.stringify(rh));
 
         // Update live app state (mutate in-place so existing references stay valid)
         try {
@@ -163,6 +167,11 @@
             if (typeof trackedDone !== 'undefined') {
                 Object.keys(trackedDone).forEach(function (k) { delete trackedDone[k]; });
                 Object.assign(trackedDone, td);
+            }
+            // revisionHistory
+            if (typeof revisionHistory !== 'undefined' && Array.isArray(revisionHistory)) {
+                revisionHistory.length = 0;
+                rh.forEach(function (item) { revisionHistory.push(item); });
             }
         } catch (e) {
             console.warn('[Sync] Could not update live app state:', e);
@@ -203,6 +212,14 @@
         cc.forEach(function (r) { idMap[r.id] = r; }); // cloud overwrites duplicates
         merged.customRevisits = Object.keys(idMap).map(function (k) { return idMap[k]; });
 
+        // Revision history: merge by id (Problem/Concept Name), cloud wins on conflict
+        var lrh = ensureArray(local.revisionHistory);
+        var crh = ensureArray(cloud.revisionHistory);
+        var rhMap = {};
+        lrh.forEach(function (r) { rhMap[r.id || r['Problem/Concept Name']] = r; });
+        crh.forEach(function (r) { rhMap[r.id || r['Problem/Concept Name']] = r; }); // cloud overwrites duplicates
+        merged.revisionHistory = Object.keys(rhMap).map(function (k) { return rhMap[k]; });
+
         return merged;
     }
 
@@ -224,7 +241,8 @@
                 revisits: parseJsonField(cloudRaw.revisits, {}),
                 notes: parseJsonField(cloudRaw.notes, {}),
                 customRevisits: ensureArray(parseJsonField(cloudRaw.customRevisits, [])),
-                trackedDone: parseJsonField(cloudRaw.trackedDone, {})
+                trackedDone: parseJsonField(cloudRaw.trackedDone, {}),
+                revisionHistory: ensureArray(parseJsonField(cloudRaw.revisionHistory, []))
             };
 
             var localData = getLocalData();
@@ -240,6 +258,7 @@
                 notes: JSON.stringify(merged.notes),
                 customRevisits: JSON.stringify(merged.customRevisits),
                 trackedDone: JSON.stringify(merged.trackedDone),
+                revisionHistory: JSON.stringify(merged.revisionHistory),
                 lastUpdated: firebase.database.ServerValue.TIMESTAMP
             });
 
@@ -265,6 +284,7 @@
                 notes: JSON.stringify(localData.notes),
                 customRevisits: JSON.stringify(localData.customRevisits),
                 trackedDone: JSON.stringify(localData.trackedDone),
+                revisionHistory: JSON.stringify(localData.revisionHistory),
                 lastUpdated: firebase.database.ServerValue.TIMESTAMP
             });
             setSyncStatus('synced');
@@ -320,47 +340,47 @@
         style.id = 'sync-module-styles';
         style.textContent = [
             '/* === Cloud Sync Bar === */',
-            '.sync-bar{display:flex;align-items:center;justify-content:center;gap:0.75rem;padding:0.6rem 1.2rem;margin:1rem auto 0;max-width:600px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;font-size:0.8rem;color:rgba(255,255,255,0.5);transition:all .3s ease}',
-            '.sync-bar:hover{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.1)}',
+            '.sync-bar{display:flex;align-items:center;justify-content:center;gap:0.75rem;padding:0.6rem 1.2rem;margin:1rem auto 0;max-width:600px;background:var(--bg-panel);border:3px solid #1a1514;border-radius:12px;font-size:0.9rem;font-weight:700;color:#1a1514;box-shadow:4px 4px 0px #1a1514;transition:all .2s ease}',
+            '.sync-bar:hover{transform:translate(2px,2px);box-shadow:2px 2px 0px #1a1514}',
 
-            '.sync-indicator{width:8px;height:8px;border-radius:50%;background:#555;flex-shrink:0;transition:all .3s ease}',
-            '.sync-indicator.synced{background:#34A853;box-shadow:0 0 8px rgba(52,168,83,0.5)}',
-            '.sync-indicator.syncing{background:#FBBC04;animation:syncPulse 1s infinite}',
-            '.sync-indicator.error{background:#EA4335;box-shadow:0 0 8px rgba(234,67,53,0.4)}',
-            '.sync-indicator.disconnected{background:#555}',
+            '.sync-indicator{width:12px;height:12px;border-radius:50%;background:#e0e0e0;border:2px solid #1a1514;flex-shrink:0;transition:all .3s ease}',
+            '.sync-indicator.synced{background:#40c4aa}',
+            '.sync-indicator.syncing{background:#fed154;animation:syncPulse 1s infinite}',
+            '.sync-indicator.error{background:#ff4d42}',
+            '.sync-indicator.disconnected{background:#e0e0e0}',
             '@keyframes syncPulse{0%,100%{opacity:1}50%{opacity:.35}}',
 
-            '.sync-status-text{font-size:0.78rem;color:rgba(255,255,255,0.5)}',
-            '.sync-id-display{font-family:"JetBrains Mono",monospace;font-size:0.72rem;color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.05);padding:0.15rem 0.5rem;border-radius:4px}',
+            '.sync-status-text{font-size:0.85rem;font-weight:700;color:#1a1514}',
+            '.sync-id-display{font-family:"JetBrains Mono",monospace;font-size:0.75rem;font-weight:800;color:#1a1514;background:#fdf5ea;padding:0.15rem 0.5rem;border:2px solid #1a1514;border-radius:6px}',
 
-            '.sync-connect-btn{background:linear-gradient(135deg,rgba(66,133,244,0.15),rgba(124,108,240,0.15));border:1px solid rgba(66,133,244,0.3);color:#7aB4ff;padding:0.4rem 1rem;border-radius:8px;font-size:0.8rem;font-weight:600;cursor:pointer;transition:all .3s ease;font-family:inherit}',
-            '.sync-connect-btn:hover{background:linear-gradient(135deg,rgba(66,133,244,0.25),rgba(124,108,240,0.25));border-color:rgba(66,133,244,0.5);transform:translateY(-1px);box-shadow:0 4px 12px rgba(66,133,244,0.2)}',
+            '.sync-connect-btn{background:#fed154;border:3px solid #1a1514;color:#1a1514;padding:0.4rem 1rem;border-radius:8px;font-size:0.85rem;font-weight:800;cursor:pointer;transition:all .2s ease;font-family:inherit;box-shadow:2px 2px 0px #1a1514}',
+            '.sync-connect-btn:hover{background:#ff4d42;color:#fff;transform:translate(2px,2px);box-shadow:0px 0px 0px #1a1514}',
 
             '.sync-actions{display:flex;gap:0.5rem;align-items:center}',
-            '.sync-action-btn{background:transparent;border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.5);padding:0.3rem 0.65rem;border-radius:6px;font-size:0.75rem;cursor:pointer;transition:all .2s ease;font-family:inherit}',
-            '.sync-action-btn:hover{background:rgba(255,255,255,0.06);color:#fff}',
-            '.sync-action-btn.danger:hover{background:rgba(234,67,53,0.1);border-color:rgba(234,67,53,0.3);color:#EA4335}',
+            '.sync-action-btn{background:var(--bg-panel);border:2px solid #1a1514;color:#1a1514;padding:0.3rem 0.65rem;border-radius:6px;font-size:0.8rem;font-weight:700;cursor:pointer;transition:all .2s ease;font-family:inherit;box-shadow:2px 2px 0px #1a1514}',
+            '.sync-action-btn:hover{background:#fdf5ea;transform:translate(2px,2px);box-shadow:0px 0px 0px #1a1514}',
+            '.sync-action-btn.danger:hover{background:#ff4d42;color:#fff}',
 
             '/* === Modal === */',
-            '.sync-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;z-index:10000;opacity:0;visibility:hidden;transition:all .3s ease}',
+            '.sync-modal-overlay{position:fixed;inset:0;background:rgba(26,21,20,0.6);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:10000;opacity:0;visibility:hidden;transition:all .2s ease}',
             '.sync-modal-overlay.open{opacity:1;visibility:visible}',
-            '.sync-modal{background:#1a1a2e;border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:2rem;width:90%;max-width:420px;box-shadow:0 25px 60px rgba(0,0,0,0.5);transform:translateY(20px) scale(0.95);transition:transform .3s ease}',
-            '.sync-modal-overlay.open .sync-modal{transform:translateY(0) scale(1)}',
-            '.sync-modal-title{font-size:1.3rem;font-weight:700;margin-bottom:0.5rem;background:linear-gradient(135deg,#4285F4,#7c6cf0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}',
-            '.sync-modal-desc{font-size:0.85rem;color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:1.5rem}',
-            '.sync-input-group{margin-bottom:1rem}',
-            '.sync-input-label{display:block;font-size:0.75rem;font-weight:600;color:rgba(255,255,255,0.5);margin-bottom:0.4rem;text-transform:uppercase;letter-spacing:0.5px}',
-            '.sync-input{width:100%;padding:0.7rem 1rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#fff;font-size:0.9rem;font-family:"JetBrains Mono",monospace;outline:none;transition:border-color .2s,box-shadow .2s;box-sizing:border-box}',
-            '.sync-input:focus{border-color:rgba(66,133,244,0.5);box-shadow:0 0 0 3px rgba(66,133,244,0.1)}',
-            '.sync-input::placeholder{color:rgba(255,255,255,0.2)}',
-            '.sync-modal-actions{display:flex;gap:0.75rem;margin-top:1.5rem}',
-            '.sync-modal-btn{flex:1;padding:0.7rem 1rem;border-radius:8px;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all .2s ease;border:none;font-family:inherit}',
-            '.sync-modal-btn.primary{background:linear-gradient(135deg,#4285F4,#7c6cf0);color:#fff}',
-            '.sync-modal-btn.primary:hover{transform:translateY(-1px);box-shadow:0 4px 15px rgba(66,133,244,0.4)}',
-            '.sync-modal-btn.primary:disabled{opacity:0.5;cursor:not-allowed;transform:none;box-shadow:none}',
-            '.sync-modal-btn.secondary{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6)}',
-            '.sync-modal-btn.secondary:hover{background:rgba(255,255,255,0.1);color:#fff}',
-            '.sync-hint{font-size:0.72rem;color:rgba(255,255,255,0.3);margin-top:0.5rem;line-height:1.5}'
+            '.sync-modal{background:var(--bg-panel);border:4px solid #1a1514;border-radius:16px;padding:2rem;width:90%;max-width:420px;box-shadow:8px 8px 0px #1a1514;transform:translateY(20px);transition:transform .2s cubic-bezier(0.4, 0, 0.2, 1)}',
+            '.sync-modal-overlay.open .sync-modal{transform:translateY(0)}',
+            '.sync-modal-title{font-size:1.6rem;font-weight:900;color:#1a1514;margin-bottom:0.5rem}',
+            '.sync-modal-desc{font-size:0.95rem;font-weight:500;color:#1a1514;line-height:1.5;margin-bottom:1.5rem}',
+            '.sync-input-group{margin-bottom:1.2rem}',
+            '.sync-input-label{display:block;font-size:0.8rem;font-weight:800;color:#1a1514;margin-bottom:0.4rem;text-transform:uppercase}',
+            '.sync-input{width:100%;padding:0.8rem 1rem;background:#fdf5ea;border:3px solid #1a1514;border-radius:8px;color:#1a1514;font-size:1rem;font-weight:600;font-family:"JetBrains Mono",monospace;outline:none;transition:all .2s;box-sizing:border-box;box-shadow:inset 3px 3px 0px rgba(0,0,0,0.05)}',
+            '.sync-input:focus{border-color:#ff4d42;background:var(--bg-panel)}',
+            '.sync-input::placeholder{color:rgba(26,21,20,0.4)}',
+            '.sync-modal-actions{display:flex;gap:0.8rem;margin-top:1.5rem}',
+            '.sync-modal-btn{flex:1;padding:0.8rem 1rem;border:3px solid #1a1514;border-radius:8px;font-size:0.95rem;font-weight:800;cursor:pointer;transition:all .2s ease;font-family:inherit;box-shadow:4px 4px 0px #1a1514}',
+            '.sync-modal-btn.primary{background:#ff4d42;color:#fff}',
+            '.sync-modal-btn.primary:hover{transform:translate(2px,2px);box-shadow:2px 2px 0px #1a1514}',
+            '.sync-modal-btn.primary:disabled{opacity:0.6;cursor:not-allowed;transform:none;box-shadow:4px 4px 0px #1a1514}',
+            '.sync-modal-btn.secondary{background:var(--bg-panel);color:#1a1514}',
+            '.sync-modal-btn.secondary:hover{background:#fdf5ea;transform:translate(2px,2px);box-shadow:2px 2px 0px #1a1514}',
+            '.sync-hint{font-size:0.8rem;font-weight:600;color:rgba(26,21,20,0.6);margin-top:0.6rem;line-height:1.4}'
         ].join('\n');
         document.head.appendChild(style);
     }

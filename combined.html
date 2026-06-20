@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/svg+xml" href="favicon-combined.svg">
@@ -19,10 +19,7 @@
 
 <body>
     <div class="progress-bar" id="progressBar"></div>
-    <div class="bg-grid"></div>
-    <div class="glow glow-1"></div>
-    <div class="glow glow-2"></div>
-    <div class="glow glow-3"></div>
+    <div class="bg-dots"></div>
 
     <header class="hero">
         <div class="hero-badge">📐 699 Unique Problems • L4 & Topics Combined</div>
@@ -100,11 +97,13 @@
             <button class="nav-pill active" data-category="all">All</button>
             <button class="nav-pill revisit-tab" id="revisitTabBtn" data-category="__revisit__">📌 Revisit</button>
             <button class="nav-pill plan-tab" id="revisionTabBtn" data-category="__revision__">🗓️ 7-Day Revision</button>
+            <button class="nav-pill" id="historyTabBtn" data-category="__history__">📖 Revision History</button>
         </div>
     </nav>
 
     <main class="content" id="mainContent"></main>
     <main class="content" id="revisitContent" style="display:none"></main>
+    <main class="content" id="historyContent" style="display:none"></main>
     
     <main class="content" id="revisionContent" style="display:none">
         <div class="roadmap-header">
@@ -241,6 +240,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
     <script src="combined-data.js"></script>
+    <script src="revision-data.js"></script>
     <script src="combined-app.js"></script>
     <script src="firebase-sync.js"></script>
 </body>

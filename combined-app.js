@@ -7,6 +7,13 @@ const STORAGE_KEY = 'combined-solved';
 let solved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
 let revisits = JSON.parse(localStorage.getItem(STORAGE_KEY + '_revisits') || '{}');
 let notes = JSON.parse(localStorage.getItem(STORAGE_KEY + '_notes') || '{}');
+let revisionHistory = JSON.parse(localStorage.getItem(STORAGE_KEY + '_history') || '[]');
+
+if (revisionHistory.length === 0 && typeof REVISION_DATA !== 'undefined') {
+    revisionHistory = JSON.parse(JSON.stringify(REVISION_DATA));
+    localStorage.setItem(STORAGE_KEY + '_history', JSON.stringify(revisionHistory));
+}
+
 let currentTier = 'all';
 let currentCategory = 'all';
 
@@ -20,6 +27,11 @@ const progressPct = document.getElementById('progressPct');
 const solvedCountEl = document.getElementById('solvedCount');
 const totalCountEl = document.getElementById('totalCount');
 const tierFilter = document.getElementById('tierNav');
+
+// History tab refs
+const historyContent = document.getElementById('historyContent');
+const historyTabBtn = document.getElementById('historyTabBtn');
+let isHistoryView = false;
 
 // ===== SVG GRADIENT FOR RING =====
 (function addRingGradient() {
@@ -535,8 +547,10 @@ function handleAddRevisit(e) {
 function switchToRevisitView() {
     isRevisitView = true;
     isRevisionView = false;
+    isHistoryView = false;
     mainContent.style.display = 'none';
     revisionContent.style.display = 'none';
+    historyContent.style.display = 'none';
     revisitContent.style.display = '';
     document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('active'));
     revisitTabBtn.classList.add('active');
@@ -546,9 +560,11 @@ function switchToRevisitView() {
 function switchToMainView() {
     isRevisitView = false;
     isRevisionView = false;
+    isHistoryView = false;
     mainContent.style.display = '';
     revisitContent.style.display = 'none';
     revisionContent.style.display = 'none';
+    historyContent.style.display = 'none';
     renderCategories(searchInput.value);
     updateProgress();
 }
@@ -556,11 +572,26 @@ function switchToMainView() {
 function switchToRevisionView() {
     isRevisitView = false;
     isRevisionView = true;
+    isHistoryView = false;
     mainContent.style.display = 'none';
     revisitContent.style.display = 'none';
+    historyContent.style.display = 'none';
     revisionContent.style.display = '';
     document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('active'));
     revisionTabBtn.classList.add('active');
+}
+
+function switchToHistoryView() {
+    isRevisitView = false;
+    isRevisionView = false;
+    isHistoryView = true;
+    mainContent.style.display = 'none';
+    revisitContent.style.display = 'none';
+    revisionContent.style.display = 'none';
+    historyContent.style.display = '';
+    document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('active'));
+    historyTabBtn.classList.add('active');
+    renderHistoryView();
 }
 
 revisitTabBtn.addEventListener('click', () => {
@@ -571,10 +602,98 @@ revisionTabBtn.addEventListener('click', () => {
     if (!isRevisionView) switchToRevisionView();
 });
 
+historyTabBtn.addEventListener('click', () => {
+    if (!isHistoryView) switchToHistoryView();
+});
+
 // Any non-special nav pill click switches back to main view
 document.querySelector('.nav-track').addEventListener('click', (e) => {
     const pill = e.target.closest('.nav-pill');
-    if (pill && !pill.classList.contains('revisit-tab') && !pill.classList.contains('plan-tab') && (isRevisitView || isRevisionView)) {
+    if (pill && !pill.classList.contains('revisit-tab') && !pill.classList.contains('plan-tab') && !pill.id.includes('historyTabBtn') && (isRevisitView || isRevisionView || isHistoryView)) {
         switchToMainView();
     }
 });
+
+// History Tab Logic
+window.toggleHistoryReview = function(idx, reviewKey) {
+    if (!revisionHistory[idx].completedReviews) revisionHistory[idx].completedReviews = {};
+    revisionHistory[idx].completedReviews[reviewKey] = !revisionHistory[idx].completedReviews[reviewKey];
+    localStorage.setItem(STORAGE_KEY + '_history', JSON.stringify(revisionHistory));
+    if (window._pushToCloud) window._pushToCloud();
+    renderHistoryView();
+};
+
+function renderHistoryView() {
+    if (!historyContent) return;
+    
+    let html = `
+        <div class="roadmap-header">
+            <h1 class="roadmap-title">📖 Revision History</h1>
+            <p style="color:var(--text-dim);margin-top:0.5rem;font-size:0.9rem;">
+                Track your space repetition reviews. Click on a date to mark it as completed.
+            </p>
+        </div>
+        <div style="overflow-x:auto; margin-top:20px; background:var(--card-bg); border:1px solid var(--border-color); border-radius:12px; padding:15px;">
+            <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.85rem;">
+                <thead>
+                    <tr style="border-bottom:1px solid var(--border-color);">
+                        <th style="padding:10px;">Problem/Concept</th>
+                        <th style="padding:10px;">Topic</th>
+                        <th style="padding:10px;">Added</th>
+                        <th style="padding:10px;">Review 1 (1d)</th>
+                        <th style="padding:10px;">Review 2 (3d)</th>
+                        <th style="padding:10px;">Review 3 (7d)</th>
+                        <th style="padding:10px;">Review 4 (14d)</th>
+                        <th style="padding:10px;">Review 5 (30d)</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+    
+    revisionHistory.forEach((item, idx) => {
+        const completed = item.completedReviews || {};
+        
+        const renderReviewCol = (key) => {
+            const date = item[key] || '-';
+            if (date === '-') return `<td style="padding:10px; color:var(--text-dim);">-</td>`;
+            
+            const isDone = completed[key];
+            const color = isDone ? '#34A853' : 'var(--text-color)';
+            const textDec = isDone ? 'line-through' : 'none';
+            const opacity = isDone ? '0.5' : '1';
+            
+            return `
+                <td style="padding:10px; cursor:pointer;" onclick="toggleHistoryReview(${idx}, '${key}')">
+                    <span style="color:${color}; text-decoration:${textDec}; opacity:${opacity}; padding:4px 8px; border-radius:4px; background:rgba(255,255,255,0.03); border:1px solid var(--border-color); display:inline-block; transition:all 0.2s;">
+                        ${isDone ? '✓ ' : ''}${date}
+                    </span>
+                </td>
+            `;
+        };
+        
+        html += `
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                <td style="padding:10px; max-width:200px;">
+                    <a href="${item.Link}" target="_blank" style="color:var(--primary-color); text-decoration:none; font-weight:600;">
+                        ${item['Problem/Concept Name']}
+                    </a>
+                </td>
+                <td style="padding:10px; color:var(--text-dim);">${item['Topic Name']}</td>
+                <td style="padding:10px; color:var(--text-dim);">${item['Date Added']}</td>
+                ${renderReviewCol('Review 1 (1 day)')}
+                ${renderReviewCol('Review 2 (3 days)')}
+                ${renderReviewCol('Review 3 (7 days)')}
+                ${renderReviewCol('Review 4 (14 days)')}
+                ${renderReviewCol('Review 5 (30 days)')}
+            </tr>
+        `;
+    });
+    
+    html += `
+                </tbody>
+            </table>
+        </div>
+    `;
+    
+    historyContent.innerHTML = html;
+}
