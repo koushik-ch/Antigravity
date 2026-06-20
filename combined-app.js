@@ -120,7 +120,11 @@ function toggleRevisit(patternNum, problemText) {
     localStorage.setItem(STORAGE_KEY + '_revisits', JSON.stringify(revisits));
     if (window._pushToCloud) window._pushToCloud();
     const btn = document.querySelector(`[data-revisit-key="${CSS.escape(key)}"]`);
-    if (btn) btn.classList.toggle('active', !!revisits[key]);
+    if (btn) {
+        btn.classList.toggle('active', !!revisits[key]);
+        const row = btn.closest('.problem-row');
+        if (row) row.classList.toggle('revisit', !!revisits[key]);
+    }
 }
 
 function saveNote(patternNum, problemText, value) {

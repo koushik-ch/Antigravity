@@ -6,17 +6,17 @@
 :root {
     --bg-panel: #fff;
     /* Colors */
-    --bg-primary: #fdf5ea;
+    --bg-primary: #fef0cb;
     --bg-card: #fed154;
     --bg-card-2: #40c4aa;
     --bg-card-3: #ffaa9e;
-    
+
     --text-primary: #1a1514;
     --text-muted: rgba(26, 21, 20, 0.7);
 
     --accent-primary: #ff4d42;
     --accent-secondary: #fed154;
-    
+
     --border-color: #1a1514;
     --border-width: 3px;
 
@@ -59,10 +59,12 @@ html {
 ::-webkit-scrollbar {
     width: 10px;
 }
+
 ::-webkit-scrollbar-track {
     background: var(--bg-primary);
     border-left: var(--border-width) solid var(--border-color);
 }
+
 ::-webkit-scrollbar-thumb {
     background: var(--accent-primary);
     border: var(--border-width) solid var(--border-color);
@@ -420,6 +422,7 @@ body {
 .nav-pill.revisit-tab {
     background: var(--bg-card-3);
 }
+
 .nav-pill.plan-tab {
     background: var(--bg-card-2);
 }
@@ -500,9 +503,17 @@ body {
 }
 
 /* Alternate colors for cards based on nth-child */
-.pattern-card:nth-child(3n+1) { background: var(--bg-card); }
-.pattern-card:nth-child(3n+2) { background: var(--bg-card-2); }
-.pattern-card:nth-child(3n+3) { background: var(--bg-card-3); }
+.pattern-card:nth-child(3n+1) {
+    background: var(--bg-card);
+}
+
+.pattern-card:nth-child(3n+2) {
+    background: var(--bg-card-2);
+}
+
+.pattern-card:nth-child(3n+3) {
+    background: var(--bg-card-3);
+}
 
 .pattern-card:hover {
     transform: translate(4px, 4px);
@@ -725,9 +736,9 @@ body.dark-mode {
     --bg-card: #c49929;
     --bg-card-2: #248c77;
     --bg-card-3: #c96557;
-    
+
     --text-primary: #fdf5ea;
     --text-muted: rgba(253, 245, 234, 0.6);
-    
+
     --border-color: #fdf5ea;
 }
