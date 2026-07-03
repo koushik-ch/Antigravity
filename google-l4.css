@@ -500,3 +500,86 @@
     border: 4px solid var(--accent-primary);
     background: var(--bg-panel);
 }
+
+/* Custom Done Button */
+.custom-done-btn {
+    background: #fff;
+    border: 2px solid var(--border-color);
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 800;
+    padding: 0.3rem 0.8rem;
+    border-radius: 8px;
+    box-shadow: 2px 2px 0px var(--border-color);
+    color: var(--text-primary);
+    transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.custom-done-btn:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 0px 0px 0px var(--border-color);
+    background: var(--bg-panel);
+}
+.custom-done-btn.active {
+    background: #40c4aa;
+    color: #1a1514;
+}
+
+/* Revisit Add Form */
+.revisit-add-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: var(--bg-panel);
+    border: 3px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 4px 4px 0px var(--border-color);
+}
+.revisit-input, .revisit-select {
+    padding: 0.6rem 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    background: #fff;
+    font-size: 0.95rem;
+    font-family: inherit;
+    font-weight: 600;
+    color: var(--text-primary);
+    box-shadow: inset 2px 2px 0px rgba(0,0,0,0.03);
+    outline: none;
+    flex: 1 1 200px;
+}
+.revisit-input:focus, .revisit-select:focus {
+    border-color: var(--accent-primary);
+}
+.revisit-add-btn {
+    padding: 0.6rem 1.5rem;
+    background: var(--accent-primary);
+    color: #fff;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 0.95rem;
+    cursor: pointer;
+    box-shadow: 2px 2px 0px var(--border-color);
+    transition: all 0.1s ease;
+    flex: 0 1 auto;
+}
+.revisit-add-btn:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 0px 0px 0px var(--border-color);
+}
+
+/* Group Headers for Revisit Items */
+.revisit-topic-group {
+    margin-bottom: 2rem;
+}
+.revisit-topic-header {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 3px solid var(--border-color);
+    display: inline-block;
+}

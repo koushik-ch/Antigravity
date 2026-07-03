@@ -469,37 +469,51 @@ function renderRevisitView() {
     // Helper: escape a key for safe use as a JS single-quoted string inside an onclick attribute
     const jsStr = s => s.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
 
-    const trackedHTML = trackedItems.length === 0
-        ? `<p class="revisit-empty">No tracked revisits yet. Hit 🔁 next to any problem to add it here.</p>`
-        : trackedItems.map(item => {
-            const isCustom = item.isCustom;
-            const isDone = isCustom ? item.isDoneCustom : !!trackedDone[item.key];
-            const safeKey = jsStr(item.key);
-            const titleHTML = (isCustom && item.url)
-                ? `<a href="${escapeHtml(item.url)}" target="_blank" rel="noopener" class="revisit-title">${escapeHtml(item.title)}</a>`
-                : `<a href="${getLeetCodeUrl(item.title)}" target="_blank" rel="noopener" class="revisit-title">${escapeHtml(item.title.replace(/^\d+\.\s*/, ''))}</a>`;
-            const sourceHTML = isCustom
-                ? `<span class="revisit-source">Custom</span>`
-                : `<span class="revisit-source">${escapeHtml(item.catTitle)} › ${escapeHtml(item.patternName)}</span>`;
-            const doneonclick = isCustom
-                ? `toggleCustomRevisitDone(${item.customId})`
-                : `toggleTrackedDone('${safeKey}')`;
-            const removeonclick = isCustom
-                ? `toggleCustomNeedsRevisit(${item.customId})`
-                : `removeTrackedRevisit('${safeKey}')`;
-            const removetitle = isCustom ? 'Remove from Tracked' : 'Remove from revisit';
-            return `
-            <div class="revisit-item ${item.isSolved ? 'solved' : ''} ${isDone ? 'done' : ''} ${isCustom ? 'custom-revisit' : ''}">
-                <div class="revisit-item-header">
-                    ${titleHTML}
-                    <span class="diff-badge ${diffClass(item.diff)}">${diffText(item.diff)}</span>
-                    ${sourceHTML}
-                    <button class="custom-done-btn ${isDone ? 'active' : ''}" title="${isDone ? 'Mark as pending' : 'Mark as done'}" onclick="${doneonclick}">${isDone ? '✓ Done' : '○ Done'}</button>
-                    <button class="revisit-remove-btn" title="${removetitle}" onclick="${removeonclick}">✕</button>
-                </div>
-                ${item.note ? `<div class="revisit-note">${escapeHtml(item.note)}</div>` : ''}
+    let trackedHTML = '';
+    if (trackedItems.length === 0) {
+        trackedHTML = `<p class="revisit-empty">No tracked revisits yet. Hit 🔁 next to any problem to add it here.</p>`;
+    } else {
+        const groups = {};
+        trackedItems.forEach(item => {
+            if (!groups[item.catTitle]) groups[item.catTitle] = [];
+            groups[item.catTitle].push(item);
+        });
+        
+        for (const cat in groups) {
+            trackedHTML += `<div class="revisit-topic-group">
+                <div class="revisit-topic-header">${escapeHtml(cat)}</div>
+                ${groups[cat].map(item => {
+                    const isCustom = item.isCustom;
+                    const isDone = isCustom ? item.isDoneCustom : !!trackedDone[item.key];
+                    const safeKey = jsStr(item.key);
+                    const titleHTML = (isCustom && item.url)
+                        ? `<a href="${escapeHtml(item.url)}" target="_blank" rel="noopener" class="revisit-title">${escapeHtml(item.title)}</a>`
+                        : `<a href="${getLeetCodeUrl(item.title)}" target="_blank" rel="noopener" class="revisit-title">${escapeHtml(item.title.replace(/^\d+\.\s*/, ''))}</a>`;
+                    const sourceHTML = isCustom
+                        ? `<span class="revisit-source">Custom</span>`
+                        : `<span class="revisit-source">${escapeHtml(item.catTitle)} › ${escapeHtml(item.patternName)}</span>`;
+                    const doneonclick = isCustom
+                        ? `toggleCustomRevisitDone(${item.customId})`
+                        : `toggleTrackedDone('${safeKey}')`;
+                    const removeonclick = isCustom
+                        ? `toggleCustomNeedsRevisit(${item.customId})`
+                        : `removeTrackedRevisit('${safeKey}')`;
+                    const removetitle = isCustom ? 'Remove from Tracked' : 'Remove from revisit';
+                    return `
+                    <div class="revisit-item ${item.isSolved ? 'solved' : ''} ${isDone ? 'done' : ''} ${isCustom ? 'custom-revisit' : ''}">
+                        <div class="revisit-item-header">
+                            ${titleHTML}
+                            <span class="diff-badge ${diffClass(item.diff)}">${diffText(item.diff)}</span>
+                            ${sourceHTML}
+                            <button class="custom-done-btn ${isDone ? 'active' : ''}" title="${isDone ? 'Mark as pending' : 'Mark as done'}" onclick="${doneonclick}">${isDone ? '✓ Done' : '○ Done'}</button>
+                            <button class="revisit-remove-btn" title="${removetitle}" onclick="${removeonclick}">✕</button>
+                        </div>
+                        ${item.note ? `<div class="revisit-note">${escapeHtml(item.note)}</div>` : ''}
+                    </div>`;
+                }).join('')}
             </div>`;
-        }).join('');
+        }
+    }
 
     const customHTML = customRevisits.length === 0 ? '' : customRevisits.map(r => `
         <div class="revisit-item custom-revisit ${r.done ? 'done' : ''} ${r.needsRevisit ? 'needs-revisit' : ''}">
